@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HousingAPI", "HousingAPI\HousingAPI.csproj", "{4E4168DE-8C49-4574-8C70-2DF2AD19161C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HousingAPI.Tests", "HousingAPI.Tests\HousingAPI.Tests.csproj", "{5921DE8C-2E54-481C-A91F-17899B7C2B8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E4168DE-8C49-4574-8C70-2DF2AD19161C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4168DE-8C49-4574-8C70-2DF2AD19161C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4168DE-8C49-4574-8C70-2DF2AD19161C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4168DE-8C49-4574-8C70-2DF2AD19161C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5921DE8C-2E54-481C-A91F-17899B7C2B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5921DE8C-2E54-481C-A91F-17899B7C2B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5921DE8C-2E54-481C-A91F-17899B7C2B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5921DE8C-2E54-481C-A91F-17899B7C2B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD82F260-44EA-4053-BFF9-3A6542434F53}
+	EndGlobalSection
+EndGlobal
