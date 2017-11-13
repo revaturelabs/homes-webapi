@@ -1,0 +1,1070 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HousingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="addressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="buildingNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="streetName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="city" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="zipcode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="state" Type="nvarchar(max)" />
+          <Property Name="country" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Batches">
+          <Key>
+            <PropertyRef Name="batchId" />
+          </Key>
+          <Property Name="batchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="contactId" />
+          </Key>
+          <Property Name="contactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="objectId" Type="nvarchar(max)" />
+          <Property Name="firstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="phoneNumber" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="genderId" />
+          </Key>
+          <Property Name="genderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="genderOption" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="HousingUnits">
+          <Key>
+            <PropertyRef Name="housingUnitId" />
+          </Key>
+          <Property Name="housingUnitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="providerId" Type="int" />
+          <Property Name="addressId" Type="int" />
+          <Property Name="housingSignature" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaintenanceRequests">
+          <Key>
+            <PropertyRef Name="maintenanceRequestId" />
+          </Key>
+          <Property Name="maintenanceRequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenantId" Type="int" />
+          <Property Name="active" Type="bit" />
+          <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Management">
+          <Key>
+            <PropertyRef Name="managerId" />
+          </Key>
+          <Property Name="managerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contactId" Type="int" />
+          <Property Name="departmentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Providers">
+          <Key>
+            <PropertyRef Name="providerId" />
+          </Key>
+          <Property Name="providerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contactId" Type="int" />
+          <Property Name="companyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestSuppliesMap">
+          <Key>
+            <PropertyRef Name="requestSupplyMapId" />
+          </Key>
+          <Property Name="requestSupplyMapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="suppliesRequestId" Type="int" />
+          <Property Name="supplyId" Type="int" />
+        </EntityType>
+        <EntityType Name="Supplies">
+          <Key>
+            <PropertyRef Name="supplyId" />
+          </Key>
+          <Property Name="supplyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplyRequests">
+          <Key>
+            <PropertyRef Name="supplyRequestId" />
+          </Key>
+          <Property Name="supplyRequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenantId" Type="int" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TenantCarRelationships">
+          <Key>
+            <PropertyRef Name="relationshipId" />
+          </Key>
+          <Property Name="relationshipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenantId" Type="int" />
+          <Property Name="parkingPassStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tenants">
+          <Key>
+            <PropertyRef Name="tenantId" />
+          </Key>
+          <Property Name="tenantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contactId" Type="int" />
+          <Property Name="batchId" Type="int" />
+          <Property Name="housingUnitId" Type="int" />
+          <Property Name="genderId" Type="int" />
+          <Property Name="moveInDate" Type="date" Nullable="false" />
+          <Property Name="hasMoved" Type="bit" />
+          <Property Name="hasKey" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HousingDB.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__HousingUn__addre__5812160E">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
+          <End Role="HousingUnits" Type="Self.HousingUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="addressId" />
+            </Principal>
+            <Dependent Role="HousingUnits">
+              <PropertyRef Name="addressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HousingUn__provi__571DF1D5">
+          <End Role="Providers" Type="Self.Providers" Multiplicity="0..1" />
+          <End Role="HousingUnits" Type="Self.HousingUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Providers">
+              <PropertyRef Name="providerId" />
+            </Principal>
+            <Dependent Role="HousingUnits">
+              <PropertyRef Name="providerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maintenan__tenan__66603565">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+          <End Role="MaintenanceRequests" Type="Self.MaintenanceRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantId" />
+            </Principal>
+            <Dependent Role="MaintenanceRequests">
+              <PropertyRef Name="tenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Managemen__conta__00200768">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Management" Type="Self.Management" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="Management">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Providers__conta__5441852A">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Providers" Type="Self.Providers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="Providers">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestSu__suppl__70DDC3D8">
+          <End Role="SupplyRequests" Type="Self.SupplyRequests" Multiplicity="0..1" />
+          <End Role="RequestSuppliesMap" Type="Self.RequestSuppliesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplyRequests">
+              <PropertyRef Name="supplyRequestId" />
+            </Principal>
+            <Dependent Role="RequestSuppliesMap">
+              <PropertyRef Name="suppliesRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestSu__suppl__71D1E811">
+          <End Role="Supplies" Type="Self.Supplies" Multiplicity="0..1" />
+          <End Role="RequestSuppliesMap" Type="Self.RequestSuppliesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplies">
+              <PropertyRef Name="supplyId" />
+            </Principal>
+            <Dependent Role="RequestSuppliesMap">
+              <PropertyRef Name="supplyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupplyReq__tenan__6D0D32F4">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+          <End Role="SupplyRequests" Type="Self.SupplyRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantId" />
+            </Principal>
+            <Dependent Role="SupplyRequests">
+              <PropertyRef Name="tenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TenantCar__tenan__628FA481">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+          <End Role="TenantCarRelationships" Type="Self.TenantCarRelationships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantId" />
+            </Principal>
+            <Dependent Role="TenantCarRelationships">
+              <PropertyRef Name="tenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__batchId__5BE2A6F2">
+          <End Role="Batches" Type="Self.Batches" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="batchId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="batchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__contact__5AEE82B9">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__genderI__5DCAEF64">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="genderId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="genderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__housing__5CD6CB2B">
+          <End Role="HousingUnits" Type="Self.HousingUnits" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HousingUnits">
+              <PropertyRef Name="housingUnitId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="housingUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="HousingDBModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HousingUnits" EntityType="Self.HousingUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaintenanceRequests" EntityType="Self.MaintenanceRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Management" EntityType="Self.Management" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Providers" EntityType="Self.Providers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestSuppliesMap" EntityType="Self.RequestSuppliesMap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplies" EntityType="Self.Supplies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplyRequests" EntityType="Self.SupplyRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TenantCarRelationships" EntityType="Self.TenantCarRelationships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tenants" EntityType="Self.Tenants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__HousingUn__addre__5812160E" Association="Self.FK__HousingUn__addre__5812160E">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="HousingUnits" EntitySet="HousingUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HousingUn__provi__571DF1D5" Association="Self.FK__HousingUn__provi__571DF1D5">
+            <End Role="Providers" EntitySet="Providers" />
+            <End Role="HousingUnits" EntitySet="HousingUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maintenan__tenan__66603565" Association="Self.FK__Maintenan__tenan__66603565">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="MaintenanceRequests" EntitySet="MaintenanceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Managemen__conta__00200768" Association="Self.FK__Managemen__conta__00200768">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Management" EntitySet="Management" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Providers__conta__5441852A" Association="Self.FK__Providers__conta__5441852A">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Providers" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestSu__suppl__70DDC3D8" Association="Self.FK__RequestSu__suppl__70DDC3D8">
+            <End Role="SupplyRequests" EntitySet="SupplyRequests" />
+            <End Role="RequestSuppliesMap" EntitySet="RequestSuppliesMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestSu__suppl__71D1E811" Association="Self.FK__RequestSu__suppl__71D1E811">
+            <End Role="Supplies" EntitySet="Supplies" />
+            <End Role="RequestSuppliesMap" EntitySet="RequestSuppliesMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupplyReq__tenan__6D0D32F4" Association="Self.FK__SupplyReq__tenan__6D0D32F4">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="SupplyRequests" EntitySet="SupplyRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TenantCar__tenan__628FA481" Association="Self.FK__TenantCar__tenan__628FA481">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="TenantCarRelationships" EntitySet="TenantCarRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__batchId__5BE2A6F2" Association="Self.FK__Tenants__batchId__5BE2A6F2">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__contact__5AEE82B9" Association="Self.FK__Tenants__contact__5AEE82B9">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__genderI__5DCAEF64" Association="Self.FK__Tenants__genderI__5DCAEF64">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__housing__5CD6CB2B" Association="Self.FK__Tenants__housing__5CD6CB2B">
+            <End Role="HousingUnits" EntitySet="HousingUnits" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HousingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="addressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="buildingNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="streetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="HousingUnits" Relationship="Self.FK__HousingUn__addre__5812160E" FromRole="Addresses" ToRole="HousingUnits" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="batchId" />
+          </Key>
+          <Property Name="batchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tenants" Relationship="Self.FK__Tenants__batchId__5BE2A6F2" FromRole="Batches" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="contactId" />
+          </Key>
+          <Property Name="contactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="objectId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Managements" Relationship="Self.FK__Managemen__conta__00200768" FromRole="Contacts" ToRole="Management" />
+          <NavigationProperty Name="Providers" Relationship="Self.FK__Providers__conta__5441852A" FromRole="Contacts" ToRole="Providers" />
+          <NavigationProperty Name="Tenants" Relationship="Self.FK__Tenants__contact__5AEE82B9" FromRole="Contacts" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="genderId" />
+          </Key>
+          <Property Name="genderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="genderOption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tenants" Relationship="Self.FK__Tenants__genderI__5DCAEF64" FromRole="Genders" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="HousingUnit">
+          <Key>
+            <PropertyRef Name="housingUnitId" />
+          </Key>
+          <Property Name="housingUnitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="providerId" Type="Int32" />
+          <Property Name="addressId" Type="Int32" />
+          <Property Name="housingSignature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__HousingUn__addre__5812160E" FromRole="HousingUnits" ToRole="Addresses" />
+          <NavigationProperty Name="Provider" Relationship="Self.FK__HousingUn__provi__571DF1D5" FromRole="HousingUnits" ToRole="Providers" />
+          <NavigationProperty Name="Tenants" Relationship="Self.FK__Tenants__housing__5CD6CB2B" FromRole="HousingUnits" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="MaintenanceRequest">
+          <Key>
+            <PropertyRef Name="maintenanceRequestId" />
+          </Key>
+          <Property Name="maintenanceRequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenantId" Type="Int32" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tenant" Relationship="Self.FK__Maintenan__tenan__66603565" FromRole="MaintenanceRequests" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="Management">
+          <Key>
+            <PropertyRef Name="managerId" />
+          </Key>
+          <Property Name="managerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contactId" Type="Int32" />
+          <Property Name="departmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contact" Relationship="Self.FK__Managemen__conta__00200768" FromRole="Management" ToRole="Contacts" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="providerId" />
+          </Key>
+          <Property Name="providerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contactId" Type="Int32" />
+          <Property Name="companyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contact" Relationship="Self.FK__Providers__conta__5441852A" FromRole="Providers" ToRole="Contacts" />
+          <NavigationProperty Name="HousingUnits" Relationship="Self.FK__HousingUn__provi__571DF1D5" FromRole="Providers" ToRole="HousingUnits" />
+        </EntityType>
+        <EntityType Name="RequestSuppliesMap">
+          <Key>
+            <PropertyRef Name="requestSupplyMapId" />
+          </Key>
+          <Property Name="requestSupplyMapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="suppliesRequestId" Type="Int32" />
+          <Property Name="supplyId" Type="Int32" />
+          <NavigationProperty Name="SupplyRequest" Relationship="Self.FK__RequestSu__suppl__70DDC3D8" FromRole="RequestSuppliesMap" ToRole="SupplyRequests" />
+          <NavigationProperty Name="Supply" Relationship="Self.FK__RequestSu__suppl__71D1E811" FromRole="RequestSuppliesMap" ToRole="Supplies" />
+        </EntityType>
+        <EntityType Name="Supply">
+          <Key>
+            <PropertyRef Name="supplyId" />
+          </Key>
+          <Property Name="supplyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RequestSuppliesMaps" Relationship="Self.FK__RequestSu__suppl__71D1E811" FromRole="Supplies" ToRole="RequestSuppliesMap" />
+        </EntityType>
+        <EntityType Name="SupplyRequest">
+          <Key>
+            <PropertyRef Name="supplyRequestId" />
+          </Key>
+          <Property Name="supplyRequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenantId" Type="Int32" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="RequestSuppliesMaps" Relationship="Self.FK__RequestSu__suppl__70DDC3D8" FromRole="SupplyRequests" ToRole="RequestSuppliesMap" />
+          <NavigationProperty Name="Tenant" Relationship="Self.FK__SupplyReq__tenan__6D0D32F4" FromRole="SupplyRequests" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TenantCarRelationship">
+          <Key>
+            <PropertyRef Name="relationshipId" />
+          </Key>
+          <Property Name="relationshipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenantId" Type="Int32" />
+          <Property Name="parkingPassStatus" Type="Boolean" />
+          <NavigationProperty Name="Tenant" Relationship="Self.FK__TenantCar__tenan__628FA481" FromRole="TenantCarRelationships" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="Tenant">
+          <Key>
+            <PropertyRef Name="tenantId" />
+          </Key>
+          <Property Name="tenantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contactId" Type="Int32" />
+          <Property Name="batchId" Type="Int32" />
+          <Property Name="housingUnitId" Type="Int32" />
+          <Property Name="genderId" Type="Int32" />
+          <Property Name="moveInDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hasMoved" Type="Boolean" />
+          <Property Name="hasKey" Type="Boolean" />
+          <NavigationProperty Name="Batch" Relationship="Self.FK__Tenants__batchId__5BE2A6F2" FromRole="Tenants" ToRole="Batches" />
+          <NavigationProperty Name="Contact" Relationship="Self.FK__Tenants__contact__5AEE82B9" FromRole="Tenants" ToRole="Contacts" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK__Tenants__genderI__5DCAEF64" FromRole="Tenants" ToRole="Genders" />
+          <NavigationProperty Name="HousingUnit" Relationship="Self.FK__Tenants__housing__5CD6CB2B" FromRole="Tenants" ToRole="HousingUnits" />
+          <NavigationProperty Name="MaintenanceRequests" Relationship="Self.FK__Maintenan__tenan__66603565" FromRole="Tenants" ToRole="MaintenanceRequests" />
+          <NavigationProperty Name="SupplyRequests" Relationship="Self.FK__SupplyReq__tenan__6D0D32F4" FromRole="Tenants" ToRole="SupplyRequests" />
+          <NavigationProperty Name="TenantCarRelationships" Relationship="Self.FK__TenantCar__tenan__628FA481" FromRole="Tenants" ToRole="TenantCarRelationships" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK__HousingUn__addre__5812160E">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="HousingUnits" Type="Self.HousingUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="addressId" />
+            </Principal>
+            <Dependent Role="HousingUnits">
+              <PropertyRef Name="addressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__batchId__5BE2A6F2">
+          <End Role="Batches" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="batchId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="batchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Managemen__conta__00200768">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Management" Type="Self.Management" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="Management">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Providers__conta__5441852A">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Providers" Type="Self.Provider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="Providers">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__contact__5AEE82B9">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__genderI__5DCAEF64">
+          <End Role="Genders" Type="Self.Gender" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="genderId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="genderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HousingUn__provi__571DF1D5">
+          <End Role="Providers" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="HousingUnits" Type="Self.HousingUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Providers">
+              <PropertyRef Name="providerId" />
+            </Principal>
+            <Dependent Role="HousingUnits">
+              <PropertyRef Name="providerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tenants__housing__5CD6CB2B">
+          <End Role="HousingUnits" Type="Self.HousingUnit" Multiplicity="0..1" />
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HousingUnits">
+              <PropertyRef Name="housingUnitId" />
+            </Principal>
+            <Dependent Role="Tenants">
+              <PropertyRef Name="housingUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maintenan__tenan__66603565">
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="0..1" />
+          <End Role="MaintenanceRequests" Type="Self.MaintenanceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantId" />
+            </Principal>
+            <Dependent Role="MaintenanceRequests">
+              <PropertyRef Name="tenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestSu__suppl__70DDC3D8">
+          <End Role="SupplyRequests" Type="Self.SupplyRequest" Multiplicity="0..1" />
+          <End Role="RequestSuppliesMap" Type="Self.RequestSuppliesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplyRequests">
+              <PropertyRef Name="supplyRequestId" />
+            </Principal>
+            <Dependent Role="RequestSuppliesMap">
+              <PropertyRef Name="suppliesRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestSu__suppl__71D1E811">
+          <End Role="Supplies" Type="Self.Supply" Multiplicity="0..1" />
+          <End Role="RequestSuppliesMap" Type="Self.RequestSuppliesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplies">
+              <PropertyRef Name="supplyId" />
+            </Principal>
+            <Dependent Role="RequestSuppliesMap">
+              <PropertyRef Name="supplyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupplyReq__tenan__6D0D32F4">
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="0..1" />
+          <End Role="SupplyRequests" Type="Self.SupplyRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantId" />
+            </Principal>
+            <Dependent Role="SupplyRequests">
+              <PropertyRef Name="tenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TenantCar__tenan__628FA481">
+          <End Role="Tenants" Type="Self.Tenant" Multiplicity="0..1" />
+          <End Role="TenantCarRelationships" Type="Self.TenantCarRelationship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantId" />
+            </Principal>
+            <Dependent Role="TenantCarRelationships">
+              <PropertyRef Name="tenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HousingDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Batches" EntityType="Self.Batch" />
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
+          <EntitySet Name="Genders" EntityType="Self.Gender" />
+          <EntitySet Name="HousingUnits" EntityType="Self.HousingUnit" />
+          <EntitySet Name="MaintenanceRequests" EntityType="Self.MaintenanceRequest" />
+          <EntitySet Name="Managements" EntityType="Self.Management" />
+          <EntitySet Name="Providers" EntityType="Self.Provider" />
+          <EntitySet Name="RequestSuppliesMaps" EntityType="Self.RequestSuppliesMap" />
+          <EntitySet Name="Supplies" EntityType="Self.Supply" />
+          <EntitySet Name="SupplyRequests" EntityType="Self.SupplyRequest" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TenantCarRelationships" EntityType="Self.TenantCarRelationship" />
+          <EntitySet Name="Tenants" EntityType="Self.Tenant" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <AssociationSet Name="FK__HousingUn__addre__5812160E" Association="Self.FK__HousingUn__addre__5812160E">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="HousingUnits" EntitySet="HousingUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__batchId__5BE2A6F2" Association="Self.FK__Tenants__batchId__5BE2A6F2">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Managemen__conta__00200768" Association="Self.FK__Managemen__conta__00200768">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Management" EntitySet="Managements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Providers__conta__5441852A" Association="Self.FK__Providers__conta__5441852A">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Providers" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__contact__5AEE82B9" Association="Self.FK__Tenants__contact__5AEE82B9">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__genderI__5DCAEF64" Association="Self.FK__Tenants__genderI__5DCAEF64">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HousingUn__provi__571DF1D5" Association="Self.FK__HousingUn__provi__571DF1D5">
+            <End Role="Providers" EntitySet="Providers" />
+            <End Role="HousingUnits" EntitySet="HousingUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tenants__housing__5CD6CB2B" Association="Self.FK__Tenants__housing__5CD6CB2B">
+            <End Role="HousingUnits" EntitySet="HousingUnits" />
+            <End Role="Tenants" EntitySet="Tenants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maintenan__tenan__66603565" Association="Self.FK__Maintenan__tenan__66603565">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="MaintenanceRequests" EntitySet="MaintenanceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestSu__suppl__70DDC3D8" Association="Self.FK__RequestSu__suppl__70DDC3D8">
+            <End Role="SupplyRequests" EntitySet="SupplyRequests" />
+            <End Role="RequestSuppliesMap" EntitySet="RequestSuppliesMaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestSu__suppl__71D1E811" Association="Self.FK__RequestSu__suppl__71D1E811">
+            <End Role="Supplies" EntitySet="Supplies" />
+            <End Role="RequestSuppliesMap" EntitySet="RequestSuppliesMaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupplyReq__tenan__6D0D32F4" Association="Self.FK__SupplyReq__tenan__6D0D32F4">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="SupplyRequests" EntitySet="SupplyRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TenantCar__tenan__628FA481" Association="Self.FK__TenantCar__tenan__628FA481">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="TenantCarRelationships" EntitySet="TenantCarRelationships" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(HousingDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(HousingDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HousingDBModelStoreContainer" CdmEntityContainer="HousingDBEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="HousingDBModel.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="buildingNumber" ColumnName="buildingNumber" />
+                <ScalarProperty Name="streetName" ColumnName="streetName" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Batches">
+            <EntityTypeMapping TypeName="HousingDBModel.Batch">
+              <MappingFragment StoreEntitySet="Batches">
+                <ScalarProperty Name="batchId" ColumnName="batchId" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="HousingDBModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+                <ScalarProperty Name="objectId" ColumnName="objectId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="HousingDBModel.Gender">
+              <MappingFragment StoreEntitySet="Genders">
+                <ScalarProperty Name="genderId" ColumnName="genderId" />
+                <ScalarProperty Name="genderOption" ColumnName="genderOption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HousingUnits">
+            <EntityTypeMapping TypeName="HousingDBModel.HousingUnit">
+              <MappingFragment StoreEntitySet="HousingUnits">
+                <ScalarProperty Name="housingUnitId" ColumnName="housingUnitId" />
+                <ScalarProperty Name="providerId" ColumnName="providerId" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+                <ScalarProperty Name="housingSignature" ColumnName="housingSignature" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaintenanceRequests">
+            <EntityTypeMapping TypeName="HousingDBModel.MaintenanceRequest">
+              <MappingFragment StoreEntitySet="MaintenanceRequests">
+                <ScalarProperty Name="maintenanceRequestId" ColumnName="maintenanceRequestId" />
+                <ScalarProperty Name="tenantId" ColumnName="tenantId" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Managements">
+            <EntityTypeMapping TypeName="HousingDBModel.Management">
+              <MappingFragment StoreEntitySet="Management">
+                <ScalarProperty Name="managerId" ColumnName="managerId" />
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Providers">
+            <EntityTypeMapping TypeName="HousingDBModel.Provider">
+              <MappingFragment StoreEntitySet="Providers">
+                <ScalarProperty Name="providerId" ColumnName="providerId" />
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestSuppliesMaps">
+            <EntityTypeMapping TypeName="HousingDBModel.RequestSuppliesMap">
+              <MappingFragment StoreEntitySet="RequestSuppliesMap">
+                <ScalarProperty Name="requestSupplyMapId" ColumnName="requestSupplyMapId" />
+                <ScalarProperty Name="suppliesRequestId" ColumnName="suppliesRequestId" />
+                <ScalarProperty Name="supplyId" ColumnName="supplyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplies">
+            <EntityTypeMapping TypeName="HousingDBModel.Supply">
+              <MappingFragment StoreEntitySet="Supplies">
+                <ScalarProperty Name="supplyId" ColumnName="supplyId" />
+                <ScalarProperty Name="supplyName" ColumnName="supplyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplyRequests">
+            <EntityTypeMapping TypeName="HousingDBModel.SupplyRequest">
+              <MappingFragment StoreEntitySet="SupplyRequests">
+                <ScalarProperty Name="supplyRequestId" ColumnName="supplyRequestId" />
+                <ScalarProperty Name="tenantId" ColumnName="tenantId" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HousingDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TenantCarRelationships">
+            <EntityTypeMapping TypeName="HousingDBModel.TenantCarRelationship">
+              <MappingFragment StoreEntitySet="TenantCarRelationships">
+                <ScalarProperty Name="relationshipId" ColumnName="relationshipId" />
+                <ScalarProperty Name="tenantId" ColumnName="tenantId" />
+                <ScalarProperty Name="parkingPassStatus" ColumnName="parkingPassStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tenants">
+            <EntityTypeMapping TypeName="HousingDBModel.Tenant">
+              <MappingFragment StoreEntitySet="Tenants">
+                <ScalarProperty Name="tenantId" ColumnName="tenantId" />
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+                <ScalarProperty Name="batchId" ColumnName="batchId" />
+                <ScalarProperty Name="housingUnitId" ColumnName="housingUnitId" />
+                <ScalarProperty Name="genderId" ColumnName="genderId" />
+                <ScalarProperty Name="moveInDate" ColumnName="moveInDate" />
+                <ScalarProperty Name="hasMoved" ColumnName="hasMoved" />
+                <ScalarProperty Name="hasKey" ColumnName="hasKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="HousingDBModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HousingDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HousingDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HousingDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="HousingDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HousingDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="HousingDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HousingDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HousingDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HousingDBModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

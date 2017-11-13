@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2955ead4d1874f47b211fbb5f95aaf40" Name="Diagram1">
+        <EntityTypeShape EntityType="HousingDBModel.Address" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Batch" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Contact" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Gender" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.HousingUnit" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.MaintenanceRequest" Width="1.5" PointX="9.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Management" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Provider" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.RequestSuppliesMap" Width="1.5" PointX="12" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Supply" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.SupplyRequest" Width="1.5" PointX="9.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.TenantCarRelationship" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Tenant" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.database_firewall_rules" Width="1.5" PointX="11.75" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="HousingDBModel.FK__HousingUn__addre__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Tenants__batchId__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Managemen__conta__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Providers__conta__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Tenants__contact__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Tenants__genderI__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__HousingUn__provi__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Tenants__housing__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__Maintenan__tenan__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__RequestSu__suppl__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__RequestSu__suppl__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__SupplyReq__tenan__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="HousingDBModel.FK__TenantCar__tenan__628FA481" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
