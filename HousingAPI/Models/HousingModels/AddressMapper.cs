@@ -16,6 +16,6 @@ namespace HousingAPI.Models.HousingModels
         public string State { get; set; }
         public string Country { get; set; }
 
-        public IList<HousingUnitMapper> HousingUnits { get; set; }
+        //public IList<HousingUnitMapper> HousingUnits { get; set; }
     }
 }

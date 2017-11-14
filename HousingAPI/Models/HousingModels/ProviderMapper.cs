@@ -12,6 +12,6 @@ namespace HousingAPI.Models.HousingModels
 
         public virtual Contact Contact { get; set; }
 
-        public virtual IEnumerable<HousingUnit> HousingUnits { get; set; }
+        //public virtual IEnumerable<HousingUnit> HousingUnits { get; set; }
     }
 }
