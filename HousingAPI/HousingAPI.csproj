@@ -275,6 +275,10 @@
     <Compile Include="Models\HousingModels\ContactMapper.cs" />
     <Compile Include="Models\HousingModels\GenderMapper.cs" />
     <Compile Include="Models\HousingModels\HousingUnitMapper.cs" />
+    <Compile Include="Models\HousingModels\SupplyMapper.cs" />
+    <Compile Include="Models\HousingModels\SupplyRequestMapper.cs" />
+    <Compile Include="Models\HousingModels\TenantCarRelationshipMapper.cs" />
+    <Compile Include="Models\HousingModels\TenantMapper.cs" />
     <Compile Include="Models\HousingUnit.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
