@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'Y:\Visual Studio\Housing\homes-webapi\HousingAPI\Models\HousingDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\andre\source\repos\RevatureProjects\Project3\homes-webapi\HousingAPI\Models\HousingDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
