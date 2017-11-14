@@ -383,6 +383,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Db_Helper_Classes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
