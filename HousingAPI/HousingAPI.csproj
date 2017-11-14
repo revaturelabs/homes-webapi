@@ -270,6 +270,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HousingDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\HousingModels\SupplyMapper.cs" />
+    <Compile Include="Models\HousingModels\SupplyRequestMapper.cs" />
+    <Compile Include="Models\HousingModels\TenantCarRelationshipMapper.cs" />
+    <Compile Include="Models\HousingModels\TenantMapper.cs" />
     <Compile Include="Models\HousingUnit.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
@@ -401,7 +405,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Db_Helper_Classes\" />
-    <Folder Include="Models\HousingModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
