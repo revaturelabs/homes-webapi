@@ -401,6 +401,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Db_Helper_Classes\" />
+    <Folder Include="Models\HousingModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
