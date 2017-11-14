@@ -10,6 +10,12 @@ namespace HousingAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            // Remove formating - xml
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            // Indentify the type of data
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            // Using camel case instead of proper case
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
