@@ -222,7 +222,20 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\APIControllers\AddressesController.cs" />
+    <Compile Include="Controllers\APIControllers\BatchesController.cs" />
+    <Compile Include="Controllers\APIControllers\ContactsController.cs" />
+    <Compile Include="Controllers\APIControllers\GendersController.cs" />
+    <Compile Include="Controllers\APIControllers\HousingUnitsController.cs" />
+    <Compile Include="Controllers\APIControllers\ManagementsController.cs" />
+    <Compile Include="Controllers\APIControllers\ProvidersController.cs" />
+    <Compile Include="Controllers\APIControllers\RequestSuppliesMapsController.cs" />
+    <Compile Include="Controllers\APIControllers\SuppliesController.cs" />
+    <Compile Include="Controllers\APIControllers\SupplyRequestsController.cs" />
+    <Compile Include="Controllers\APIControllers\TenantCarRelationshipsController.cs" />
+    <Compile Include="Controllers\APIControllers\TenantsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\APIControllers\MaintenanceRequestsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
