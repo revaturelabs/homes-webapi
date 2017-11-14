@@ -7,10 +7,10 @@ namespace HousingAPI.Models.HousingModels
 {
     public class ContactMapper
     {
-        public int batchId { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
-        public string name { get; set; }
+        public int BatchId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Name { get; set; }
         
         //public IEnumerable<TenantMapper> Tenants { get; set; }
     }

@@ -7,11 +7,11 @@ namespace HousingAPI.Models.HousingModels
 {
     public class HousingUnitMapper
     {
-        public int housingUnitId { get; set; }
-        public Nullable<int> providerId { get; set; }
-        public Nullable<int> addressId { get; set; }
-        public string housingSignature { get; set; }
-        public int capacity { get; set; }
+        public int HousingUnitId { get; set; }
+        public int ProviderId { get; set; }
+        public int AddressId { get; set; }
+        public string HousingSignature { get; set; }
+        public int Capacity { get; set; }
 
         //public Address Address { get; set; }
         //public Provider Provider { get; set; }

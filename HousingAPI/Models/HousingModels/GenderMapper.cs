@@ -7,8 +7,8 @@ namespace HousingAPI.Models.HousingModels
 {
     public class GenderMapper
     {
-        public int genderId { get; set; }
-        public string genderOption { get; set; }
+        public int GenderId { get; set; }
+        public string GenderOption { get; set; }
 
         //public IEnumerable<Tenant> Tenants { get; set; }
     }
