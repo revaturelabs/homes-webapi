@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HousingAPI.Models.HousingModels
+﻿namespace HousingAPI.Models.HousingModels
 {
-    public class SupplyMapper
+    public abstract class ASupplyMapper
     {
         public int SupplyId { get; set; }
         public string SupplyName { get; set; }

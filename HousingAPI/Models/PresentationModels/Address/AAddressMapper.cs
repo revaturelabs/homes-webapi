@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HousingAPI.Models.HousingModels
+﻿namespace HousingAPI.Models.HousingModels
 {
-    public class AddressMapper
+    public abstract class AAddressMapper
     {
         public int AddressId { get; set; }
         public string Name { get; set; }
