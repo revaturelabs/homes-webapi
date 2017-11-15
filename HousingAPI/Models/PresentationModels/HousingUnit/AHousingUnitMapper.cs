@@ -1,4 +1,4 @@
-﻿namespace HousingAPI.Models.HousingModels
+﻿namespace HousingAPI.Models.PresentationModels.HousingUnit
 {
     public abstract class AHousingUnitMapper
     {

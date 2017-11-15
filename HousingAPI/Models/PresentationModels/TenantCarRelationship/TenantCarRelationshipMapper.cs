@@ -1,6 +1,6 @@
 ﻿using HousingAPI.Models.PresentationModels.Tenant;
 
-namespace HousingAPI.Models.HousingModels
+namespace HousingAPI.Models.PresentationModels.TenantCarRelationship
 {
     public class TenantCarRelationshipMapper
     {

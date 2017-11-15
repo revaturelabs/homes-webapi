@@ -1,4 +1,6 @@
-﻿namespace HousingAPI.Models.HousingModels
+﻿using HousingAPI.Models.PresentationModels.Supply;
+
+namespace HousingAPI.Models.PresentationModels.RequestSuppliesMap
 {
     public class RequestSuppliesMapMapper
     {
@@ -6,6 +8,6 @@
         public int SuppliesRequestId { get; set; }
         public int SupplyId { get; set; }
 
-        public Supply Supply { get; set; }
+        public SupplyMapper Supply { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using HousingAPI.Models.HousingModels;
-using HousingAPI.Models.PresentationModels.HousingUnit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Models.PresentationModels.Tenant
 {

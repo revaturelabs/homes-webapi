@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HousingAPI.Models.HousingModels
+namespace HousingAPI.Models.PresentationModels.Contact
 {
     public class ContactMapper
     {

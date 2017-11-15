@@ -284,7 +284,7 @@
     <Compile Include="Models\PresentationModels\Management\ManagementContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\ProviderContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\ProviderUnitsMapper.cs" />
-    <Compile Include="Models\PresentationModels\SupplyRequest\ASupplyRequestMapper.cs" />
+    <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\TenantCarRelationship\TenantCarRelationshipMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\ATenantMapper.cs" />
     <Compile Include="Models\PresentationModels\MaintenanceRequest\MaintenanceRequestMapper.cs" />
@@ -299,7 +299,6 @@
     <Compile Include="Models\Management.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PresentationModels\Tenant\BatchMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantProviderMapper.cs" />

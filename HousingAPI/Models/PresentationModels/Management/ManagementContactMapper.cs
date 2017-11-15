@@ -1,8 +1,4 @@
-﻿using HousingAPI.Models.HousingModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using HousingAPI.Models.PresentationModels.Contact;
 
 namespace HousingAPI.Models.PresentationModels.Management
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HousingAPI.Models.HousingModels
+namespace HousingAPI.Models.PresentationModels.Tenant
 {
     public abstract class ATenantMapper
     {
