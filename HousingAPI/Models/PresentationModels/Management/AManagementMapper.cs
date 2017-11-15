@@ -6,6 +6,5 @@
         public int ContactId { get; set; }
         public string DepartmentName { get; set; }
 
-        // public virtual ContactMapper Contact { get; set; }
     }
 }
