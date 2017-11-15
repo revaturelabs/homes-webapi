@@ -1,6 +1,6 @@
 ﻿namespace HousingAPI.Models.HousingModels
 {
-    public abstract class AddressMapper
+    public abstract class AAddressMapper
     {
         public int AddressId { get; set; }
         public string Name { get; set; }

@@ -1,12 +1,10 @@
 ﻿namespace HousingAPI.Models.HousingModels
 {
-    public abstract class ProviderMapper
+    public abstract class AProviderMapper
     {
-
-
-        public int providerId { get; set; }
-        public int contactId { get; set; }
-        public string companyName { get; set; }
+        public int ProviderId { get; set; }
+        public int ContactId { get; set; }
+        public string CompanyName { get; set; }
 
         public virtual Contact Contact { get; set; }
 
