@@ -236,6 +236,7 @@
     <Compile Include="Controllers\APIControllers\TenantsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\APIControllers\MaintenanceRequestsController.cs" />
+    <Compile Include="Controllers\InternalControllers\ContactsHelper.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
