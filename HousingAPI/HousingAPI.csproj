@@ -274,11 +274,8 @@
     <Compile Include="Models\PresentationModels\Batch\ABatchMapper.cs" />
     <Compile Include="Models\PresentationModels\Contact\ContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Gender\GenderMapper.cs" />
-    <Compile Include="Models\PresentationModels\Batch\BatchMapper.cs" />
     <Compile Include="Models\PresentationModels\Batch\BatchTenantAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\Batch\BatchTenantInfoMapper.cs" />
-    
-    
     <Compile Include="Models\PresentationModels\HousingUnit\AHousingUnitMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderMapper.cs" />
@@ -287,14 +284,12 @@
     <Compile Include="Models\PresentationModels\Management\ManagementContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\ProviderContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\ProviderUnitsMapper.cs" />
-    
     <Compile Include="Models\PresentationModels\SupplyRequest\ASupplyRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\TenantCarRelationship\TenantCarRelationshipMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\ATenantMapper.cs" />
-    <Compile Include="Models\PresentationModels\MaintenanceRequest\AMaintenanceRequestMapper.cs" />
-    <Compile Include="Models\PresentationModels\Management\AManagementMapper.cs" />
+    <Compile Include="Models\PresentationModels\MaintenanceRequest\MaintenanceRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\AProviderMapper.cs" />
-    <Compile Include="Models\PresentationModels\RequestSuppliesMap\ARequestSuppliesMapMapper.cs" />
+    <Compile Include="Models\PresentationModels\RequestSuppliesMap\RequestSuppliesMapMapper.cs" />
     <Compile Include="Models\HousingUnit.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
@@ -304,8 +299,10 @@
     <Compile Include="Models\Management.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PresentationModels\Tenant\BatchMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantInfoMapper.cs" />
+    <Compile Include="Models\PresentationModels\Tenant\TenantProviderMapper.cs" />
     <Compile Include="Models\Provider.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>

@@ -5,8 +5,5 @@
         public int ProviderId { get; set; }
         public int ContactId { get; set; }
         public string CompanyName { get; set; }
-
-        public virtual Contact Contact { get; set; }
-        
     }
 }

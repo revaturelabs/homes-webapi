@@ -8,6 +8,6 @@ namespace HousingAPI.Models.PresentationModels.Provider
 {
     public class ProviderContactMapper : AProviderMapper
     {
-        //public virtual IEnumerable<HousingUnit> HousingUnits { get; set; }
+        public Contact Contact { get; set; }
     }
 }

@@ -1,13 +1,17 @@
-﻿using System;
+﻿using HousingAPI.Models.HousingModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using HousingAPI.Models.HousingModels;
 
 namespace HousingAPI.Models.PresentationModels.Management
 {
-    public class ManagementContactMapper : AManagementMapper
+    public class ManagementContactMapper
     {
-        // public virtual ContactMapper Contact { get; set; }
+        public int ManagerId { get; set; }
+        public int ContactId { get; set; }
+        public string DepartmentName { get; set; }
+
+        public ContactMapper Contact { get; set; }
     }
 }
