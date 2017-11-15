@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HousingAPI.Models.HousingModels
+﻿namespace HousingAPI.Models.HousingModels
 {
-    public class HousingUnitMapper
+    public abstract class HousingUnitMapper
     {
         public int HousingUnitId { get; set; }
         public int ProviderId { get; set; }

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace HousingAPI.Models.HousingModels
+﻿namespace HousingAPI.Models.HousingModels
 {
-    public class ProviderMapper
+    public abstract class ProviderMapper
     {
 
 

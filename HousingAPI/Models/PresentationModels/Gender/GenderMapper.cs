@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HousingAPI.Models.HousingModels
+﻿namespace HousingAPI.Models.HousingModels
 {
-    public class GenderMapper
+    public abstract class GenderMapper
     {
         public int GenderId { get; set; }
         public string GenderOption { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace HousingAPI.Models.HousingModels
 {
-    public class RequestSuppliesMapMapper
+    public abstract class RequestSuppliesMapMapper
     {
         public int requestSupplyMapId { get; set; }
         public int suppliesRequestId { get; set; }

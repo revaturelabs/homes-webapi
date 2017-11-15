@@ -1,6 +1,6 @@
 ﻿namespace HousingAPI.Models.HousingModels
 {
-    public class MaintenanceRequestMapper
+    public abstract class MaintenanceRequestMapper
     {
         public int MaintenanceRequestId { get; set; }
         public int tenantId { get; set; }
