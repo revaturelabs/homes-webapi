@@ -10,6 +10,7 @@ namespace HousingAPI.Models.PresentationModels.Tenant
         public ABatchMapper Batch { get; set; }
         public ContactMapper Contact { get; set; }
         public GenderMapper Gender { get; set; }
+
         public TenantCarRelationshipMapper TenantCarRelationships { get; set; }
     }
 }
