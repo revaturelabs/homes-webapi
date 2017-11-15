@@ -236,7 +236,6 @@
     <Compile Include="Controllers\APIControllers\TenantsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\APIControllers\MaintenanceRequestsController.cs" />
-    <Compile Include="Controllers\InternalControllers\ContactsHelper.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -276,6 +275,7 @@
     <Compile Include="Models\PresentationModels\Contact\AContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Gender\AGenderMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\AHousingUnitMapper.cs" />
+    <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequest.cs" />
     <Compile Include="Models\PresentationModels\Supply\ASupplyMapper.cs" />
     <Compile Include="Models\PresentationModels\SupplyRequest\ASupplyRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\TenantCarRelationship\ATenantCarRelationshipMapper.cs" />
@@ -414,6 +414,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\InternalControllers\" />
     <Folder Include="Db_Helper_Classes\" />
   </ItemGroup>
   <ItemGroup>
