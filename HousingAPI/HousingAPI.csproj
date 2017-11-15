@@ -275,7 +275,6 @@
     <Compile Include="Models\PresentationModels\Contact\AContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Gender\AGenderMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\AHousingUnitMapper.cs" />
-    <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequest.cs" />
     <Compile Include="Models\PresentationModels\Supply\ASupplyMapper.cs" />
     <Compile Include="Models\PresentationModels\SupplyRequest\ASupplyRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\TenantCarRelationship\ATenantCarRelationshipMapper.cs" />
