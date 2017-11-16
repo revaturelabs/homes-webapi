@@ -243,7 +243,7 @@
     <Compile Include="Controllers\Helpers\ManagementsHelper.cs" />
     <Compile Include="Controllers\Helpers\ProvidersController.cs" />
     <Compile Include="Controllers\Helpers\RequestSuppliesMapsController.cs" />
-    <Compile Include="Controllers\Helpers\SuppliesController.cs" />
+    <Compile Include="Controllers\Helpers\SuppliesHelper.cs" />
     <Compile Include="Controllers\Helpers\SupplyRequestsHelper.cs" />
     <Compile Include="Controllers\Helpers\TenantCarRelationshipsController.cs" />
     <Compile Include="Controllers\Helpers\TenantsController.cs" />
