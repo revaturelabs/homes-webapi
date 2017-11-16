@@ -17,46 +17,56 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        //Get all contacts
+        // Get all contacts
         public IEnumerable<ContactMapper> GetContacts()
         {
-            List<ContactMapper> cml = new List<ContactMapper>();
-            var toBeMapped = db.Contacts.ToList();
-            foreach (var contact in toBeMapped)
-            {
-                ContactMapper cm = new ContactMapper();
-
-                cm.ContactId = contact.contactId;
-                cm.Email = contact.email;
-                cm.FirstName = contact.firstName;
-                cm.LastName = contact.lastName;
-                cm.ObjectId = contact.objectId;
-                cm.PhoneNumber = contact.phoneNumber;
-
-                cml.Add(cm);
-            }
-
-            return cml;
-        }
-
-        //Get single contact by id
-        public ContactMapper GetContact(int id)
-        {
-            var contact = db.Contacts.FirstOrDefault(i => i.contactId == id);
-            if (contact == null)
+            var content = db.Contacts.ToList();
+            if(content.Count() == 0)
             {
                 return null;
             }
             else
             {
-                ContactMapper cm = new ContactMapper();
-                cm.ContactId = contact.contactId;
-                cm.Email = contact.email;
-                cm.FirstName = contact.firstName;
-                cm.LastName = contact.lastName;
-                cm.ObjectId = contact.objectId;
-                cm.PhoneNumber = contact.phoneNumber;
-                return cm;
+                List<ContactMapper> contacts = new List<ContactMapper>();
+
+                foreach (var item in content)
+                {
+                    ContactMapper contact = new ContactMapper
+                    {
+                        ContactId = item.contactId,
+                        Email = item.email,
+                        FirstName = item.firstName,
+                        LastName = item.lastName,
+                        ObjectId = item.objectId,
+                        PhoneNumber = item.phoneNumber
+                    };
+                    contacts.Add(contact);
+                }
+
+                return contacts;
+            }
+        }
+
+        // Get single contact by id
+        public ContactMapper GetContact(int contactId)
+        {
+            var content = db.Contacts.FirstOrDefault(i => i.contactId == contactId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                ContactMapper contact = new ContactMapper
+                {
+                    ContactId = content.contactId,
+                    Email = content.email,
+                    FirstName = content.firstName,
+                    LastName = content.lastName,
+                    ObjectId = content.objectId,
+                    PhoneNumber = content.phoneNumber
+                };
+                return contact;
             }
         }
 

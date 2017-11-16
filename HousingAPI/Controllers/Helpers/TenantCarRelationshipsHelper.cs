@@ -13,24 +13,35 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<TenantCarRelationshipMapper> GetTenantCarRelationships()
         {
             var content = db.TenantCarRelationships.ToList();
-            List<TenantCarRelationshipMapper> tenantCarRelationships = new List<TenantCarRelationshipMapper>();
-            foreach (var item in content)
+            if (content.Count() == 0)
             {
-                TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
-                {
-                    RelationshipId = item.relationshipId,
-                    TenantId = item.tenantId ?? default(int),
-                    ParkingPassStatus = item.parkingPassStatus ?? default(bool),
-                };
-                tenantCarRelationships.Add(tenantCarRelationship);
+                return null;
             }
-            return null;
+            else
+            {
+                List<TenantCarRelationshipMapper> tenantCarRelationships = new List<TenantCarRelationshipMapper>();
+                foreach (var item in content)
+                {
+                    TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
+                    {
+                        RelationshipId = item.relationshipId,
+                        TenantId = item.tenantId ?? default(int),
+                        ParkingPassStatus = item.parkingPassStatus ?? default(bool),
+                    };
+                    tenantCarRelationships.Add(tenantCarRelationship);
+                }
+                return null;
+            }
         }
 
-        public TenantCarRelationshipMapper GetTenantCarRelationship(int id)
+        public TenantCarRelationshipMapper GetTenantCarRelationship(int relationshipId)
         {
-            var content = db.TenantCarRelationships.Where(j => j.relationshipId == id).FirstOrDefault();
-            if (content != null)
+            var content = db.TenantCarRelationships.Where(j => j.relationshipId == relationshipId).FirstOrDefault();
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
                 {
@@ -40,8 +51,6 @@ namespace HousingAPI.Controllers.Helpers
                 };
                 return tenantCarRelationship;
             }
-
-            return null;
         }
 
 

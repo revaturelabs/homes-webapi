@@ -1,5 +1,7 @@
 ﻿using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.MaintenanceRequest;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HousingAPI.Controllers.Helpers
 {
@@ -7,24 +9,91 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/MaintenanceRequests
-        public IEnumerable<MaintenanceRequest> GetMaintenanceRequests()
+        // Get all simple maintenance requests
+        public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequests()
         {
-            return db.MaintenanceRequests;
+            var content = db.MaintenanceRequests.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<MaintenanceRequestMapper> mrml = new List<MaintenanceRequestMapper>();
+                foreach (var maintenanceRequest in content)
+                {
+                    MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
+                    mrm.Active = maintenanceRequest.active ?? default(bool);
+                    mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
+                    mrm.Message = maintenanceRequest.message;
+                    mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
+
+                    mrml.Add(mrm);
+
+                }
+
+                return mrml;
+            }
+
+
         }
 
-        // GET: api/MaintenanceRequests/5
-        //public IHttpActionResult GetMaintenanceRequest(int id)
+        ////Get single simple maintenance request
+        //public MaintenanceRequestMapper GetMaintenanceRequest(int id)
         //{
-        //    MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
+        //    MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.FirstOrDefault(i => i.maintenanceRequestId == id);
         //    if (maintenanceRequest == null)
         //    {
-        //        return NotFound();
+        //        return null;
         //    }
+        //    else
+        //    {
+        //        MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
+        //        mrm.Active = maintenanceRequest.active ?? default(bool);
+        //        mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
+        //        mrm.Message = maintenanceRequest.message;
+        //        mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
 
-        //    return Ok(maintenanceRequest);
+        //        return mrm;
+        //    }
         //}
 
+        ////Get all maintenance requests with providers
+        //public IEnumerable<MaintenanceRequestTenantProviderMapper> GetMaintenanceRequestsForProvider(int providerId)
+        //{
+        //    TenantsHelper tenantsHelper = new TenantsHelper();
+        //    ProvidersHelper providersHelper = new ProvidersHelper();
+
+        //    var housingUnitsForSpecificProvider = providersHelper.GetProviderWithUnit(providerId).HousingUnits;
+        //    var tenants = tenantsHelper.GetTenants();
+        //    var maintenanceRequests = GetMaintenanceRequests();
+
+        //    if (tenantsWithProvider.Count() == 0 || maintenanceRequests.Count() == 0)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        var maintenanceRequestForSpecificProvider = 
+
+        //        List<MaintenanceRequestTenantProviderMapper> mrtpm = new List<MaintenanceRequestTenantProviderMapper>();
+        //        foreach (var maintenanceRequest in maintenanceRequests)
+        //        {
+        //            MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
+        //            mrm.Active = maintenanceRequest.active ?? default(bool);
+        //            mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
+        //            mrm.Message = maintenanceRequest.message;
+        //            mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
+
+        //            mrml.Add(mrm);
+
+        //        }
+
+        //        return mrml;
+        //    }
+
+
+        //}
 
         /*
         // PUT: api/MaintenanceRequests/5
