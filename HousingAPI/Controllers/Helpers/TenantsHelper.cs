@@ -1,19 +1,12 @@
-﻿using System;
+﻿using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.Tenant;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using HousingAPI.Models;
-using HousingAPI.Models.PresentationModels.Tenant;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class TenantsHelper : ApiController
+    public class TenantsHelper
     {
         private HousingDBEntities db = new HousingDBEntities();
 
@@ -73,7 +66,7 @@ namespace HousingAPI.Controllers.Helpers
             {
                 BatchesHelpers batch = new BatchesHelpers();
                 GendersHelper gender = new GendersHelper();
-                
+
                 TenantInfoMapper tenant = new TenantInfoMapper
                 {
                     TenantId = content.tenantId,

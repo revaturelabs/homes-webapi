@@ -1,38 +1,47 @@
-﻿using System;
+﻿using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.TenantCarRelationship;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class TenantCarRelationshipsHelper : ApiController
+    public class TenantCarRelationshipsHelper
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/TenantCarRelationships
-        public IQueryable<TenantCarRelationship> GetTenantCarRelationships()
+
+        public IEnumerable<TenantCarRelationshipMapper> GetTenantCarRelationships()
         {
-            return db.TenantCarRelationships;
+            var content = db.TenantCarRelationships.ToList();
+            List<TenantCarRelationshipMapper> tenantCarRelationships = new List<TenantCarRelationshipMapper>();
+            foreach (var item in content)
+            {
+                TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
+                {
+                    RelationshipId = item.relationshipId,
+                    TenantId = item.tenantId ?? default(int),
+                    ParkingPassStatus = item.parkingPassStatus ?? default(bool),
+                };
+                tenantCarRelationships.Add(tenantCarRelationship);
+            }
+            return null;
         }
 
-        // GET: api/TenantCarRelationships/5
-        [ResponseType(typeof(TenantCarRelationship))]
-        public IHttpActionResult GetTenantCarRelationship(int id)
+        public TenantCarRelationshipMapper GetTenantCarRelationship(int id)
         {
-            TenantCarRelationship tenantCarRelationship = db.TenantCarRelationships.Find(id);
-            if (tenantCarRelationship == null)
+            var content = db.TenantCarRelationships.Where(j => j.tenantId == id).FirstOrDefault();
+            if (content != null)
             {
-                return NotFound();
+                TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
+                {
+                    RelationshipId = content.relationshipId,
+                    TenantId = content.tenantId ?? default(int),
+                    ParkingPassStatus = content.parkingPassStatus ?? default(bool),
+                };
+                return tenantCarRelationship;
             }
 
-            return Ok(tenantCarRelationship);
+            return null;
         }
 
 
