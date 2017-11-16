@@ -159,7 +159,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //
-        public IEnumerable<TenantAddressMapper> GetTenantWithAddress()
+        public IEnumerable<TenantAddressMapper> GetTenantsWithAddress()
         {
             var content = db.Tenants.ToList();
             List<TenantAddressMapper> tenants = new List<TenantAddressMapper>();
@@ -218,7 +218,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //
-        public IEnumerable<TenantProviderMapper> GetTenantWithProvider()
+        public IEnumerable<TenantProviderMapper> GetTenantsWithProvider()
         {
             var content = db.Tenants.ToList();
             List<TenantProviderMapper> tenants = new List<TenantProviderMapper>();
@@ -248,7 +248,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //
-        public TenantProviderMapper GeTenantWithProvider(int id)
+        public TenantProviderMapper GetTenantWithProvider(int id)
         {
             var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
 
