@@ -65,7 +65,10 @@ namespace HousingAPI.Controllers.Helpers
             if (content != null)
             {
                 BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
                 GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+
 
                 TenantInfoMapper tenant = new TenantInfoMapper
                 {
@@ -76,7 +79,12 @@ namespace HousingAPI.Controllers.Helpers
                     GenderId = content.genderId ?? 0,
                     MoveInDate = content.moveInDate,
                     HasMoved = content.hasMoved ?? default(bool),
-                    HasKey = content.hasKey ?? default(bool)
+                    HasKey = content.hasKey ?? default(bool),
+
+                    Batch = batch.GetBatch(content.batchId ?? 0),
+                    Contact = contact.GetContact(content.contactId ?? 0),
+                    Gender = gender.GetGender(content.genderId ?? 0),
+                    TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(content.tenantId)
                 };
 
                 return tenant;

@@ -29,7 +29,7 @@ namespace HousingAPI.Controllers.Helpers
 
         public TenantCarRelationshipMapper GetTenantCarRelationship(int id)
         {
-            var content = db.TenantCarRelationships.Where(j => j.tenantId == id).FirstOrDefault();
+            var content = db.TenantCarRelationships.Where(j => j.relationshipId == id).FirstOrDefault();
             if (content != null)
             {
                 TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
