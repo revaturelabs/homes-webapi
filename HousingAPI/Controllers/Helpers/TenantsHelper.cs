@@ -199,6 +199,9 @@ namespace HousingAPI.Controllers.Helpers
             foreach (var item in content)
             {
                 HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper car = new TenantCarRelationshipsHelper();
 
                 TenantAddressMapper tenant = new TenantAddressMapper
                 {
@@ -211,8 +214,10 @@ namespace HousingAPI.Controllers.Helpers
                     HasMoved = item.hasMoved ?? default(bool),
                     HasKey = item.hasKey ?? default(bool),
 
-                    HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0)
-
+                    HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0),
+                    Contact = contact.GetContact(item.contactId ?? 0),
+                    Gender = gender.GetGender(item.genderId ?? 0),
+                    TenantCarRelationships = car.GetTenantCarRelationship(item.tenantId)
                 };
                 tenants.Add(tenant);
             }
@@ -220,6 +225,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //
+        /*
         public IEnumerable<TenantAddressMapper> GetTenantWithAddressByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();
@@ -246,6 +252,7 @@ namespace HousingAPI.Controllers.Helpers
             }
             return tenants;
         }
+        */
 
         //
         public TenantAddressMapper GetTenantWithAddress(int id)
@@ -256,6 +263,9 @@ namespace HousingAPI.Controllers.Helpers
             {
 
                 HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper car = new TenantCarRelationshipsHelper();
 
                 TenantAddressMapper tenant = new TenantAddressMapper
                 {
@@ -268,8 +278,10 @@ namespace HousingAPI.Controllers.Helpers
                     HasMoved = content.hasMoved ?? default(bool),
                     HasKey = content.hasKey ?? default(bool),
 
-                    HousingUnit = housingUnits.GetHousingUnitWithAddress(content.housingUnitId ?? 0)
-
+                    HousingUnit = housingUnits.GetHousingUnitWithAddress(content.housingUnitId ?? 0),
+                    Contact = contact.GetContact(content.contactId ?? 0),
+                    Gender = gender.GetGender(content.genderId ?? 0),
+                    TenantCarRelationships = car.GetTenantCarRelationship(content.tenantId)
                 };
 
                 return tenant;
