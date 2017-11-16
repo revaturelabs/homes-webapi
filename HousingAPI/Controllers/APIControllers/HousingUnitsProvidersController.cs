@@ -13,28 +13,26 @@ using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
-    public class GendersController : ApiController
+    public class HousingUnitsProvidersController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/Genders
-        public IHttpActionResult GetGenders()
+        // GET: api/HousingUnits
+        public IHttpActionResult GetHousingUnitWithProvider()
         {
-            var helper = new GendersHelper();
-            var result = helper.GetGenders();
-
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitWithAddress();
             if (result != null)
                 return Ok(result);
 
             return NotFound();
-            //return db.Genders;
         }
-        // GET: api/Genders/5
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult GetGender(int id)
+        // GET: api/HousingUnits/5
+        [ResponseType(typeof(HousingUnit))]
+        public IHttpActionResult GetHousingUnitWithProvider(int id)
         {
-            var helper = new GendersHelper();
-            var result = helper.GetGender(id);
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitWithProvider(id);
             if (result == null)
             {
                 return NotFound();
@@ -43,21 +41,21 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
-        // PUT: api/Genders/5
+        // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutGender(int id, Gender gender)
+        public IHttpActionResult PutHousingUnit(int id, HousingUnit housingUnit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != gender.genderId)
+            if (id != housingUnit.housingUnitId)
             {
                 return BadRequest();
             }
 
-            db.Entry(gender).State = EntityState.Modified;
+            db.Entry(housingUnit).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +63,7 @@ namespace HousingAPI.Controllers.APIControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GenderExists(id))
+                if (!HousingUnitExists(id))
                 {
                     return NotFound();
                 }
@@ -78,35 +76,35 @@ namespace HousingAPI.Controllers.APIControllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Genders
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult PostGender(Gender gender)
+        // POST: api/HousingUnits
+        [ResponseType(typeof(HousingUnit))]
+        public IHttpActionResult PostHousingUnit(HousingUnit housingUnit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Genders.Add(gender);
+            db.HousingUnits.Add(housingUnit);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = gender.genderId }, gender);
+            return CreatedAtRoute("DefaultApi", new { id = housingUnit.housingUnitId }, housingUnit);
         }
 
-        // DELETE: api/Genders/5
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult DeleteGender(int id)
+        // DELETE: api/HousingUnits/5
+        [ResponseType(typeof(HousingUnit))]
+        public IHttpActionResult DeleteHousingUnit(int id)
         {
-            Gender gender = db.Genders.Find(id);
-            if (gender == null)
+            HousingUnit housingUnit = db.HousingUnits.Find(id);
+            if (housingUnit == null)
             {
                 return NotFound();
             }
 
-            db.Genders.Remove(gender);
+            db.HousingUnits.Remove(housingUnit);
             db.SaveChanges();
 
-            return Ok(gender);
+            return Ok(housingUnit);
         }
 
         protected override void Dispose(bool disposing)
@@ -118,9 +116,9 @@ namespace HousingAPI.Controllers.APIControllers
             base.Dispose(disposing);
         }
 
-        private bool GenderExists(int id)
+        private bool HousingUnitExists(int id)
         {
-            return db.Genders.Count(e => e.genderId == id) > 0;
+            return db.HousingUnits.Count(e => e.housingUnitId == id) > 0;
         }
     }
 }

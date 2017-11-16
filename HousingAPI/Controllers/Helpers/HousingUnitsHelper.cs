@@ -51,7 +51,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get all with Address
-        public List<HousingUnitAddressMapper> GetHousingUnitsWithAddress()
+        public List<HousingUnitAddressMapper> GetHousingUnitWithAddress()
         {
             var content = db.HousingUnits.ToList();
             List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
