@@ -184,7 +184,7 @@ namespace HousingAPI.Controllers.Helpers
             foreach (var item in content)
             {
                 AddressesHelper address = new AddressesHelper();
-                ProvidersHelper provider = new ProvidersHelper();
+                TenantsHelper tenants = new TenantsHelper();
                 HousingUnitTenantInfoMapper housingUnit = new HousingUnitTenantInfoMapper()
                 {
                     HousingUnitId = item.housingUnitId,
@@ -194,7 +194,7 @@ namespace HousingAPI.Controllers.Helpers
                     Capacity = item.capacity,
 
                     Address = address.GetAddress(item.addressId ?? 0),
-                    Tenants = null
+                    Tenants = tenants.GetTenantswithInfoByHousing(item.housingUnitId)
                 };
                 housingUnits.Add(housingUnit);
             }
@@ -209,7 +209,7 @@ namespace HousingAPI.Controllers.Helpers
             if (content != null)
             {
                 AddressesHelper address = new AddressesHelper();
-                ProvidersHelper provider = new ProvidersHelper();
+                TenantsHelper tenants = new TenantsHelper();
                 HousingUnitTenantInfoMapper housingUnit = new HousingUnitTenantInfoMapper()
                 {
                     HousingUnitId = content.housingUnitId,
@@ -219,7 +219,7 @@ namespace HousingAPI.Controllers.Helpers
                     Capacity = content.capacity,
 
                     Address = address.GetAddress(id),
-                    Tenants = null
+                    Tenants = tenants.GetTenantswithInfoByHousing(content.housingUnitId)
                 };
 
                 return housingUnit;

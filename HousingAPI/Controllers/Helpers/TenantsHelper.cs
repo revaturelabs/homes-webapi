@@ -58,6 +58,73 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
+        public IEnumerable<TenantInfoMapper> GetTenantswithInfo()
+        {
+            var content = db.Tenants.ToList();
+            List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
+            foreach (var item in content)
+            {
+                BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+
+                TenantInfoMapper tenant = new TenantInfoMapper
+                {
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool),
+
+                    Batch = batch.GetBatch(item.batchId ?? 0),
+                    Contact = contact.GetContact(item.contactId ?? 0),
+                    Gender = gender.GetGender(item.genderId ?? 0),
+                    TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+        }
+
+        // 
+        public IEnumerable<TenantInfoMapper> GetTenantswithInfoByHousing(int housingId)
+        {
+            var content = db.Tenants.Where(j => j.housingUnitId == housingId).ToList();
+            List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
+            foreach (var item in content)
+            {
+                BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+
+                TenantInfoMapper tenant = new TenantInfoMapper
+                {
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool),
+
+                    Batch = batch.GetBatch(item.batchId ?? 0),
+                    Contact = contact.GetContact(item.contactId ?? 0),
+                    Gender = gender.GetGender(item.genderId ?? 0),
+                    TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+        }
+
+
+        // 
         public TenantInfoMapper GetTenantwithInfo(int id)
         {
             var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
