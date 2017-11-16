@@ -17,30 +17,38 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        //Get all contacts
+        // Get all contacts
         public IEnumerable<ContactMapper> GetContacts()
         {
-            List<ContactMapper> cml = new List<ContactMapper>();
             var toBeMapped = db.Contacts.ToList();
-            foreach (var contact in toBeMapped)
+            if(toBeMapped.Count() == 0)
             {
-                ContactMapper cm = new ContactMapper();
-
-                cm.ContactId = contact.contactId;
-                cm.Email = contact.email;
-                cm.FirstName = contact.firstName;
-                cm.LastName = contact.lastName;
-                cm.ObjectId = contact.objectId;
-                cm.PhoneNumber = contact.phoneNumber;
-
-                cml.Add(cm);
+                return null;
             }
+            else
+            {
+                List<ContactMapper> cml = new List<ContactMapper>();
 
-            return cml;
+                foreach (var contact in toBeMapped)
+                {
+                    ContactMapper cm = new ContactMapper();
+
+                    cm.ContactId = contact.contactId;
+                    cm.Email = contact.email;
+                    cm.FirstName = contact.firstName;
+                    cm.LastName = contact.lastName;
+                    cm.ObjectId = contact.objectId;
+                    cm.PhoneNumber = contact.phoneNumber;
+
+                    cml.Add(cm);
+                }
+
+                return cml;
+            }
         }
 
-        //Get single contact by id
-        public ContactMapper GetContact(int id)
+        // Get single contact by id
+        public ContactMapper GetContact(int )
         {
             var contact = db.Contacts.FirstOrDefault(i => i.contactId == id);
             if (contact == null)

@@ -18,33 +18,40 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
         
-        // Not needeed
+        // Get all basic table
         public IEnumerable<AddressMapper> GetAddresses()
         {
-            var content = db.Addresses.ToList();
-            List<AddressMapper> addresses = new List<AddressMapper>();
-            foreach(var item in content)
+            List< Address> content = db.Addresses.ToList();
+            if (content.Count() == 0 )
             {
-                AddressMapper address = new AddressMapper
-                {
-                    AddressId = item.addressId,
-                    Name = item.name,
-                    BuildingNumber = item.buildingNumber,
-                    StreetName = item.streetName,
-                    City = item.city,
-                    Zipcode = item.zipcode,
-                    State = item.state,
-                    Country = item.country
-                };
-                addresses.Add(address);
+                return null;
             }
-            return addresses;
+            else
+            {
+                List<AddressMapper> addresses = new List<AddressMapper>();
+                foreach (var item in content)
+                {
+                    AddressMapper address = new AddressMapper
+                    {
+                        AddressId = item.addressId,
+                        Name = item.name,
+                        BuildingNumber = item.buildingNumber,
+                        StreetName = item.streetName,
+                        City = item.city,
+                        Zipcode = item.zipcode,
+                        State = item.state,
+                        Country = item.country
+                    };
+                    addresses.Add(address);
+                }
+                return addresses;
+            }
         }
         
-        // Actually used
-        public AddressMapper GetAddress(int id)
+        // Get one basic table
+        public AddressMapper GetAddress(int addressId)
         {
-            var content = db.Addresses.Where(j => j.addressId == id).FirstOrDefault();
+            var content = db.Addresses.Where(j => j.addressId == addressId).FirstOrDefault();
             
             if (content != null)
             {

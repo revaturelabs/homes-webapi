@@ -21,17 +21,24 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<GenderMapper> GetGenders()
         {
             var content = db.Genders.ToList();
-            List<GenderMapper> genders = new List<GenderMapper>();
-            foreach (var item in content)
+            if(content.Count() == 0)
             {
-                GenderMapper gender = new GenderMapper()
-                {
-                    GenderId = item.genderId,
-                    GenderOption = item.genderOption
-                };
-                genders.Add(gender);
+                return null;
             }
-            return genders;
+            else
+            {
+                List<GenderMapper> genders = new List<GenderMapper>();
+                foreach (var item in content)
+                {
+                    GenderMapper gender = new GenderMapper()
+                    {
+                        GenderId = item.genderId,
+                        GenderOption = item.genderOption
+                    };
+                    genders.Add(gender);
+                }
+                return genders;
+            }
         }
 
         public GenderMapper GetGender(int id)
