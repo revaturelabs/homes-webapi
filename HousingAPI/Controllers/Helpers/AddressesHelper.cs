@@ -21,7 +21,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get all basic table
         public IEnumerable<AddressMapper> GetAddresses()
         {
-            List< Address> content = db.Addresses.ToList();
+            List<Address> content = db.Addresses.ToList();
             if (content.Count() == 0 )
             {
                 return null;
@@ -53,7 +53,11 @@ namespace HousingAPI.Controllers.Helpers
         {
             var content = db.Addresses.Where(j => j.addressId == addressId).FirstOrDefault();
             
-            if (content != null)
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 AddressMapper address = new AddressMapper
                 {
@@ -66,10 +70,8 @@ namespace HousingAPI.Controllers.Helpers
                     State = content.state,
                     Country = content.country
                 };
-
                 return address;
             }
-            return null;
         }
 
         /*

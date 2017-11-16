@@ -20,51 +20,53 @@ namespace HousingAPI.Controllers.Helpers
         // Get all contacts
         public IEnumerable<ContactMapper> GetContacts()
         {
-            var toBeMapped = db.Contacts.ToList();
-            if(toBeMapped.Count() == 0)
+            var content = db.Contacts.ToList();
+            if(content.Count() == 0)
             {
                 return null;
             }
             else
             {
-                List<ContactMapper> cml = new List<ContactMapper>();
+                List<ContactMapper> contacts = new List<ContactMapper>();
 
-                foreach (var contact in toBeMapped)
+                foreach (var item in content)
                 {
-                    ContactMapper cm = new ContactMapper();
-
-                    cm.ContactId = contact.contactId;
-                    cm.Email = contact.email;
-                    cm.FirstName = contact.firstName;
-                    cm.LastName = contact.lastName;
-                    cm.ObjectId = contact.objectId;
-                    cm.PhoneNumber = contact.phoneNumber;
-
-                    cml.Add(cm);
+                    ContactMapper contact = new ContactMapper
+                    {
+                        ContactId = item.contactId,
+                        Email = item.email,
+                        FirstName = item.firstName,
+                        LastName = item.lastName,
+                        ObjectId = item.objectId,
+                        PhoneNumber = item.phoneNumber
+                    };
+                    contacts.Add(contact);
                 }
 
-                return cml;
+                return contacts;
             }
         }
 
         // Get single contact by id
-        public ContactMapper GetContact(int )
+        public ContactMapper GetContact(int contactId)
         {
-            var contact = db.Contacts.FirstOrDefault(i => i.contactId == id);
-            if (contact == null)
+            var content = db.Contacts.FirstOrDefault(i => i.contactId == contactId);
+            if (content == null)
             {
                 return null;
             }
             else
             {
-                ContactMapper cm = new ContactMapper();
-                cm.ContactId = contact.contactId;
-                cm.Email = contact.email;
-                cm.FirstName = contact.firstName;
-                cm.LastName = contact.lastName;
-                cm.ObjectId = contact.objectId;
-                cm.PhoneNumber = contact.phoneNumber;
-                return cm;
+                ContactMapper contact = new ContactMapper
+                {
+                    ContactId = content.contactId,
+                    Email = content.email,
+                    FirstName = content.firstName,
+                    LastName = content.lastName,
+                    ObjectId = content.objectId,
+                    PhoneNumber = content.phoneNumber
+                };
+                return contact;
             }
         }
 

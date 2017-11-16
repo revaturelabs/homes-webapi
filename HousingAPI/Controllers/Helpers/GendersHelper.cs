@@ -41,22 +41,22 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        public GenderMapper GetGender(int id)
+        public GenderMapper GetGender(int genderId)
         {
-            var content = db.Genders.Where(j => j.genderId == id).FirstOrDefault();
-            if (content != null)
+            var content = db.Genders.Where(j => j.genderId == genderId).FirstOrDefault();
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 GenderMapper gender = new GenderMapper()
                 {
                     GenderId = content.genderId,
                     GenderOption = content.genderOption
-
-
                 };
                 return gender;
             }
-
-            return null;
         }
 
 

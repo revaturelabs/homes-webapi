@@ -37,11 +37,15 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // A Batch with no connection, not used
-        public BatchMapper GetBatch(int id)
+        public BatchMapper GetBatch(int batchId)
         {
-            var content = db.Batches.Where(j => j.batchId == id).FirstOrDefault();
+            var content = db.Batches.Where(j => j.batchId == batchId).FirstOrDefault();
 
-            if (content != null)
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 BatchMapper batch = new BatchMapper
                 {
@@ -53,17 +57,18 @@ namespace HousingAPI.Controllers.Helpers
 
                 return batch;
             }
-            return null;
         }
 
         // A Batch with no connection, not used
-        public BatchTenantAddressMapper GetBatchwithHousingAddress(int id)
+        public BatchTenantAddressMapper GetBatchwithHousingAddress(int batchId)
         {
-            var content = db.Batches.Where(j => j.batchId == id).FirstOrDefault();
-            //var reference = db.Tenants.Where(j => j.batchId == id).ToList();
-            //var reference1 = db.HousingUnits.Where(j => j.Tenants) 
+            var content = db.Batches.Where(j => j.batchId == batchId).FirstOrDefault();
 
-            if (content != null)
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 BatchTenantAddressMapper batch = new BatchTenantAddressMapper
                 {
@@ -75,7 +80,6 @@ namespace HousingAPI.Controllers.Helpers
 
                 return batch;
             }
-            return null;
         }
 
 

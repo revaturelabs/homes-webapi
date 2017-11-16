@@ -37,9 +37,9 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
-        public HousingUnitMapper GetHousingUnit(int id)
+        public HousingUnitMapper GetHousingUnit(int housingUnitId)
         {
-            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
+            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
 
             if (content != null)
             {
@@ -89,9 +89,9 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get one with Address
-        public HousingUnitAddressMapper GetHousingUnitWithAddress(int id)
+        public HousingUnitAddressMapper GetHousingUnitWithAddress(int housingUnitId)
         {
-            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
+            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
 
             if (content != null)
             {
@@ -104,7 +104,7 @@ namespace HousingAPI.Controllers.Helpers
                     HousingSignature = content.housingSignature,
                     Capacity = content.capacity,
 
-                    Address = address.GetAddress(id)
+                    Address = address.GetAddress(housingUnitId)
                 };
 
                 return housingUnit;
@@ -177,9 +177,9 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get one with Provider
-        public HousingUnitProviderMapper GetHousingUnitWithProvider(int id)
+        public HousingUnitProviderMapper GetHousingUnitWithProvider(int housingUnitId)
         {
-            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
+            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
 
             if (content != null)
             {
@@ -193,8 +193,8 @@ namespace HousingAPI.Controllers.Helpers
                     HousingSignature = content.housingSignature,
                     Capacity = content.capacity,
 
-                    Address = address.GetAddress(id),
-                    Provider = provider.GetProviderWithContact(id)
+                    Address = address.GetAddress(housingUnitId),
+                    Provider = provider.GetProviderWithContact(housingUnitId)
                 };
 
                 return housingUnit;
@@ -236,9 +236,9 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get one with Provider
-        public HousingUnitTenantInfoMapper GetHousingUnitWithTenats(int id)
+        public HousingUnitTenantInfoMapper GetHousingUnitWithTenats(int housingUnitId)
         {
-            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
+            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
 
             if (content != null)
             {
@@ -252,7 +252,7 @@ namespace HousingAPI.Controllers.Helpers
                     HousingSignature = content.housingSignature,
                     Capacity = content.capacity,
 
-                    Address = address.GetAddress(id),
+                    Address = address.GetAddress(housingUnitId),
                     Tenants = tenants.GetTenantswithInfoByHousing(content.housingUnitId)
                 };
 

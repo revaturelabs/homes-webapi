@@ -22,36 +22,43 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<ProviderMapper> GetProviders()
         {
             var content = db.Providers.ToList();
-            List<ProviderMapper> providers = new List<ProviderMapper>();
-            foreach (var item in content)
-            {
-                ProviderMapper provider = new ProviderMapper
-                {
-                    ProviderId = item.providerId,
-                    ContactId = item.contactId ?? 0,
-                    CompanyName = item.companyName
-                };
-            }
-            return providers;
-        }
-
-        // Get one basic table
-        public ProviderMapper GetProvider(int id)
-        {
-            var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
-            if (provider == null)
+            if(content.Count() == 0)
             {
                 return null;
             }
             else
             {
-                ProviderMapper apm = new ProviderMapper
+                List<ProviderMapper> providers = new List<ProviderMapper>();
+                foreach (var item in content)
                 {
-                    ProviderId  = provider.providerId,
-                    ContactId   = provider.contactId ?? 0,
-                    CompanyName = provider.companyName
+                    ProviderMapper provider = new ProviderMapper
+                    {
+                        ProviderId = item.providerId,
+                        ContactId = item.contactId ?? 0,
+                        CompanyName = item.companyName
+                    };
+                }
+                return providers;
+            }
+        }
+
+        // Get one basic table
+        public ProviderMapper GetProvider(int providerId)
+        {
+            var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                ProviderMapper provider = new ProviderMapper
+                {
+                    ProviderId  = content.providerId,
+                    ContactId   = content.contactId ?? 0,
+                    CompanyName = content.companyName
                 };
-                return apm;
+                return provider;
             }
         }
 
@@ -59,43 +66,50 @@ namespace HousingAPI.Controllers.Helpers
         public List<ProviderContactMapper> GetProvidersWithContact()
         {
             var content = db.Providers.ToList();
-            List<ProviderContactMapper> providers = new List<ProviderContactMapper>();
-            foreach(var item in content)
-            {
-                ContactsHelper contact = new ContactsHelper();
-                ProviderContactMapper provider = new ProviderContactMapper
-                {
-                    ProviderId = item.providerId,
-                    ContactId = item.contactId ?? 0,
-                    CompanyName = item.companyName,
-
-                    Contact = contact.GetContact(item.contactId ?? 0)
-                };
-                providers.Add(provider);
-            }
-            return providers;
-        }
-
-        // Get one with contact
-        public ProviderContactMapper GetProviderWithContact(int id)
-        {
-            var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
-            if (provider == null)
+            if (content.Count() == 0)
             {
                 return null;
             }
             else
             {
-                ContactsHelper ch = new ContactsHelper();
-                ProviderContactMapper apm = new ProviderContactMapper
+                List<ProviderContactMapper> providers = new List<ProviderContactMapper>();
+                foreach (var item in content)
                 {
-                    ProviderId = provider.providerId,
-                    ContactId = provider.contactId ?? 0,
-                    CompanyName = provider.companyName,
+                    ContactsHelper contact = new ContactsHelper();
+                    ProviderContactMapper provider = new ProviderContactMapper
+                    {
+                        ProviderId = item.providerId,
+                        ContactId = item.contactId ?? 0,
+                        CompanyName = item.companyName,
 
-                    Contact = ch.GetContact(provider.contactId ?? 0)
+                        Contact = contact.GetContact(item.contactId ?? 0)
+                    };
+                    providers.Add(provider);
+                }
+                return providers;
+            }
+        }
+
+        // Get one with contact
+        public ProviderContactMapper GetProviderWithContact(int providerId)
+        {
+            var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                ContactsHelper contact = new ContactsHelper();
+                ProviderContactMapper provider = new ProviderContactMapper
+                {
+                    ProviderId = content.providerId,
+                    ContactId = content.contactId ?? 0,
+                    CompanyName = content.companyName,
+
+                    Contact = contact.GetContact(content.contactId ?? 0)
                 };
-                return apm;
+                return provider;
             }
         }
 
@@ -103,29 +117,36 @@ namespace HousingAPI.Controllers.Helpers
         public List<ProviderUnitsMapper> GetProvidersWithUnit()
         {
             var content = db.Providers.ToList();
-            List<ProviderUnitsMapper> providers = new List<ProviderUnitsMapper>();
-            foreach (var item in content)
+            if (content.Count() == 0)
             {
-                HousingUnitsHelper housing = new HousingUnitsHelper();
-                
-                ProviderUnitsMapper provider = new ProviderUnitsMapper
-                {
-                    ProviderId = item.providerId,
-                    ContactId = item.contactId ?? 0,
-                    CompanyName = item.companyName,
-
-                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(item.providerId)
-                };
-                providers.Add(provider);
+                return null;
             }
-            return providers;
+            else
+            {
+                List<ProviderUnitsMapper> providers = new List<ProviderUnitsMapper>();
+                foreach (var item in content)
+                {
+                    HousingUnitsHelper housing = new HousingUnitsHelper();
+
+                    ProviderUnitsMapper provider = new ProviderUnitsMapper
+                    {
+                        ProviderId = item.providerId,
+                        ContactId = item.contactId ?? 0,
+                        CompanyName = item.companyName,
+
+                        HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(item.providerId)
+                    };
+                    providers.Add(provider);
+                }
+                return providers;
+            }
         }
 
         // Get one with contact
-        public ProviderUnitsMapper GetProviderWithUnit(int id)
+        public ProviderUnitsMapper GetProviderWithUnit(int providerId)
         {
-            var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
-            if (provider == null)
+            var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
+            if (content == null)
             {
                 return null;
             }
@@ -133,15 +154,15 @@ namespace HousingAPI.Controllers.Helpers
             {
                 HousingUnitsHelper housing = new HousingUnitsHelper();
 
-                ProviderUnitsMapper apm = new ProviderUnitsMapper
+                ProviderUnitsMapper provider = new ProviderUnitsMapper
                 {
-                    ProviderId = provider.providerId,
-                    ContactId = provider.contactId ?? 0,
-                    CompanyName = provider.companyName,
+                    ProviderId = content.providerId,
+                    ContactId = content.contactId ?? 0,
+                    CompanyName = content.companyName,
 
-                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(provider.providerId)
+                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(content.providerId)
                 };
-                return apm;
+                return provider;
             }
         }
 

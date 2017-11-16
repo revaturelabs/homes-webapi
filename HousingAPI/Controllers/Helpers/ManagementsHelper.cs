@@ -12,27 +12,38 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<ManagementContactMapper> GetManagements()
         {
             var content = db.Managements.ToList();
-            List<ManagementContactMapper> managements = new List<ManagementContactMapper>();
-            foreach (var item in content)
+            if(content.Count() == 0)
             {
-                ContactsHelper contact = new ContactsHelper();
-                ManagementContactMapper management = new ManagementContactMapper
-                {
-                    ManagerId = item.managerId,
-                    ContactId = item.contactId ?? 0,
-                    DepartmentName = item.departmentName,
-
-                    Contact = contact.GetContact(item.contactId ?? 0)
-                };
-                managements.Add(management);
+                return null;
             }
-            return managements;
+            else
+            {
+                List<ManagementContactMapper> managements = new List<ManagementContactMapper>();
+                foreach (var item in content)
+                {
+                    ContactsHelper contact = new ContactsHelper();
+                    ManagementContactMapper management = new ManagementContactMapper
+                    {
+                        ManagerId = item.managerId,
+                        ContactId = item.contactId ?? 0,
+                        DepartmentName = item.departmentName,
+
+                        Contact = contact.GetContact(item.contactId ?? 0)
+                    };
+                    managements.Add(management);
+                }
+                return managements;
+            }
         }
 
-        public ManagementContactMapper GetManagement(int id)
+        public ManagementContactMapper GetManagement(int managerId)
         {
-            var content = db.Managements.Where(j => j.managerId == id).FirstOrDefault();
-            if (content != null)
+            var content = db.Managements.Where(j => j.managerId == managerId).FirstOrDefault();
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 ContactsHelper contact = new ContactsHelper();
                 ManagementContactMapper management = new ManagementContactMapper
@@ -44,10 +55,7 @@ namespace HousingAPI.Controllers.Helpers
                     Contact = contact.GetContact(content.contactId ?? 0)
                 };
                 return management;
-
             }
-
-            return null;
         }
 
 
