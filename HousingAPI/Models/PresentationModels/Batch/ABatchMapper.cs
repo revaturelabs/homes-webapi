@@ -2,7 +2,7 @@
 
 namespace HousingAPI.Models.PresentationModels.Batch
 {
-    public abstract class ABatchMapper
+    public class ABatchMapper
     {
         public int BatchId { get; set; }
         public DateTime StartDate { get; set; }

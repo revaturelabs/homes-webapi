@@ -12,44 +12,44 @@ using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class BatchesController : ApiController
+    public class ContactsHelper : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/Batches
-        public IQueryable<Batch> GetBatches()
+        // GET: api/Contacts
+        public IQueryable<Contact> GetContacts()
         {
-            return db.Batches;
+            return db.Contacts;
         }
 
-        // GET: api/Batches/5
-        [ResponseType(typeof(Batch))]
-        public IHttpActionResult GetBatch(int id)
+        // GET: api/Contacts/5
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult GetContact(int id)
         {
-            Batch batch = db.Batches.Find(id);
-            if (batch == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return Ok(batch);
+            return Ok(contact);
         }
 
-        // PUT: api/Batches/5
+        // PUT: api/Contacts/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBatch(int id, Batch batch)
+        public IHttpActionResult PutContact(int id, Contact contact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != batch.batchId)
+            if (id != contact.contactId)
             {
                 return BadRequest();
             }
 
-            db.Entry(batch).State = EntityState.Modified;
+            db.Entry(contact).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace HousingAPI.Controllers.Helpers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BatchExists(id))
+                if (!ContactExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace HousingAPI.Controllers.Helpers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Batches
-        [ResponseType(typeof(Batch))]
-        public IHttpActionResult PostBatch(Batch batch)
+        // POST: api/Contacts
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult PostContact(Contact contact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Batches.Add(batch);
+            db.Contacts.Add(contact);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = batch.batchId }, batch);
+            return CreatedAtRoute("DefaultApi", new { id = contact.contactId }, contact);
         }
 
-        // DELETE: api/Batches/5
-        [ResponseType(typeof(Batch))]
-        public IHttpActionResult DeleteBatch(int id)
+        // DELETE: api/Contacts/5
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult DeleteContact(int id)
         {
-            Batch batch = db.Batches.Find(id);
-            if (batch == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            db.Batches.Remove(batch);
+            db.Contacts.Remove(contact);
             db.SaveChanges();
 
-            return Ok(batch);
+            return Ok(contact);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace HousingAPI.Controllers.Helpers
             base.Dispose(disposing);
         }
 
-        private bool BatchExists(int id)
+        private bool ContactExists(int id)
         {
-            return db.Batches.Count(e => e.batchId == id) > 0;
+            return db.Contacts.Count(e => e.contactId == id) > 0;
         }
     }
 }
