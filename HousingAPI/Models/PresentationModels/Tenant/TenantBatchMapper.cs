@@ -5,7 +5,7 @@ using HousingAPI.Models.PresentationModels.TenantCarRelationship;
 
 namespace HousingAPI.Models.PresentationModels.Tenant
 {
-    public class TenantInfoMapper : TenantMapper
+    public class TenantBatchMapper : TenantMapper
     {
         public BatchMapper Batch { get; set; }
         public ContactMapper Contact { get; set; }
