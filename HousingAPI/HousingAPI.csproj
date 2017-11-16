@@ -226,7 +226,6 @@
     <Compile Include="Controllers\APIControllers\BatchesController.cs" />
     <Compile Include="Controllers\APIControllers\ContactsController.cs" />
     <Compile Include="Controllers\APIControllers\GendersController.cs" />
-    <Compile Include="Controllers\APIControllers\HousingUnitsProvidersController.cs" />
     <Compile Include="Controllers\APIControllers\HousingUnitsController.cs" />
     <Compile Include="Controllers\APIControllers\ManagementsController.cs" />
     <Compile Include="Controllers\APIControllers\ProvidersController.cs" />
