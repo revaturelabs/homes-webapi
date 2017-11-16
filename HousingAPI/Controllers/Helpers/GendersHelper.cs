@@ -12,44 +12,44 @@ using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class ContactsController : ApiController
+    public class GendersHelper : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/Contacts
-        public IQueryable<Contact> GetContacts()
+        // GET: api/Genders
+        public IQueryable<Gender> GetGenders()
         {
-            return db.Contacts;
+            return db.Genders;
         }
 
-        // GET: api/Contacts/5
-        [ResponseType(typeof(Contact))]
-        public IHttpActionResult GetContact(int id)
+        // GET: api/Genders/5
+        [ResponseType(typeof(Gender))]
+        public IHttpActionResult GetGender(int id)
         {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
+            Gender gender = db.Genders.Find(id);
+            if (gender == null)
             {
                 return NotFound();
             }
 
-            return Ok(contact);
+            return Ok(gender);
         }
 
-        // PUT: api/Contacts/5
+        // PUT: api/Genders/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutContact(int id, Contact contact)
+        public IHttpActionResult PutGender(int id, Gender gender)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != contact.contactId)
+            if (id != gender.genderId)
             {
                 return BadRequest();
             }
 
-            db.Entry(contact).State = EntityState.Modified;
+            db.Entry(gender).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace HousingAPI.Controllers.Helpers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ContactExists(id))
+                if (!GenderExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace HousingAPI.Controllers.Helpers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Contacts
-        [ResponseType(typeof(Contact))]
-        public IHttpActionResult PostContact(Contact contact)
+        // POST: api/Genders
+        [ResponseType(typeof(Gender))]
+        public IHttpActionResult PostGender(Gender gender)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Contacts.Add(contact);
+            db.Genders.Add(gender);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = contact.contactId }, contact);
+            return CreatedAtRoute("DefaultApi", new { id = gender.genderId }, gender);
         }
 
-        // DELETE: api/Contacts/5
-        [ResponseType(typeof(Contact))]
-        public IHttpActionResult DeleteContact(int id)
+        // DELETE: api/Genders/5
+        [ResponseType(typeof(Gender))]
+        public IHttpActionResult DeleteGender(int id)
         {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
+            Gender gender = db.Genders.Find(id);
+            if (gender == null)
             {
                 return NotFound();
             }
 
-            db.Contacts.Remove(contact);
+            db.Genders.Remove(gender);
             db.SaveChanges();
 
-            return Ok(contact);
+            return Ok(gender);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace HousingAPI.Controllers.Helpers
             base.Dispose(disposing);
         }
 
-        private bool ContactExists(int id)
+        private bool GenderExists(int id)
         {
-            return db.Contacts.Count(e => e.contactId == id) > 0;
+            return db.Genders.Count(e => e.genderId == id) > 0;
         }
     }
 }

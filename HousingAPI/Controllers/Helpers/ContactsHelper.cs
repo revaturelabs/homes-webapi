@@ -12,44 +12,44 @@ using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class SupplyRequestsController : ApiController
+    public class ContactsHelper : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/SupplyRequests
-        public IQueryable<SupplyRequest> GetSupplyRequests()
+        // GET: api/Contacts
+        public IQueryable<Contact> GetContacts()
         {
-            return db.SupplyRequests;
+            return db.Contacts;
         }
 
-        // GET: api/SupplyRequests/5
-        [ResponseType(typeof(SupplyRequest))]
-        public IHttpActionResult GetSupplyRequest(int id)
+        // GET: api/Contacts/5
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult GetContact(int id)
         {
-            SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
-            if (supplyRequest == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return Ok(supplyRequest);
+            return Ok(contact);
         }
 
-        // PUT: api/SupplyRequests/5
+        // PUT: api/Contacts/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSupplyRequest(int id, SupplyRequest supplyRequest)
+        public IHttpActionResult PutContact(int id, Contact contact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != supplyRequest.supplyRequestId)
+            if (id != contact.contactId)
             {
                 return BadRequest();
             }
 
-            db.Entry(supplyRequest).State = EntityState.Modified;
+            db.Entry(contact).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace HousingAPI.Controllers.Helpers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SupplyRequestExists(id))
+                if (!ContactExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace HousingAPI.Controllers.Helpers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/SupplyRequests
-        [ResponseType(typeof(SupplyRequest))]
-        public IHttpActionResult PostSupplyRequest(SupplyRequest supplyRequest)
+        // POST: api/Contacts
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult PostContact(Contact contact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.SupplyRequests.Add(supplyRequest);
+            db.Contacts.Add(contact);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = supplyRequest.supplyRequestId }, supplyRequest);
+            return CreatedAtRoute("DefaultApi", new { id = contact.contactId }, contact);
         }
 
-        // DELETE: api/SupplyRequests/5
-        [ResponseType(typeof(SupplyRequest))]
-        public IHttpActionResult DeleteSupplyRequest(int id)
+        // DELETE: api/Contacts/5
+        [ResponseType(typeof(Contact))]
+        public IHttpActionResult DeleteContact(int id)
         {
-            SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
-            if (supplyRequest == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            db.SupplyRequests.Remove(supplyRequest);
+            db.Contacts.Remove(contact);
             db.SaveChanges();
 
-            return Ok(supplyRequest);
+            return Ok(contact);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace HousingAPI.Controllers.Helpers
             base.Dispose(disposing);
         }
 
-        private bool SupplyRequestExists(int id)
+        private bool ContactExists(int id)
         {
-            return db.SupplyRequests.Count(e => e.supplyRequestId == id) > 0;
+            return db.Contacts.Count(e => e.contactId == id) > 0;
         }
     }
 }
