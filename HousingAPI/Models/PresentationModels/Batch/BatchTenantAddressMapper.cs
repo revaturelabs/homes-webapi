@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HousingAPI.Models.PresentationModels.Batch
 {
-    public class BatchTenantAddressMapper : ABatchMapper
+    public class BatchTenantAddressMapper : BatchMapper
     {
         public IEnumerable<TenantAddressMapper> Tenant { get; set; }
     }

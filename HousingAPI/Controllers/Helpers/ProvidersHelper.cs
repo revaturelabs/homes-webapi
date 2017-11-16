@@ -18,13 +18,13 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Providers
-        public IEnumerable<AProviderMapper> GetProviders()
+        public IEnumerable<ProviderMapper> GetProviders()
         {
             var provMapper = db.Providers.ToList();
-            List<AProviderMapper> providers = new List<AProviderMapper>();
+            List<ProviderMapper> providers = new List<ProviderMapper>();
             foreach (var item in provMapper)
             {
-                AProviderMapper provider = new AProviderMapper
+                ProviderMapper provider = new ProviderMapper
                 {
                     ProviderId = item.providerId,
                     ContactId = item.contactId ?? 0,
@@ -35,17 +35,16 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // GET: api/Providers/5
-        public AProviderMapper GetProvider(int id)
+        public ProviderMapper GetProvider(int id)
         {
             var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
             if (provider == null)
             {
-                AProviderMapper provMapper = new AProviderMapper();
-                return provMapper;
+                return null;
             }
             else
             {
-                AProviderMapper apm = new AProviderMapper
+                ProviderMapper apm = new ProviderMapper
                 {
                     ProviderId  = provider.providerId,
                     ContactId   = provider.contactId ?? 0,
@@ -62,8 +61,7 @@ namespace HousingAPI.Controllers.Helpers
             var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
             if (provider == null)
             {
-                ProviderContactMapper provMapper = new ProviderContactMapper();
-                return provMapper;
+                return null;
             }
             else
             {
@@ -81,6 +79,87 @@ namespace HousingAPI.Controllers.Helpers
         }
 
 
+        /*
+        // PUT: api/Providers/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProvider(int id, Provider provider)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != provider.providerId)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(provider).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProviderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Providers
+        [ResponseType(typeof(Provider))]
+        public IHttpActionResult PostProvider(Provider provider)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Providers.Add(provider);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = provider.providerId }, provider);
+        }
+
+        // DELETE: api/Providers/5
+        [ResponseType(typeof(Provider))]
+        public IHttpActionResult DeleteProvider(int id)
+        {
+            Provider provider = db.Providers.Find(id);
+            if (provider == null)
+            {
+                return NotFound();
+            }
+
+            db.Providers.Remove(provider);
+            db.SaveChanges();
+
+            return Ok(provider);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProviderExists(int id)
+        {
+            return db.Providers.Count(e => e.providerId == id) > 0;
+        }
+        */
     }
 
 }

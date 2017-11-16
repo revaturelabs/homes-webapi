@@ -13,18 +13,18 @@ using HousingAPI.Models.PresentationModels.Tenant;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class TenantsController : ApiController
+    public class TenantsHelper : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
         // 
-        public IEnumerable<ATenantMapper> GetTenants()
+        public IEnumerable<TenantMapper> GetTenants()
         {
             var content = db.Tenants.ToList();
-            List<ATenantMapper> tenants = new List<ATenantMapper>();
+            List<TenantMapper> tenants = new List<TenantMapper>();
             foreach (var item in content)
             {
-                ATenantMapper tenant = new ATenantMapper
+                TenantMapper tenant = new TenantMapper
                 {
                     TenantId = item.tenantId,
                     ContactId = item.contactId ?? 0,
@@ -41,13 +41,13 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
-        public ATenantMapper GetTenant(int id)
+        public TenantMapper GetTenant(int id)
         {
             var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
 
             if (content != null)
             {
-                ATenantMapper tenant = new ATenantMapper
+                TenantMapper tenant = new TenantMapper
                 {
                     TenantId = content.tenantId,
                     ContactId = content.contactId ?? 0,
@@ -61,7 +61,7 @@ namespace HousingAPI.Controllers.Helpers
 
                 return tenant;
             }
-            return new ATenantMapper();
+            return null;
         }
 
         // 
@@ -88,7 +88,90 @@ namespace HousingAPI.Controllers.Helpers
 
                 return tenant;
             }
-            return new TenantInfoMapper();
+            return null;
         }
+
+
+        /*
+        // PUT: api/Tenants/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutTenant(int id, Tenant tenant)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != tenant.tenantId)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(tenant).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TenantExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Tenants
+        [ResponseType(typeof(Tenant))]
+        public IHttpActionResult PostTenant(Tenant tenant)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Tenants.Add(tenant);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = tenant.tenantId }, tenant);
+        }
+
+        // DELETE: api/Tenants/5
+        [ResponseType(typeof(Tenant))]
+        public IHttpActionResult DeleteTenant(int id)
+        {
+            Tenant tenant = db.Tenants.Find(id);
+            if (tenant == null)
+            {
+                return NotFound();
+            }
+
+            db.Tenants.Remove(tenant);
+            db.SaveChanges();
+
+            return Ok(tenant);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool TenantExists(int id)
+        {
+            return db.Tenants.Count(e => e.tenantId == id) > 0;
+        }
+        */
     }
 }

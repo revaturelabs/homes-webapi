@@ -18,13 +18,13 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // All Batches with no connection
-        public IEnumerable <ABatchMapper> GetBatches()
+        public IEnumerable <BatchMapper> GetBatches()
         {
             var content = db.Batches.ToList();
-            List<ABatchMapper> batches = new List<ABatchMapper>();
+            List<BatchMapper> batches = new List<BatchMapper>();
             foreach(var item in content)
             {
-                ABatchMapper batch = new ABatchMapper
+                BatchMapper batch = new BatchMapper
                 {
                     BatchId = item.batchId,
                     StartDate = item.startDate ?? default(DateTime),
@@ -37,13 +37,13 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // A Batch with no connection, not used
-        public ABatchMapper GetBatch(int id)
+        public BatchMapper GetBatch(int id)
         {
             var content = db.Batches.Where(j => j.batchId == id).FirstOrDefault();
 
             if (content != null)
             {
-                ABatchMapper batch = new ABatchMapper
+                BatchMapper batch = new BatchMapper
                 {
                     BatchId = content.batchId,
                     StartDate = content.startDate ?? default(DateTime),
@@ -53,7 +53,7 @@ namespace HousingAPI.Controllers.Helpers
 
                 return batch;
             }
-            return new ABatchMapper();
+            return null;
         }
 
         // A Batch with no connection, not used
@@ -75,7 +75,91 @@ namespace HousingAPI.Controllers.Helpers
 
                 return batch;
             }
-            return new BatchTenantAddressMapper();
+            return null;
         }
+
+
+        /*
+         // PUT: api/Batches/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutBatch(int id, Batch batch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != batch.batchId)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(batch).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BatchExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Batches
+        [ResponseType(typeof(Batch))]
+        public IHttpActionResult PostBatch(Batch batch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Batches.Add(batch);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = batch.batchId }, batch);
+        }
+
+        // DELETE: api/Batches/5
+        [ResponseType(typeof(Batch))]
+        public IHttpActionResult DeleteBatch(int id)
+        {
+            Batch batch = db.Batches.Find(id);
+            if (batch == null)
+            {
+                return NotFound();
+            }
+
+            db.Batches.Remove(batch);
+            db.SaveChanges();
+
+            return Ok(batch);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool BatchExists(int id)
+        {
+            return db.Batches.Count(e => e.batchId == id) > 0;
+        }
+        */
     }
 }
+ 

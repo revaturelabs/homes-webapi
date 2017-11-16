@@ -1,6 +1,6 @@
 ﻿namespace HousingAPI.Models.PresentationModels.Provider
 {
-    public class AProviderMapper
+    public class ProviderMapper
     {
         public int ProviderId { get; set; }
         public int ContactId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace HousingAPI.Models.PresentationModels.HousingUnit
 {
-    public class HousingUnitAddressMapper : AHousingUnitMapper
+    public class HousingUnitAddressMapper : HousingUnitMapper
     {
         public AddressMapper Address { get; set; }
     }

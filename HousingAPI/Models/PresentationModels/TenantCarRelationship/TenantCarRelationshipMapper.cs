@@ -7,7 +7,5 @@ namespace HousingAPI.Models.PresentationModels.TenantCarRelationship
         public int RelationshipId { get; set; }
         public int TenantId { get; set; }
         public bool ParkingPassStatus { get; set; }
-
-        public TenantAddressMapper Tenant { get; set; }
     }
 }

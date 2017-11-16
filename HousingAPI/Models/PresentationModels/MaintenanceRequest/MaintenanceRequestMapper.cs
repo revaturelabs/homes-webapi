@@ -8,7 +8,5 @@ namespace HousingAPI.Models.PresentationModels.MaintenanceRequest
         public int TenantId { get; set; }
         public bool Active { get; set; }
         public string Message { get; set; }
-
-        public TenantProviderMapper Tenant { get; set; }
     }
 }

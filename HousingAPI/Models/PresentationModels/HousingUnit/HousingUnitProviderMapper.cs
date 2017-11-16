@@ -3,7 +3,7 @@ using HousingAPI.Models.PresentationModels.Provider;
 
 namespace HousingAPI.Models.PresentationModels.HousingUnit
 {
-    public class HousingUnitProviderMapper : AHousingUnitMapper
+    public class HousingUnitProviderMapper : HousingUnitMapper
     {
         public AddressMapper Address { get; set; }
         public ProviderContactMapper Provider { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HousingAPI.Models.PresentationModels.Provider
 {
-    public class ProviderUnitsMapper : AProviderMapper
+    public class ProviderUnitsMapper : ProviderMapper
     {
         public IEnumerable<HousingUnitAddressMapper> HousingUnits { get; set; }
     }

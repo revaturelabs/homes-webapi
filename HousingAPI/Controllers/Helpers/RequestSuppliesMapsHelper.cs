@@ -12,7 +12,7 @@ using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class RequestSuppliesMapsController : ApiController
+    public class RequestSuppliesMapsHelper : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
@@ -35,6 +35,8 @@ namespace HousingAPI.Controllers.Helpers
             return Ok(requestSuppliesMap);
         }
 
+
+        /*
         // PUT: api/RequestSuppliesMaps/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRequestSuppliesMap(int id, RequestSuppliesMap requestSuppliesMap)
@@ -114,5 +116,6 @@ namespace HousingAPI.Controllers.Helpers
         {
             return db.RequestSuppliesMaps.Count(e => e.requestSupplyMapId == id) > 0;
         }
+        */
     }
 }

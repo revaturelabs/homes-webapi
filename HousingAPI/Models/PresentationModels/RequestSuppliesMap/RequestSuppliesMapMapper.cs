@@ -7,7 +7,5 @@ namespace HousingAPI.Models.PresentationModels.RequestSuppliesMap
         public int RequestSupplyMapId { get; set; }
         public int SuppliesRequestId { get; set; }
         public int SupplyId { get; set; }
-
-        public SupplyMapper Supply { get; set; }
     }
 }

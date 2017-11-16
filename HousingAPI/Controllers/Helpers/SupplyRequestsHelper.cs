@@ -40,10 +40,8 @@ namespace HousingAPI.Controllers.Helpers
             SupplyRequest supplyRequest = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == id);
             if (supplyRequest == null)
             {
-                SupplyRequestMapper srm = new SupplyRequestMapper();
-                return srm;
+                return null;
             }
-
             else
             {
                 SupplyRequestMapper srm = new SupplyRequestMapper();
@@ -53,5 +51,89 @@ namespace HousingAPI.Controllers.Helpers
                 return srm;
             }
         }
+        
+
+        /*
+        // PUT: api/SupplyRequests/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutSupplyRequest(int id, SupplyRequest supplyRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != supplyRequest.supplyRequestId)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(supplyRequest).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SupplyRequestExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/SupplyRequests
+        [ResponseType(typeof(SupplyRequest))]
+        public IHttpActionResult PostSupplyRequest(SupplyRequest supplyRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.SupplyRequests.Add(supplyRequest);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = supplyRequest.supplyRequestId }, supplyRequest);
+        }
+
+        // DELETE: api/SupplyRequests/5
+        [ResponseType(typeof(SupplyRequest))]
+        public IHttpActionResult DeleteSupplyRequest(int id)
+        {
+            SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
+            if (supplyRequest == null)
+            {
+                return NotFound();
+            }
+
+            db.SupplyRequests.Remove(supplyRequest);
+            db.SaveChanges();
+
+            return Ok(supplyRequest);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool SupplyRequestExists(int id)
+        {
+            return db.SupplyRequests.Count(e => e.supplyRequestId == id) > 0;
+        }
+        */
     }
 }
+ 

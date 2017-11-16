@@ -2,7 +2,7 @@
 
 namespace HousingAPI.Models.PresentationModels.Provider
 {
-    public class ProviderContactMapper : AProviderMapper
+    public class ProviderContactMapper : ProviderMapper
     {
         public ContactMapper Contact { get; set; }
     }

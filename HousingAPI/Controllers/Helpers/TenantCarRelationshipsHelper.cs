@@ -12,7 +12,7 @@ using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class TenantCarRelationshipsController : ApiController
+    public class TenantCarRelationshipsHelper : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
@@ -35,6 +35,8 @@ namespace HousingAPI.Controllers.Helpers
             return Ok(tenantCarRelationship);
         }
 
+
+        /*
         // PUT: api/TenantCarRelationships/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTenantCarRelationship(int id, TenantCarRelationship tenantCarRelationship)
@@ -114,5 +116,6 @@ namespace HousingAPI.Controllers.Helpers
         {
             return db.TenantCarRelationships.Count(e => e.relationshipId == id) > 0;
         }
+        */
     }
 }
