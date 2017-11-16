@@ -58,7 +58,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
-        public IEnumerable<TenantInfoMapper> GetTenantswithInfo()
+        public IEnumerable<TenantInfoMapper> GetTenantsWithInfo()
         {
             var content = db.Tenants.ToList();
             List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
@@ -91,7 +91,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
-        public IEnumerable<TenantInfoMapper> GetTenantswithInfoByHousing(int housingId)
+        public IEnumerable<TenantInfoMapper> GetTenantsWithInfoByHousing(int housingId)
         {
             var content = db.Tenants.Where(j => j.housingUnitId == housingId).ToList();
             List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
@@ -123,9 +123,8 @@ namespace HousingAPI.Controllers.Helpers
             return tenants;
         }
 
-
         // 
-        public TenantInfoMapper GetTenantwithInfo(int id)
+        public TenantInfoMapper GetTenantWithInfo(int id)
         {
             var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
 
@@ -159,35 +158,123 @@ namespace HousingAPI.Controllers.Helpers
             return null;
         }
 
+        //
+        public IEnumerable<TenantAddressMapper> GetTenantWithAddress()
+        {
+            var content = db.Tenants.ToList();
+            List<TenantAddressMapper> tenants = new List<TenantAddressMapper>();
+            foreach (var item in content)
+            {
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+
+                TenantAddressMapper tenant = new TenantAddressMapper
+                {
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool),
+
+                    HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0)
+
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+
+        }
+
+        //
         public TenantAddressMapper GetTenantWithAddress(int id)
         {
+            var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
+
+            if (content != null)
             {
-                var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
 
-                if (content != null)
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+
+                TenantAddressMapper tenant = new TenantAddressMapper
                 {
+                    TenantId = content.tenantId,
+                    ContactId = content.contactId ?? 0,
+                    BatchId = content.batchId ?? 0,
+                    HousingUnitId = content.housingUnitId ?? 0,
+                    GenderId = content.genderId ?? 0,
+                    MoveInDate = content.moveInDate,
+                    HasMoved = content.hasMoved ?? default(bool),
+                    HasKey = content.hasKey ?? default(bool),
 
-                    HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                    HousingUnit = housingUnits.GetHousingUnitWithAddress(content.housingUnitId ?? 0)
 
-                    TenantAddressMapper tenant = new TenantAddressMapper
-                    {
-                        TenantId = content.tenantId,
-                        ContactId = content.contactId ?? 0,
-                        BatchId = content.batchId ?? 0,
-                        HousingUnitId = content.housingUnitId ?? 0,
-                        GenderId = content.genderId ?? 0,
-                        MoveInDate = content.moveInDate,
-                        HasMoved = content.hasMoved ?? default(bool),
-                        HasKey = content.hasKey ?? default(bool),
+                };
 
-                        HousingUnit = housingUnits.GetHousingUnitWithAddress(content.housingUnitId ?? 0)
-
-                    };
-
-                    return tenant;
-                }
-                return null;
+                return tenant;
             }
+            return null;
+        }
+
+        //
+        public IEnumerable<TenantProviderMapper> GetTenantWithProvider()
+        {
+            var content = db.Tenants.ToList();
+            List<TenantProviderMapper> tenants = new List<TenantProviderMapper>();
+            foreach (var item in content)
+            {
+
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+
+                TenantProviderMapper tenant = new TenantProviderMapper
+                {
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool),
+
+                    HousingUnit = housingUnits.GetHousingUnitWithProvider(item.housingUnitId ?? 0)
+
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+
+        }
+
+        //
+        public TenantProviderMapper GeTenantWithProvider(int id)
+        {
+            var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
+
+            if (content != null)
+            {
+
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+
+                TenantProviderMapper tenant = new TenantProviderMapper
+                {
+                    TenantId = content.tenantId,
+                    ContactId = content.contactId ?? 0,
+                    BatchId = content.batchId ?? 0,
+                    HousingUnitId = content.housingUnitId ?? 0,
+                    GenderId = content.genderId ?? 0,
+                    MoveInDate = content.moveInDate,
+                    HasMoved = content.hasMoved ?? default(bool),
+                    HasKey = content.hasKey ?? default(bool),
+
+                    HousingUnit = housingUnits.GetHousingUnitWithProvider(content.housingUnitId ?? 0)
+
+                };
+
+                return tenant;
+            }
+            return null;
         }
         /*
         // PUT: api/Tenants/5
