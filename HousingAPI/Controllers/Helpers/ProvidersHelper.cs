@@ -21,110 +21,66 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<AProviderMapper> GetProviders()
         {
             var provMapper = db.Providers.ToList();
-            List <AProviderMapper> providers = new List<AProviderMapper>();
-            foreach(var item in provMapper)
+            List<AProviderMapper> providers = new List<AProviderMapper>();
+            foreach (var item in provMapper)
             {
                 AProviderMapper provider = new AProviderMapper
                 {
-                    ProviderId  = item.providerId,
-                    ContactId   = item.contactId ?? 0,
+                    ProviderId = item.providerId,
+                    ContactId = item.contactId ?? 0,
                     CompanyName = item.companyName
                 };
-            } 
+            }
             return providers;
         }
 
         // GET: api/Providers/5
-        [ResponseType(typeof(Provider))]
-        public IHttpActionResult GetProvider(int id)
+        public AProviderMapper GetProvider(int id)
         {
-            ProvidersHelper provider = db.ProvidersHelper.Find(id);
+            var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
             if (provider == null)
             {
-                return NotFound();
+                AProviderMapper provMapper = new AProviderMapper();
+                return provMapper;
             }
-
-            return Ok(provider);
-        }
-
-        // PUT: api/Providers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutProvider(int id, Provider provider)
-        {
-            if (!ModelState.IsValid)
+            else
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != provider.providerId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(provider).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProviderExists(id))
+                AProviderMapper apm = new AProviderMapper
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    ProviderId  = provider.providerId,
+                    ContactId   = provider.contactId ?? 0,
+                    CompanyName = provider.companyName
+                };
+                return apm;
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Providers
-        [ResponseType(typeof(Provider))]
-        public IHttpActionResult PostProvider(Provider provider)
+
+        // Not complete
+        public ProviderContactMapper GetProviderWithContact(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Providers.Add(provider);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = provider.providerId }, provider);
-        }
-
-        // DELETE: api/Providers/5
-        [ResponseType(typeof(Provider))]
-        public IHttpActionResult DeleteProvider(int id)
-        {
-            Provider provider = db.Providers.Find(id);
+            var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
             if (provider == null)
             {
-                return NotFound();
+                ProviderContactMapper provMapper = new ProviderContactMapper();
+                return provMapper;
             }
-
-            db.Providers.Remove(provider);
-            db.SaveChanges();
-
-            return Ok(provider);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                ContactsHelper ch = new ContactsHelper();
+                ProviderContactMapper apm = new ProviderContactMapper
+                {
+                    ProviderId = provider.providerId,
+                    ContactId = provider.contactId ?? 0,
+                    CompanyName = provider.companyName,
+
+                    Contact = ch.GetContact(provider.contactId ?? 0)
+                };
+                return apm;
             }
-            base.Dispose(disposing);
         }
 
-        private bool ProviderExists(int id)
-        {
-            return db.Providers.Count(e => e.providerId == id) > 0;
-        }
+
     }
+
 }
