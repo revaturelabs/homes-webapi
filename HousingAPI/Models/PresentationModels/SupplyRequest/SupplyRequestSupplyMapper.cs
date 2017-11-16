@@ -7,9 +7,8 @@ using System.Web;
 
 namespace HousingAPI.Models.PresentationModels.SupplyRequest
 {
-    public class SupplyRequestTenantSupplyMapper : SupplyRequestMapper
+    public class SupplyRequestSupplyMapper : SupplyRequestMapper
     {
         public IEnumerable<RequestSuppliesMapMapper> RequestSuppliesMaps { get; set; }
-        public TenantAddressMapper Tenant { get; set; }
     }
 }

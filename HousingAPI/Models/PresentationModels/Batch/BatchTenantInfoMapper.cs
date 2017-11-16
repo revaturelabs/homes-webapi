@@ -5,6 +5,6 @@ namespace HousingAPI.Models.PresentationModels.Batch
 {
     public class BatchTenantInfoMapper : BatchMapper
     {
-        public IEnumerable<TenantInfoMapper> Tenants { get; set; }
+        public IEnumerable<TenantBatchMapper> Tenants { get; set; }
     }
 }

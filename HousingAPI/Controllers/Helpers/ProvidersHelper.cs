@@ -37,6 +37,7 @@ namespace HousingAPI.Controllers.Helpers
                         ContactId = item.contactId ?? 0,
                         CompanyName = item.companyName
                     };
+                    providers.Add(provider);
                 }
                 return providers;
             }
@@ -114,7 +115,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get all with contact
-        public List<ProviderUnitsMapper> GetProvidersWithUnit()
+        public List<ProviderUnitsMapper> GetProvidersWithUnits()
         {
             var content = db.Providers.ToList();
             if (content.Count() == 0)
@@ -143,7 +144,31 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get one with contact
-        public ProviderUnitsMapper GetProviderWithUnit(int providerId)
+        public ProviderUnitsMapper GetProviderWithUnits(int providerId)
+        {
+            var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                HousingUnitsHelper housing = new HousingUnitsHelper();
+
+                ProviderUnitsMapper provider = new ProviderUnitsMapper
+                {
+                    ProviderId = content.providerId,
+                    ContactId = content.contactId ?? 0,
+                    CompanyName = content.companyName,
+
+                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(content.providerId)
+                };
+                return provider;
+            }
+        }
+
+        // Get one with contact
+        public ProviderUnitsMapper GetProviderWithMaintenanceRequest(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
             if (content == null)
