@@ -13,7 +13,7 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<HousingUnitMapper> GetHousingUnits()
         {
             var content = db.HousingUnits.ToList();
-            if(content.Count() == 0)
+            if (content.Count() == 0)
             {
                 return null;
             }
@@ -61,7 +61,7 @@ namespace HousingAPI.Controllers.Helpers
         public List<HousingUnitAddressMapper> GetHousingUnitsWithAddress()
         {
             var content = db.HousingUnits.ToList();
-            if(content.Count() == 0)
+            if (content.Count() == 0)
             {
                 return null;
             }
@@ -116,7 +116,7 @@ namespace HousingAPI.Controllers.Helpers
         public List<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
         {
             var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
-            if(content.Count() == 0)
+            if (content.Count() == 0)
             {
                 return null;
             }
@@ -147,7 +147,7 @@ namespace HousingAPI.Controllers.Helpers
         public List<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
         {
             var content = db.HousingUnits.ToList();
-            if(content.Count() == 0)
+            if (content.Count() == 0)
             {
                 return null;
             }
@@ -206,7 +206,7 @@ namespace HousingAPI.Controllers.Helpers
         public List<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
         {
             var content = db.HousingUnits.ToList();
-            if(content.Count() == 0)
+            if (content.Count() == 0)
             {
                 return null;
             }
@@ -227,7 +227,7 @@ namespace HousingAPI.Controllers.Helpers
                         Capacity = item.capacity,
 
                         Address = address.GetAddress(item.addressId ?? 0),
-                        Tenants = tenants.GetTenantswithInfoByHousing(item.housingUnitId)
+                        Tenants = tenants.GetTenantsWithInfoByHousing(item.housingUnitId)
                     };
                     housingUnits.Add(housingUnit);
                 }
@@ -253,7 +253,7 @@ namespace HousingAPI.Controllers.Helpers
                     Capacity = content.capacity,
 
                     Address = address.GetAddress(housingUnitId),
-                    Tenants = tenants.GetTenantswithInfoByHousing(content.housingUnitId)
+                    Tenants = tenants.GetTenantsWithInfoByHousing(content.housingUnitId)
                 };
 
                 return housingUnit;
