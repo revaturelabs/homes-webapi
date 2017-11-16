@@ -240,7 +240,7 @@
     <Compile Include="Controllers\Helpers\GendersHelper.cs" />
     <Compile Include="Controllers\Helpers\HousingUnitsController.cs" />
     <Compile Include="Controllers\Helpers\MaintenanceRequestsController.cs" />
-    <Compile Include="Controllers\Helpers\ManagementsController.cs" />
+    <Compile Include="Controllers\Helpers\ManagementsHelper.cs" />
     <Compile Include="Controllers\Helpers\ProvidersController.cs" />
     <Compile Include="Controllers\Helpers\RequestSuppliesMapsController.cs" />
     <Compile Include="Controllers\Helpers\SuppliesController.cs" />
