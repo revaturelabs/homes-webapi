@@ -302,7 +302,7 @@
     <Compile Include="Models\PresentationModels\Provider\ProviderUnitsMapper.cs" />
     <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\TenantCarRelationship\TenantCarRelationshipMapper.cs" />
-    <Compile Include="Models\PresentationModels\Tenant\TenantInfo.cs" />
+    <Compile Include="Models\PresentationModels\Tenant\TenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantMaintenanceMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantMapper.cs" />
     <Compile Include="Models\PresentationModels\MaintenanceRequest\MaintenanceRequestMapper.cs" />

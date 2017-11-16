@@ -8,7 +8,6 @@ namespace HousingAPI.Models.PresentationModels.Tenant
 {
     public class TenantAddressMapper : TenantMapper
     {
-        public BatchMapper Batch { get; set; }
         public HousingUnitAddressMapper HousingUnit { get; set; }
         public ContactMapper Contact { get; set; }
         public GenderMapper Gender { get; set; }

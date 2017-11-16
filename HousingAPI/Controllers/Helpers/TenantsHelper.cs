@@ -58,7 +58,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
-        public IEnumerable<TenantBatchMapper> GetTenantsWithInfo()
+        public IEnumerable<TenantBatchMapper> GetTenantsWithBatch()
         {
             var content = db.Tenants.ToList();
             List<TenantBatchMapper> tenants = new List<TenantBatchMapper>();
@@ -91,7 +91,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
-        public IEnumerable<TenantBatchMapper> GetTenantsWithInfoByBatch(int batchId)
+        public IEnumerable<TenantBatchMapper> GetTenantsWithBatchByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();
             List<TenantBatchMapper> tenants = new List<TenantBatchMapper>();
@@ -124,40 +124,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // 
-        public IEnumerable<TenantBatchMapper> GetTenantsWithInfoByHousing(int housingId)
-        {
-            var content = db.Tenants.Where(j => j.housingUnitId == housingId).ToList();
-            List<TenantBatchMapper> tenants = new List<TenantBatchMapper>();
-            foreach (var item in content)
-            {
-                BatchesHelpers batch = new BatchesHelpers();
-                ContactsHelper contact = new ContactsHelper();
-                GendersHelper gender = new GendersHelper();
-                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
-
-                TenantBatchMapper tenant = new TenantBatchMapper
-                {
-                    TenantId = item.tenantId,
-                    ContactId = item.contactId ?? 0,
-                    BatchId = item.batchId ?? 0,
-                    HousingUnitId = item.housingUnitId ?? 0,
-                    GenderId = item.genderId ?? 0,
-                    MoveInDate = item.moveInDate,
-                    HasMoved = item.hasMoved ?? default(bool),
-                    HasKey = item.hasKey ?? default(bool),
-
-                    Batch = batch.GetBatch(item.batchId ?? 0),
-                    Contact = contact.GetContact(item.contactId ?? 0),
-                    Gender = gender.GetGender(item.genderId ?? 0),
-                    TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
-                };
-                tenants.Add(tenant);
-            }
-            return tenants;
-        }
-
-        // 
-        public TenantBatchMapper GetTenantWithInfo(int id)
+        public TenantBatchMapper GetTenantWithBatch(int id)
         {
             var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
 
@@ -218,6 +185,74 @@ namespace HousingAPI.Controllers.Helpers
                     Contact = contact.GetContact(item.contactId ?? 0),
                     Gender = gender.GetGender(item.genderId ?? 0),
                     TenantCarRelationships = car.GetTenantCarRelationship(item.tenantId)
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+        }
+
+        // 
+        public IEnumerable<TenantBatchMapper> GetTenantsWithInfoByHousing(int housingId)
+        {
+            var content = db.Tenants.Where(j => j.housingUnitId == housingId).ToList();
+            List<TenantBatchMapper> tenants = new List<TenantBatchMapper>();
+            foreach (var item in content)
+            {
+                BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+
+                TenantBatchMapper tenant = new TenantBatchMapper
+                {
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool),
+
+                    Batch = batch.GetBatch(item.batchId ?? 0),
+                    Contact = contact.GetContact(item.contactId ?? 0),
+                    Gender = gender.GetGender(item.genderId ?? 0),
+                    TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+        }
+
+        // 
+        public IEnumerable<TenantInfoMapper> GetTenantsInfo()
+        {
+            var content = db.Tenants.ToList();
+            List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
+            foreach (var item in content)
+            {
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+
+                TenantInfoMapper tenant = new TenantInfoMapper
+                {
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool),
+
+                    HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0),
+                    Batch = batch.GetBatch(item.batchId ?? 0),
+                    Contact = contact.GetContact(item.contactId ?? 0),
+                    Gender = gender.GetGender(item.genderId ?? 0),
+                    TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
                 };
                 tenants.Add(tenant);
             }
