@@ -59,7 +59,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // A Batch with no connection, not used
+        // 
         public BatchTenantAddressMapper GetBatchwithHousingAddress(int batchId)
         {
             var content = db.Batches.Where(j => j.batchId == batchId).FirstOrDefault();
@@ -70,12 +70,15 @@ namespace HousingAPI.Controllers.Helpers
             }
             else
             {
+                TenantsHelper tenants = new TenantsHelper();
                 BatchTenantAddressMapper batch = new BatchTenantAddressMapper
                 {
                     BatchId = content.batchId,
                     StartDate = content.startDate ?? default(DateTime),
                     EndDate = content.endDate ?? default(DateTime),
-                    Name = content.name
+                    Name = content.name,
+
+                    Tenant = null//tenants.GetTenantWithAddressByBatch(content.batchId)
                 };
 
                 return batch;
