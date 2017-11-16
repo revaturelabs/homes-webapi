@@ -1,118 +1,129 @@
-﻿using System;
+﻿using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.HousingUnit;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class HousingUnitsController : ApiController
+    public class HousingUnitsHelper
     {
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/HousingUnits
-        public IQueryable<HousingUnit> GetHousingUnits()
+        public IEnumerable<AHousingUnitMapper> GetHousingUnits()
         {
-            return db.HousingUnits;
-        }
-
-        // GET: api/HousingUnits/5
-        [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult GetHousingUnit(int id)
-        {
-            HousingUnit housingUnit = db.HousingUnits.Find(id);
-            if (housingUnit == null)
+            var content = db.HousingUnits.ToList();
+            List<AHousingUnitMapper> housingUnits = new List<AHousingUnitMapper>();
+            foreach (var item in content)
             {
-                return NotFound();
-            }
-
-            return Ok(housingUnit);
-        }
-
-        // PUT: api/HousingUnits/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutHousingUnit(int id, HousingUnit housingUnit)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != housingUnit.housingUnitId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(housingUnit).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HousingUnitExists(id))
+                AHousingUnitMapper housingUnit = new AHousingUnitMapper()
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    HousingUnitId = item.housingUnitId,
+                    ProviderId = item.providerId ?? 0,
+                    AddressId = item.addressId ?? 0,
+                    HousingSignature = item.housingSignature,
+                    Capacity = item.capacity
+                };
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return housingUnits;
         }
+        //    // GET: api/HousingUnits/5
+        //    [ResponseType(typeof(HousingUnit))]
+        //    public IHttpActionResult GetHousingUnit(int id)
+        //    {
+        //        var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
 
-        // POST: api/HousingUnits
-        [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult PostHousingUnit(HousingUnit housingUnit)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //        AHousingUnitMapper housingUnit = new AHousingUnitMapper()
+        //        {
+        //            HousingUnitId = content.housingUnitId,
+        //            ProviderId = content.providerId ?? 0,
+        //            AddressId = content.addressId ?? 0,
+        //            HousingSignature = content.housingSignature,
+        //            Capacity = content.capacity
+        //        };
+        //    }
+        //        return housingUnit ;
+        //    }
 
-            db.HousingUnits.Add(housingUnit);
-            db.SaveChanges();
+        //    // PUT: api/HousingUnits/5
+        //    [ResponseType(typeof(void))]
+        //    public IHttpActionResult PutHousingUnit(int id, HousingUnit housingUnit)
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return BadRequest(ModelState);
+        //        }
 
-            return CreatedAtRoute("DefaultApi", new { id = housingUnit.housingUnitId }, housingUnit);
-        }
+        //        if (id != housingUnit.housingUnitId)
+        //        {
+        //            return BadRequest();
+        //        }
 
-        // DELETE: api/HousingUnits/5
-        [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult DeleteHousingUnit(int id)
-        {
-            HousingUnit housingUnit = db.HousingUnits.Find(id);
-            if (housingUnit == null)
-            {
-                return NotFound();
-            }
+        //        db.Entry(housingUnit).State = EntityState.Modified;
 
-            db.HousingUnits.Remove(housingUnit);
-            db.SaveChanges();
+        //        try
+        //        {
+        //            db.SaveChanges();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!HousingUnitExists(id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
 
-            return Ok(housingUnit);
-        }
+        //        return StatusCode(HttpStatusCode.NoContent);
+        //    }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //    // POST: api/HousingUnits
+        //    [ResponseType(typeof(HousingUnit))]
+        //    public IHttpActionResult PostHousingUnit(HousingUnit housingUnit)
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return BadRequest(ModelState);
+        //        }
 
-        private bool HousingUnitExists(int id)
-        {
-            return db.HousingUnits.Count(e => e.housingUnitId == id) > 0;
-        }
+        //        db.HousingUnits.Add(housingUnit);
+        //        db.SaveChanges();
+
+        //        return CreatedAtRoute("DefaultApi", new { id = housingUnit.housingUnitId }, housingUnit);
+        //    }
+
+        //    // DELETE: api/HousingUnits/5
+        //    [ResponseType(typeof(HousingUnit))]
+        //    public IHttpActionResult DeleteHousingUnit(int id)
+        //    {
+        //        HousingUnit housingUnit = db.HousingUnits.Find(id);
+        //        if (housingUnit == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        db.HousingUnits.Remove(housingUnit);
+        //        db.SaveChanges();
+
+        //        return Ok(housingUnit);
+        //    }
+
+        //    protected override void Dispose(bool disposing)
+        //    {
+        //        if (disposing)
+        //        {
+        //            db.Dispose();
+        //        }
+        //        base.Dispose(disposing);
+        //    }
+
+        //    private bool HousingUnitExists(int id)
+        //    {
+        //        return db.HousingUnits.Count(e => e.housingUnitId == id) > 0;
+        //    }
     }
 }

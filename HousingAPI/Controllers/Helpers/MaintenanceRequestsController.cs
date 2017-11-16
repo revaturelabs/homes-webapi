@@ -1,118 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using HousingAPI.Models;
+﻿using HousingAPI.Models;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class MaintenanceRequestsController : ApiController
+    public class MaintenanceRequestsHelper
     {
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/MaintenanceRequests
-        public IQueryable<MaintenanceRequest> GetMaintenanceRequests()
-        {
-            return db.MaintenanceRequests;
-        }
+        //public IEnumerable<MaintenanceRequest> GetMaintenanceRequests()
+        //{
+        //    return db.MaintenanceRequests;
+        //}
 
-        // GET: api/MaintenanceRequests/5
-        [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult GetMaintenanceRequest(int id)
-        {
-            MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
-            if (maintenanceRequest == null)
-            {
-                return NotFound();
-            }
+        //// GET: api/MaintenanceRequests/5
+        //[ResponseType(typeof(MaintenanceRequest))]
+        //public IHttpActionResult GetMaintenanceRequest(int id)
+        //{
+        //    MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
+        //    if (maintenanceRequest == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(maintenanceRequest);
-        }
+        //    return Ok(maintenanceRequest);
+        //}
 
-        // PUT: api/MaintenanceRequests/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutMaintenanceRequest(int id, MaintenanceRequest maintenanceRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/MaintenanceRequests/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutMaintenanceRequest(int id, MaintenanceRequest maintenanceRequest)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != maintenanceRequest.maintenanceRequestId)
-            {
-                return BadRequest();
-            }
+        //    if (id != maintenanceRequest.maintenanceRequestId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(maintenanceRequest).State = EntityState.Modified;
+        //    db.Entry(maintenanceRequest).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MaintenanceRequestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MaintenanceRequestExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/MaintenanceRequests
-        [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult PostMaintenanceRequest(MaintenanceRequest maintenanceRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/MaintenanceRequests
+        //[ResponseType(typeof(MaintenanceRequest))]
+        //public IHttpActionResult PostMaintenanceRequest(MaintenanceRequest maintenanceRequest)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            db.MaintenanceRequests.Add(maintenanceRequest);
-            db.SaveChanges();
+        //    db.MaintenanceRequests.Add(maintenanceRequest);
+        //    db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = maintenanceRequest.maintenanceRequestId }, maintenanceRequest);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = maintenanceRequest.maintenanceRequestId }, maintenanceRequest);
+        //}
 
-        // DELETE: api/MaintenanceRequests/5
-        [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult DeleteMaintenanceRequest(int id)
-        {
-            MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
-            if (maintenanceRequest == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/MaintenanceRequests/5
+        //[ResponseType(typeof(MaintenanceRequest))]
+        //public IHttpActionResult DeleteMaintenanceRequest(int id)
+        //{
+        //    MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
+        //    if (maintenanceRequest == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.MaintenanceRequests.Remove(maintenanceRequest);
-            db.SaveChanges();
+        //    db.MaintenanceRequests.Remove(maintenanceRequest);
+        //    db.SaveChanges();
 
-            return Ok(maintenanceRequest);
-        }
+        //    return Ok(maintenanceRequest);
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
-        private bool MaintenanceRequestExists(int id)
-        {
-            return db.MaintenanceRequests.Count(e => e.maintenanceRequestId == id) > 0;
-        }
+        //private bool MaintenanceRequestExists(int id)
+        //{
+        //    return db.MaintenanceRequests.Count(e => e.maintenanceRequestId == id) > 0;
+        //}
     }
 }
