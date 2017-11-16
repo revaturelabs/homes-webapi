@@ -27,8 +27,8 @@ namespace HousingAPI.Controllers.Helpers
             {
                 SupplyRequestMapper srm = new SupplyRequestMapper();
                 srm.SupplyRequestId = request.supplyRequestId;
-                srm.TenantId = request.tenantId ?? 0;
-                srm.Active = request.active ?? false;
+                srm.TenantId = request.tenantId ?? default(int);
+                srm.Active = request.active ?? default(bool);
                 srml.Add(srm);
             }
             return srml;
@@ -46,12 +46,13 @@ namespace HousingAPI.Controllers.Helpers
             {
                 SupplyRequestMapper srm = new SupplyRequestMapper();
                 SuppliesHelper sh = new SuppliesHelper();
-                srm.Active = supplyRequest.active ?? false;
-                //COMPLETE RequestSuppliesHelperFirst
+                srm.Active = supplyRequest.active ?? default(bool);
+                srm.SupplyRequestId = supplyRequest.supplyRequestId;
+                srm.TenantId = supplyRequest.tenantId ?? default(int);
                 return srm;
             }
         }
-        
+
 
         /*
         // PUT: api/SupplyRequests/5
@@ -136,4 +137,3 @@ namespace HousingAPI.Controllers.Helpers
         */
     }
 }
- 

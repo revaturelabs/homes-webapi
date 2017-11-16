@@ -9,30 +9,50 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.RequestSuppliesMap;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class RequestSuppliesMapsHelper : ApiController
+    public class RequestSuppliesMapsHelper
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/RequestSuppliesMaps
-        public IQueryable<RequestSuppliesMap> GetRequestSuppliesMaps()
+        // Get all request supplies maps
+        public IEnumerable<RequestSuppliesMapMapper> GetRequestSuppliesMaps()
         {
-            return db.RequestSuppliesMaps;
-        }
-
-        // GET: api/RequestSuppliesMaps/5
-        [ResponseType(typeof(RequestSuppliesMap))]
-        public IHttpActionResult GetRequestSuppliesMap(int id)
-        {
-            RequestSuppliesMap requestSuppliesMap = db.RequestSuppliesMaps.Find(id);
-            if (requestSuppliesMap == null)
+            var toBeMapped = db.RequestSuppliesMaps.ToList();
+            List<RequestSuppliesMapMapper> rsmml = new List<RequestSuppliesMapMapper>();
+            foreach (var rsm in toBeMapped)
             {
-                return NotFound();
+                RequestSuppliesMapMapper rsmm = new RequestSuppliesMapMapper();
+                rsmm.RequestSupplyMapId = rsm.requestSupplyMapId;
+                rsmm.SuppliesRequestId = rsm.suppliesRequestId ?? default(int);
+                rsmm.SupplyId = rsm.supplyId ?? default(int);
+                rsmml.Add(rsmm);
             }
 
-            return Ok(requestSuppliesMap);
+            return rsmml;
+
+        }
+
+        // Get a single request supplies map
+        public RequestSuppliesMapMapper GetRequestSuppliesMap(int id)
+        {
+            RequestSuppliesMap requestSuppliesMap = db.RequestSuppliesMaps.FirstOrDefault();
+            if (requestSuppliesMap == null)
+            {
+                return null;
+            }
+            else
+            {
+                RequestSuppliesMapMapper rsmm = new RequestSuppliesMapMapper();
+                rsmm.RequestSupplyMapId = requestSuppliesMap.requestSupplyMapId;
+                rsmm.SuppliesRequestId = requestSuppliesMap.suppliesRequestId ?? default(int);
+                rsmm.SupplyId = requestSuppliesMap.supplyId ?? default(int);
+
+                return rsmm;
+            }
+
         }
 
 
