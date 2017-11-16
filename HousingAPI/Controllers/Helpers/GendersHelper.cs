@@ -9,110 +9,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.Gender;
 
 namespace HousingAPI.Controllers.Helpers
 {
-    public class GendersHelper : ApiController
+    public class GendersHelper
     {
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Genders
-        public IQueryable<Gender> GetGenders()
+        public IEnumerable<GenderMapper> GetGenders()
         {
-            return db.Genders;
-        }
-
-        // GET: api/Genders/5
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult GetGender(int id)
-        {
-            Gender gender = db.Genders.Find(id);
-            if (gender == null)
+            var content = db.Genders.ToList();
+            List<GenderMapper> genders = new List<GenderMapper>();
+            foreach (var item in content)
             {
-                return NotFound();
-            }
-
-            return Ok(gender);
-        }
-
-        // PUT: api/Genders/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutGender(int id, Gender gender)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != gender.genderId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(gender).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GenderExists(id))
+                GenderMapper gender = new GenderMapper()
                 {
-                    return NotFound();
-                }
-                else
+                    GenderId = item.genderId,
+                    GenderOption = item.genderOption
+                };
+                genders.Add(gender);
+            }
+            return genders;
+        }
+
+        public GenderMapper GetGender(int id)
+        {
+            var content = db.Genders.Where(j => j.genderId == id).FirstOrDefault();
+            if (content != null)
+            {
+                GenderMapper gender = new GenderMapper()
                 {
-                    throw;
-                }
+                    GenderId = content.genderId,
+                    GenderOption = content.genderOption
+
+
+                };
+                return gender;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return new GenderMapper();
         }
 
-        // POST: api/Genders
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult PostGender(Gender gender)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            db.Genders.Add(gender);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = gender.genderId }, gender);
-        }
-
-        // DELETE: api/Genders/5
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult DeleteGender(int id)
-        {
-            Gender gender = db.Genders.Find(id);
-            if (gender == null)
-            {
-                return NotFound();
-            }
-
-            db.Genders.Remove(gender);
-            db.SaveChanges();
-
-            return Ok(gender);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool GenderExists(int id)
-        {
-            return db.Genders.Count(e => e.genderId == id) > 0;
-        }
     }
 }
