@@ -4,9 +4,11 @@ namespace HousingAPI.Models.PresentationModels.Contact
 {
     public class ContactMapper
     {
-        public int BatchId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string Name { get; set; }
+        public int ContactId { get; set; }
+        public string ObjectId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
