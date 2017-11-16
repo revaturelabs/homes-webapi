@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Models.PresentationModels.Provider;
+using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Controllers.Helpers
 {
@@ -17,12 +18,12 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/Providers
+        // Get all basic table
         public IEnumerable<ProviderMapper> GetProviders()
         {
-            var provMapper = db.Providers.ToList();
+            var content = db.Providers.ToList();
             List<ProviderMapper> providers = new List<ProviderMapper>();
-            foreach (var item in provMapper)
+            foreach (var item in content)
             {
                 ProviderMapper provider = new ProviderMapper
                 {
@@ -34,7 +35,7 @@ namespace HousingAPI.Controllers.Helpers
             return providers;
         }
 
-        // GET: api/Providers/5
+        // Get one basic table
         public ProviderMapper GetProvider(int id)
         {
             var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
@@ -54,8 +55,28 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        // Get all with contact
+        public List<ProviderContactMapper> GetProvidersWithContact()
+        {
+            var content = db.Providers.ToList();
+            List<ProviderContactMapper> providers = new List<ProviderContactMapper>();
+            foreach(var item in content)
+            {
+                ContactsHelper contact = new ContactsHelper();
+                ProviderContactMapper provider = new ProviderContactMapper
+                {
+                    ProviderId = item.providerId,
+                    ContactId = item.contactId ?? 0,
+                    CompanyName = item.companyName,
 
-        // Not complete
+                    Contact = contact.GetContact(item.contactId ?? 0)
+                };
+                providers.Add(provider);
+            }
+            return providers;
+        }
+
+        // Get one with contact
         public ProviderContactMapper GetProviderWithContact(int id)
         {
             var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
@@ -78,6 +99,51 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        // Get all with contact
+        public List<ProviderUnitsMapper> GetProvidersWithUnit()
+        {
+            var content = db.Providers.ToList();
+            List<ProviderUnitsMapper> providers = new List<ProviderUnitsMapper>();
+            foreach (var item in content)
+            {
+                HousingUnitsHelper housing = new HousingUnitsHelper();
+                
+                ProviderUnitsMapper provider = new ProviderUnitsMapper
+                {
+                    ProviderId = item.providerId,
+                    ContactId = item.contactId ?? 0,
+                    CompanyName = item.companyName,
+
+                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(item.providerId)
+                };
+                providers.Add(provider);
+            }
+            return providers;
+        }
+
+        // Get one with contact
+        public ProviderUnitsMapper GetProviderWithUnit(int id)
+        {
+            var provider = db.Providers.FirstOrDefault(p => p.providerId == id);
+            if (provider == null)
+            {
+                return null;
+            }
+            else
+            {
+                HousingUnitsHelper housing = new HousingUnitsHelper();
+
+                ProviderUnitsMapper apm = new ProviderUnitsMapper
+                {
+                    ProviderId = provider.providerId,
+                    ContactId = provider.contactId ?? 0,
+                    CompanyName = provider.companyName,
+
+                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(provider.providerId)
+                };
+                return apm;
+            }
+        }
 
         /*
         // PUT: api/Providers/5

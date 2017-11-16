@@ -38,7 +38,7 @@ namespace HousingAPI.Controllers.Helpers
                 };
                 addresses.Add(address);
             }
-            return null;
+            return addresses;
         }
         
         // Actually used

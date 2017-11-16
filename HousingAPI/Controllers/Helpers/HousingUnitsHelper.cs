@@ -9,7 +9,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // 
+        // Get all basic table
         public IEnumerable<HousingUnitMapper> GetHousingUnits()
         {
             var content = db.HousingUnits.ToList();
@@ -29,7 +29,7 @@ namespace HousingAPI.Controllers.Helpers
             return housingUnits;
         }
 
-        // 
+        // Get One basic table
         public HousingUnitMapper GetHousingUnit(int id)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
@@ -50,6 +50,31 @@ namespace HousingAPI.Controllers.Helpers
             return null;
         }
 
+        // Get all with Address
+        public List<HousingUnitAddressMapper> GetHousingUnitsWithAddress()
+        {
+            var content = db.HousingUnits.ToList();
+            List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
+
+            foreach (var item in content)
+            {
+                AddressesHelper address = new AddressesHelper();
+                HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
+                {
+                    HousingUnitId = item.housingUnitId,
+                    ProviderId = item.providerId ?? 0,
+                    AddressId = item.addressId ?? 0,
+                    HousingSignature = item.housingSignature,
+                    Capacity = item.capacity,
+
+                    Address = address.GetAddress(item.addressId ?? 0)
+                };
+                housingUnits.Add(housingUnit);
+            }
+            return housingUnits;
+        }
+
+        // Get one with Address
         public HousingUnitAddressMapper GetHousingUnitWithAddress(int id)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
@@ -73,6 +98,58 @@ namespace HousingAPI.Controllers.Helpers
             return null;
         }
 
+        // Get all with Address, used in providers
+        public List<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
+        {
+            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
+
+            foreach (var item in content)
+            {
+                AddressesHelper address = new AddressesHelper();
+                HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
+                {
+                    HousingUnitId = item.housingUnitId,
+                    ProviderId = item.providerId ?? 0,
+                    AddressId = item.addressId ?? 0,
+                    HousingSignature = item.housingSignature,
+                    Capacity = item.capacity,
+
+                    Address = address.GetAddress(item.addressId ?? 0)
+                };
+                housingUnits.Add(housingUnit);
+            }
+            return housingUnits;
+
+        }
+
+        // Get all with Provider
+        public List<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
+        {
+            var content = db.HousingUnits.ToList();
+            List<HousingUnitProviderMapper> housingUnits = new List<HousingUnitProviderMapper>();
+
+            foreach (var item in content)
+            {
+                AddressesHelper address = new AddressesHelper();
+                ProvidersHelper provider = new ProvidersHelper();
+                HousingUnitProviderMapper housingUnit = new HousingUnitProviderMapper()
+                {
+                    HousingUnitId = item.housingUnitId,
+                    ProviderId = item.providerId ?? 0,
+                    AddressId = item.addressId ?? 0,
+                    HousingSignature = item.housingSignature,
+                    Capacity = item.capacity,
+
+                    Address = address.GetAddress(item.addressId ?? 0),
+                    Provider = provider.GetProviderWithContact(item.providerId ?? 0)
+                };
+                housingUnits.Add(housingUnit);
+            }
+            return housingUnits;
+        }
+
+        // Get one with Provider
         public HousingUnitProviderMapper GetHousingUnitWithProvider(int id)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
