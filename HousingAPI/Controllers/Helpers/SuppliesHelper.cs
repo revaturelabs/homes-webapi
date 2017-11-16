@@ -26,8 +26,8 @@ namespace HousingAPI.Controllers.Helpers
             {
                 SupplyMapper supply = new SupplyMapper
                 {
-                    SupplyId    = item.supplyId,
-                    SupplyName  = item.supplyName
+                    SupplyId = item.supplyId,
+                    SupplyName = item.supplyName
                 };
                 supplies.Add(supply);
             }
@@ -54,3 +54,5 @@ namespace HousingAPI.Controllers.Helpers
                 return sm;
             }
         }
+    }
+}

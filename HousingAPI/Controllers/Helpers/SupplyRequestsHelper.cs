@@ -34,90 +34,24 @@ namespace HousingAPI.Controllers.Helpers
             return srml;
         }
 
-        ////Get single supply request
-        //public SupplyRequestMapper GetSupplyRequest(int id)
-        //{
-        //    SupplyRequest supplyRequest = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == id);
-        //    if (supplyRequest == null)
-        //    {
-        //        SupplyRequestMapper srm = new SupplyRequestMapper();
-        //        return srm;
-        //    }
+        //Get single supply request
+        public SupplyRequestMapper GetSupplyRequest(int id)
+        {
+            SupplyRequest supplyRequest = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == id);
+            if (supplyRequest == null)
+            {
+                SupplyRequestMapper srm = new SupplyRequestMapper();
+                return srm;
+            }
 
-        //    else
-        //    {
-        //        SupplyRequestMapper srm = new SupplyRequestMapper();
-        //        srm.Active = supplyRequest.active ?? false;
-        //        srm.RequestSuppliesMaps
-
-        //        return;
-        //    }
-        //}
-
-        //// PUT: api/SupplyRequests/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutSupplyRequest(int id, SupplyRequest supplyRequest)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (id != supplyRequest.supplyRequestId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    db.Entry(supplyRequest).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!SupplyRequestExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
-
-        //// POST: api/SupplyRequests
-        //[ResponseType(typeof(SupplyRequest))]
-        //public IHttpActionResult PostSupplyRequest(SupplyRequest supplyRequest)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    db.SupplyRequests.Add(supplyRequest);
-        //    db.SaveChanges();
-
-        //    return CreatedAtRoute("DefaultApi", new { id = supplyRequest.supplyRequestId }, supplyRequest);
-        //}
-
-        //// DELETE: api/SupplyRequests/5
-        //[ResponseType(typeof(SupplyRequest))]
-        //public IHttpActionResult DeleteSupplyRequest(int id)
-        //{
-        //    SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
-        //    if (supplyRequest == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    db.SupplyRequests.Remove(supplyRequest);
-        //    db.SaveChanges();
-
-        //    return Ok(supplyRequest);
-        //}
+            else
+            {
+                SupplyRequestMapper srm = new SupplyRequestMapper();
+                SuppliesHelper sh = new SuppliesHelper();
+                srm.Active = supplyRequest.active ?? false;
+                //COMPLETE RequestSuppliesHelperFirst
+                return srm;
+            }
+        }
     }
 }
