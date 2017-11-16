@@ -9,7 +9,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/HousingUnits
+        // 
         public IEnumerable<AHousingUnitMapper> GetHousingUnits()
         {
             var content = db.HousingUnits.ToList();
@@ -24,106 +24,79 @@ namespace HousingAPI.Controllers.Helpers
                     HousingSignature = item.housingSignature,
                     Capacity = item.capacity
                 };
+                housingUnits.Add(housingUnit);
             }
-
             return housingUnits;
         }
-        //    // GET: api/HousingUnits/5
-        //    [ResponseType(typeof(HousingUnit))]
-        //    public IHttpActionResult GetHousingUnit(int id)
-        //    {
-        //        var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
 
-        //        AHousingUnitMapper housingUnit = new AHousingUnitMapper()
-        //        {
-        //            HousingUnitId = content.housingUnitId,
-        //            ProviderId = content.providerId ?? 0,
-        //            AddressId = content.addressId ?? 0,
-        //            HousingSignature = content.housingSignature,
-        //            Capacity = content.capacity
-        //        };
-        //    }
-        //        return housingUnit ;
-        //    }
+        // 
+        public AHousingUnitMapper GetHousingUnit(int id)
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
 
-        //    // PUT: api/HousingUnits/5
-        //    [ResponseType(typeof(void))]
-        //    public IHttpActionResult PutHousingUnit(int id, HousingUnit housingUnit)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
+            if (content != null)
+            {
+                AHousingUnitMapper housingUnit = new AHousingUnitMapper()
+                {
+                    HousingUnitId = content.housingUnitId,
+                    ProviderId = content.providerId ?? 0,
+                    AddressId = content.addressId ?? 0,
+                    HousingSignature = content.housingSignature,
+                    Capacity = content.capacity
+                };
 
-        //        if (id != housingUnit.housingUnitId)
-        //        {
-        //            return BadRequest();
-        //        }
+                return housingUnit;
+            }
+            return new AHousingUnitMapper();
+        }
 
-        //        db.Entry(housingUnit).State = EntityState.Modified;
+        public HousingUnitAddressMapper GetHousingUnitWithAddress(int id)
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
 
-        //        try
-        //        {
-        //            db.SaveChanges();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!HousingUnitExists(id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
+            if (content != null)
+            {
+                AddressesHelper address = new AddressesHelper();
+                HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
+                {
+                    HousingUnitId = content.housingUnitId,
+                    ProviderId = content.providerId ?? 0,
+                    AddressId = content.addressId ?? 0,
+                    HousingSignature = content.housingSignature,
+                    Capacity = content.capacity,
 
-        //        return StatusCode(HttpStatusCode.NoContent);
-        //    }
+                    Address = address.GetAddress(id)
+                };
 
-        //    // POST: api/HousingUnits
-        //    [ResponseType(typeof(HousingUnit))]
-        //    public IHttpActionResult PostHousingUnit(HousingUnit housingUnit)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
+                return housingUnit;
+            }
+            return new HousingUnitAddressMapper();
+        }
 
-        //        db.HousingUnits.Add(housingUnit);
-        //        db.SaveChanges();
+        public HousingUnitProviderMapper GetHousingUnitWithProvider(int id)
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
 
-        //        return CreatedAtRoute("DefaultApi", new { id = housingUnit.housingUnitId }, housingUnit);
-        //    }
+            if (content != null)
+            {
+                AddressesHelper address = new AddressesHelper();
+                ProviderHelper provider = new ProviderHelper();
+                HousingUnitProviderMapper housingUnit = new HousingUnitProviderMapper()
+                {
+                    HousingUnitId = content.housingUnitId,
+                    ProviderId = content.providerId ?? 0,
+                    AddressId = content.addressId ?? 0,
+                    HousingSignature = content.housingSignature,
+                    Capacity = content.capacity,
 
-        //    // DELETE: api/HousingUnits/5
-        //    [ResponseType(typeof(HousingUnit))]
-        //    public IHttpActionResult DeleteHousingUnit(int id)
-        //    {
-        //        HousingUnit housingUnit = db.HousingUnits.Find(id);
-        //        if (housingUnit == null)
-        //        {
-        //            return NotFound();
-        //        }
+                    Address = address.GetAddress(id),
+                    Provider = provider.GetProvider(id)
+                };
 
-        //        db.HousingUnits.Remove(housingUnit);
-        //        db.SaveChanges();
+                return housingUnit;
+            }
+            return new HousingUnitProviderMapper();
+        }
 
-        //        return Ok(housingUnit);
-        //    }
-
-        //    protected override void Dispose(bool disposing)
-        //    {
-        //        if (disposing)
-        //        {
-        //            db.Dispose();
-        //        }
-        //        base.Dispose(disposing);
-        //    }
-
-        //    private bool HousingUnitExists(int id)
-        //    {
-        //        return db.HousingUnits.Count(e => e.housingUnitId == id) > 0;
-        //    }
     }
 }

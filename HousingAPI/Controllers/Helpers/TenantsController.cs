@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.Tenant;
 
 namespace HousingAPI.Controllers.Helpers
 {
@@ -16,103 +17,78 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/Tenants
-        public IQueryable<Tenant> GetTenants()
+        // 
+        public IEnumerable<ATenantMapper> GetTenants()
         {
-            return db.Tenants;
-        }
-
-        // GET: api/Tenants/5
-        [ResponseType(typeof(Tenant))]
-        public IHttpActionResult GetTenant(int id)
-        {
-            Tenant tenant = db.Tenants.Find(id);
-            if (tenant == null)
+            var content = db.Tenants.ToList();
+            List<ATenantMapper> tenants = new List<ATenantMapper>();
+            foreach (var item in content)
             {
-                return NotFound();
-            }
-
-            return Ok(tenant);
-        }
-
-        // PUT: api/Tenants/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTenant(int id, Tenant tenant)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != tenant.tenantId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(tenant).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TenantExists(id))
+                ATenantMapper tenant = new ATenantMapper
                 {
-                    return NotFound();
-                }
-                else
+                    TenantId = item.tenantId,
+                    ContactId = item.contactId ?? 0,
+                    BatchId = item.batchId ?? 0,
+                    HousingUnitId = item.housingUnitId ?? 0,
+                    GenderId = item.genderId ?? 0,
+                    MoveInDate = item.moveInDate,
+                    HasMoved = item.hasMoved ?? default(bool),
+                    HasKey = item.hasKey ?? default(bool)
+                };
+                tenants.Add(tenant);
+            }
+            return tenants;
+        }
+
+        // 
+        public ATenantMapper GetTenant(int id)
+        {
+            var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
+
+            if (content != null)
+            {
+                ATenantMapper tenant = new ATenantMapper
                 {
-                    throw;
-                }
-            }
+                    TenantId = content.tenantId,
+                    ContactId = content.contactId ?? 0,
+                    BatchId = content.batchId ?? 0,
+                    HousingUnitId = content.housingUnitId ?? 0,
+                    GenderId = content.genderId ?? 0,
+                    MoveInDate = content.moveInDate,
+                    HasMoved = content.hasMoved ?? default(bool),
+                    HasKey = content.hasKey ?? default(bool)
+                };
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return tenant;
+            }
+            return new ATenantMapper();
         }
 
-        // POST: api/Tenants
-        [ResponseType(typeof(Tenant))]
-        public IHttpActionResult PostTenant(Tenant tenant)
+        // 
+        public TenantInfoMapper GetTenantwithInfo(int id)
         {
-            if (!ModelState.IsValid)
+            var content = db.Tenants.Where(j => j.tenantId == id).FirstOrDefault();
+
+            if (content != null)
             {
-                return BadRequest(ModelState);
+                BatchesHelpers batch = new BatchesHelpers();
+                GendersHelper gender = new GendersHelper();
+                
+                TenantInfoMapper tenant = new TenantInfoMapper
+                {
+                    TenantId = content.tenantId,
+                    ContactId = content.contactId ?? 0,
+                    BatchId = content.batchId ?? 0,
+                    HousingUnitId = content.housingUnitId ?? 0,
+                    GenderId = content.genderId ?? 0,
+                    MoveInDate = content.moveInDate,
+                    HasMoved = content.hasMoved ?? default(bool),
+                    HasKey = content.hasKey ?? default(bool)
+                };
+
+                return tenant;
             }
-
-            db.Tenants.Add(tenant);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = tenant.tenantId }, tenant);
-        }
-
-        // DELETE: api/Tenants/5
-        [ResponseType(typeof(Tenant))]
-        public IHttpActionResult DeleteTenant(int id)
-        {
-            Tenant tenant = db.Tenants.Find(id);
-            if (tenant == null)
-            {
-                return NotFound();
-            }
-
-            db.Tenants.Remove(tenant);
-            db.SaveChanges();
-
-            return Ok(tenant);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool TenantExists(int id)
-        {
-            return db.Tenants.Count(e => e.tenantId == id) > 0;
+            return new TenantInfoMapper();
         }
     }
 }

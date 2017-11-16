@@ -2,7 +2,7 @@
 
 namespace HousingAPI.Models.PresentationModels.Tenant
 {
-    public abstract class ATenantMapper
+    public class ATenantMapper
     {
         public int TenantId { get; set; }
         public int ContactId { get; set; }
