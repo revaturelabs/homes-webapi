@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,23 +18,101 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/HousingUnits
-        public IQueryable<HousingUnit> GetHousingUnits()
+        public IHttpActionResult GetHousingUnits()
         {
-            return db.HousingUnits;
-        }
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnits();
+            if (result != null)
+                return Ok(result);
 
+            return NotFound();
+        }
         // GET: api/HousingUnits/5
         [ResponseType(typeof(HousingUnit))]
         public IHttpActionResult GetHousingUnit(int id)
         {
-            HousingUnit housingUnit = db.HousingUnits.Find(id);
-            if (housingUnit == null)
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnit(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(housingUnit);
+            return Ok(result);
         }
+        // GET: api/HousingUnits/WithProviders
+        [Route("api/HousingUnits/WithProviders")]
+        public IHttpActionResult GetHousingUnitsWithProviders()
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitWithAddress();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+        // GET api/HousingUnits/WithAddresses
+        [Route("api/HousingUnits/WithAddresses")]
+        public IHttpActionResult GetHousingUnitWithAddress()
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitWithAddress();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+        // GET api/HousingUnits/WithAddresses
+        [Route("api/HousingUnits/WithAddresses/{id}")]
+        public IHttpActionResult GetHousingUnitWithAddress(int id)
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitWithAddress(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }        // GET: api/HousingUnits/WithProviders/
+        [Route("api/HousingUnits/WithProviders")]
+        [ResponseType(typeof(HousingUnit))]
+        public IHttpActionResult GetHousingUnitsWithProvider()
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsWithProvider();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        // GET: api/HousingUnits/WithProviders/5
+        [Route("api/HousingUnits/WithProviders/{id}")]
+        [ResponseType(typeof(HousingUnit))]
+        public IHttpActionResult GetHousingUnitWithProvider(int id)
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitWithProvider(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        // GET api/HousingUnits/WithAddresses/WithProviders
+        [Route("api/HousingUnits/WithAddresses/ByProvider/{id}")]
+        public IHttpActionResult GetHousingUnitsWithAddressbyProvider(int id)
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsWithAddressbyProvider(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+
 
         // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]

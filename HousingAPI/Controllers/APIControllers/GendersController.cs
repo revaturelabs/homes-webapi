@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,22 +18,29 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Genders
-        public IQueryable<Gender> GetGenders()
+        public IHttpActionResult GetGenders()
         {
-            return db.Genders;
-        }
+            var helper = new GendersHelper();
+            var result = helper.GetGenders();
 
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+            //return db.Genders;
+        }
         // GET: api/Genders/5
         [ResponseType(typeof(Gender))]
         public IHttpActionResult GetGender(int id)
         {
-            Gender gender = db.Genders.Find(id);
-            if (gender == null)
+            var helper = new GendersHelper();
+            var result = helper.GetGender(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(gender);
+            return Ok(result);
         }
 
         // PUT: api/Genders/5
