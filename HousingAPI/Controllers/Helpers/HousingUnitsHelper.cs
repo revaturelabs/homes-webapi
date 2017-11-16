@@ -175,6 +175,58 @@ namespace HousingAPI.Controllers.Helpers
             return null;
         }
 
+        // Get all with Provider
+        public List<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
+        {
+            var content = db.HousingUnits.ToList();
+            List<HousingUnitTenantInfoMapper> housingUnits = new List<HousingUnitTenantInfoMapper>();
+
+            foreach (var item in content)
+            {
+                AddressesHelper address = new AddressesHelper();
+                ProvidersHelper provider = new ProvidersHelper();
+                HousingUnitTenantInfoMapper housingUnit = new HousingUnitTenantInfoMapper()
+                {
+                    HousingUnitId = item.housingUnitId,
+                    ProviderId = item.providerId ?? 0,
+                    AddressId = item.addressId ?? 0,
+                    HousingSignature = item.housingSignature,
+                    Capacity = item.capacity,
+
+                    Address = address.GetAddress(item.addressId ?? 0),
+                    Tenants = null
+                };
+                housingUnits.Add(housingUnit);
+            }
+            return housingUnits;
+        }
+
+        // Get one with Provider
+        public HousingUnitTenantInfoMapper GetHousingUnitWithTenats(int id)
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId == id).FirstOrDefault();
+
+            if (content != null)
+            {
+                AddressesHelper address = new AddressesHelper();
+                ProvidersHelper provider = new ProvidersHelper();
+                HousingUnitTenantInfoMapper housingUnit = new HousingUnitTenantInfoMapper()
+                {
+                    HousingUnitId = content.housingUnitId,
+                    ProviderId = content.providerId ?? 0,
+                    AddressId = content.addressId ?? 0,
+                    HousingSignature = content.housingSignature,
+                    Capacity = content.capacity,
+
+                    Address = address.GetAddress(id),
+                    Tenants = null
+                };
+
+                return housingUnit;
+            }
+            return null;
+        }
+
 
         /*
         // PUT: api/HousingUnits/5
