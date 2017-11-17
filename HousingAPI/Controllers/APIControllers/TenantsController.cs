@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,24 +18,65 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Tenants
-        public IQueryable<Tenant> GetTenants()
+        public IHttpActionResult GetTenants()
         {
-            return db.Tenants;
-        }
+            var helper = new TenantsHelper();
+            var result = helper.GetTenants();
+            if (result != null)
+                return Ok(result);
 
+            return NotFound();
+        }
         // GET: api/Tenants/5
         [ResponseType(typeof(Tenant))]
         public IHttpActionResult GetTenant(int id)
         {
-            Tenant tenant = db.Tenants.Find(id);
-            if (tenant == null)
+            var helper = new TenantsHelper();
+            var result = helper.GetTenant(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(tenant);
+            return Ok(result);
         }
+        //GET: api/Tenants/Info
+        [Route("api/Tenants/Info")]
+        public IHttpActionResult GetTenantsInfo()
+        {
+            var helper = new TenantsHelper();
+            var result = helper.GetTenantsInfo();
+            if (result != null)
+                return Ok(result);
 
+            return NotFound();
+        }
+        //GET: api/Tenants/Info/{id}
+        [Route("api/Tenants/Info/{id}")]
+        public IHttpActionResult GetTenantInfo(int id)
+        {
+            var helper = new TenantsHelper();
+            var result = helper.GetTenantInfo(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        //GET: api/Tenants/Info/ByBatch/5
+        [Route("api/Tenants/Info/ByBatch/{id}")]
+        public IHttpActionResult GetTenantsInfoByBatch(int id)
+        {
+            var helper = new TenantsHelper();
+            var result = helper.GetTenantsInfoByBatch(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
         // PUT: api/Tenants/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTenant(int id, Tenant tenant)

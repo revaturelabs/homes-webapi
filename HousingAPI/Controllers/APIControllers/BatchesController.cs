@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,22 +18,27 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Batches
-        public IQueryable<Batch> GetBatches()
+        public IHttpActionResult GetBatches()
         {
-            return db.Batches;
-        }
+            var helper = new BatchesHelpers();
+            var result = helper.GetBatches();
+            if (result != null)
+                return Ok(result);
 
+            return NotFound();
+        }
         // GET: api/Batches/5
         [ResponseType(typeof(Batch))]
         public IHttpActionResult GetBatch(int id)
         {
-            Batch batch = db.Batches.Find(id);
-            if (batch == null)
+            var helper = new BatchesHelpers();
+            var result = helper.GetBatch(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(batch);
+            return Ok(result);
         }
 
         // PUT: api/Batches/5

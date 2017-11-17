@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace HousingAPI
 {
@@ -9,6 +10,9 @@ namespace HousingAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            // Web API configuration and services
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
             // Web API configuration and services
             // Remove formating - xml
             config.Formatters.Remove(config.Formatters.XmlFormatter);

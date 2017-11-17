@@ -13,8 +13,8 @@
         <EntityTypeShape EntityType="HousingDBModel.MaintenanceRequest" Width="1.5" PointX="9.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HousingDBModel.Management" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="HousingDBModel.Provider" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HousingDBModel.RequestSuppliesMap" Width="1.5" PointX="12" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HousingDBModel.Supply" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.RequestSuppliesMap" Width="1.5" PointX="12" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HousingDBModel.Supply" Width="1.5" PointX="14.5" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HousingDBModel.SupplyRequest" Width="1.5" PointX="9.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="HousingDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HousingDBModel.TenantCarRelationship" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
