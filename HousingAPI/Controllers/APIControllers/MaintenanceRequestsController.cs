@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
-
+using HousingAPI.Controllers.Helpers;
 namespace HousingAPI.Controllers
 {
     public class MaintenanceRequestsController : ApiController
@@ -17,24 +17,41 @@ namespace HousingAPI.Controllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/MaintenanceRequests
-        public IQueryable<MaintenanceRequest> GetMaintenanceRequests()
+        public IHttpActionResult GetMaintenanceRequests()
         {
-            return db.MaintenanceRequests;
-        }
+            var helper = new MaintenanceRequestsHelper();
+            var result = helper.GetMaintenanceRequests();
+            if (result != null)
+                return Ok(result);
 
+            return NotFound();
+        }
         // GET: api/MaintenanceRequests/5
         [ResponseType(typeof(MaintenanceRequest))]
         public IHttpActionResult GetMaintenanceRequest(int id)
         {
-            MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
-            if (maintenanceRequest == null)
+            var helper = new MaintenanceRequestsHelper();
+            var result = helper.GetMaintenanceRequest(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(maintenanceRequest);
+            return Ok(result);
         }
+        //GET: api/MaintenanceRequests/ByTenant/5
+        [Route("api/MaintenanceRequests/ByTenant/{id}")]
+        public IHttpActionResult GetMaintenanceRequestsByTenant(int id)
+        {
+            var helper = new MaintenanceRequestsHelper();
+            var result = helper.GetMaintenanceRequestsByTenant(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
 
+            return Ok(result);
+        }
         // PUT: api/MaintenanceRequests/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutMaintenanceRequest(int id, MaintenanceRequest maintenanceRequest)

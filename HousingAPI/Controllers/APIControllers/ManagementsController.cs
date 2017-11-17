@@ -33,7 +33,33 @@ namespace HousingAPI.Controllers.APIControllers
         public IHttpActionResult GetManagement(int id)
         {
             var helper = new ManagementsHelper();
-            var result = helper.GetManagements();
+            var result = helper.GetManagement(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        // GET: api/Managements/WithContact
+        [Route("api/Managements/WithContact")]
+        public IHttpActionResult GetManagementsWithContact()
+        {
+            var helper = new ManagementsHelper();
+            var result = helper.GetManagementsWithContact();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        // GET: api/Managements/WithContact/5
+        [Route("api/Managements/WithContact/{id}")]
+        public IHttpActionResult GetManagementWithContact(int id)
+        {
+            var helper = new ManagementsHelper();
+            var result = helper.GetManagementWithContact(id);
             if (result == null)
             {
                 return NotFound();
