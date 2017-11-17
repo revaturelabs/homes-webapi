@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,22 +18,78 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Providers
-        public IQueryable<Provider> GetProviders()
+        public IHttpActionResult GetProviders()
         {
-            return db.Providers;
+            var helper = new ProvidersHelper();
+            var result = helper.GetProviders();
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // GET: api/Providers/5
         [ResponseType(typeof(Provider))]
         public IHttpActionResult GetProvider(int id)
         {
-            Provider provider = db.Providers.Find(id);
-            if (provider == null)
+            var helper = new ProvidersHelper();
+            var result = helper.GetProvider(id);
+            //Provider provider = db.Providers.Find(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(provider);
+            return Ok(result);
+        }
+
+        // GET: api/Providers/WithContact
+        [Route("api/Providers/WithContact")]
+        public IHttpActionResult GetProvidersWithContact()
+        {
+            var helper = new ProvidersHelper();
+            var result = helper.GetProvidersWithContact();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+        
+        // GET api/Providers/WithContact
+        [Route("api/Providers/WithContact/{id}")]
+        public IHttpActionResult GetProviderWithContact(int id)
+        {
+            var helper = new ProvidersHelper();
+            var result = helper.GetProviderWithContact(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+        
+        // GET: api/Providers/WithUnits
+        [Route("api/Providers/WithUnits")]
+        public IHttpActionResult GetProvidersWithUnits()
+        {
+            var helper = new ProvidersHelper();
+            var result = helper.GetProvidersWithUnits();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+        
+        // GET api/Providers/WithUnits
+        [Route("api/Providers/WithUnits/{id}")]
+        public IHttpActionResult GetProviderWithUnits(int id)
+        {
+            var helper = new ProvidersHelper();
+            var result = helper.GetProviderWithUnits(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
         }
 
         // PUT: api/Providers/5
