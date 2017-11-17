@@ -19,23 +19,46 @@ namespace HousingAPI.Controllers.Helpers
             }
             else
             {
-                List<MaintenanceRequestMapper> mrml = new List<MaintenanceRequestMapper>();
-                foreach (var maintenanceRequest in content)
+                List<MaintenanceRequestMapper> requests = new List<MaintenanceRequestMapper>();
+                foreach (var item in content)
                 {
-                    MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
-                    mrm.Active = maintenanceRequest.active ?? default(bool);
-                    mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
-                    mrm.Message = maintenanceRequest.message;
-                    mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
-
-                    mrml.Add(mrm);
-
+                    MaintenanceRequestMapper request = new MaintenanceRequestMapper
+                    {
+                        Active = item.active ?? default(bool),
+                        MaintenanceRequestId = item.maintenanceRequestId,
+                        Message = item.message,
+                        TenantId = item.tenantId ?? default(int)
+                    };
+                    requests.Add(request);
                 }
-
-                return mrml;
+                return requests;
             }
+        }
 
-
+        // Get all simple maintenance requests by a tenant
+        public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByTenant(int tenantId)
+        {
+            var content = db.MaintenanceRequests.Where(j => j.tenantId == tenantId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<MaintenanceRequestMapper> requests = new List<MaintenanceRequestMapper>();
+                foreach (var item in content)
+                {
+                    MaintenanceRequestMapper request = new MaintenanceRequestMapper
+                    {
+                        Active = item.active ?? default(bool),
+                        MaintenanceRequestId = item.maintenanceRequestId,
+                        Message = item.message,
+                        TenantId = item.tenantId ?? default(int)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
         }
 
         ////Get single simple maintenance request

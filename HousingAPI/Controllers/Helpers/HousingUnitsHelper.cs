@@ -143,6 +143,40 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        // Get all with Address, used in providers
+        public List<HousingUnitProviderTenantMapper> GetHousingUnitsMaintenanceRequest(int providerId)
+        {
+            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitProviderTenantMapper> housingUnits = new List<HousingUnitProviderTenantMapper>();
+
+                foreach (var item in content)
+                {
+                    AddressesHelper address = new AddressesHelper();
+                    TenantsHelper tenants = new TenantsHelper();
+
+                    HousingUnitProviderTenantMapper housingUnit = new HousingUnitProviderTenantMapper()
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithMaintenance(item.housingUnitId)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
         // Get all with Provider
         public List<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
         {
