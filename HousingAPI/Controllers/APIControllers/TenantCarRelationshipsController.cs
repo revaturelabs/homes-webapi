@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,9 +18,16 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/TenantCarRelationships
-        public IQueryable<TenantCarRelationship> GetTenantCarRelationships()
+        public IHttpActionResult GetTenantCarRelationships()
         {
-            return db.TenantCarRelationships;
+            //return db.TenantCarRelationships;
+            var helper = new TenantCarRelationshipsHelper();
+            var result = helper.GetTenantCarRelationships();
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // GET: api/TenantCarRelationships/5

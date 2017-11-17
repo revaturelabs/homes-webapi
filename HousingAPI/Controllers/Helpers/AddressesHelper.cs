@@ -19,6 +19,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
         
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<AddressMapper> GetAddresses()
         {
             List<Address> content = db.Addresses.ToList();
@@ -49,10 +50,10 @@ namespace HousingAPI.Controllers.Helpers
         }
         
         // Get One basic table
+        // DEFAULT CRUD
         public AddressMapper GetAddress(int addressId)
         {
             var content = db.Addresses.FirstOrDefault(j => j.addressId == addressId);
-            
             if (content == null)
             {
                 return null;

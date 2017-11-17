@@ -18,6 +18,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<GenderMapper> GetGenders()
         {
             var content = db.Genders.ToList();
@@ -42,6 +43,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
+        // DEFAULT CRUD
         public GenderMapper GetGender(int genderId)
         {
             var content = db.Genders.FirstOrDefault(j => j.genderId == genderId);
