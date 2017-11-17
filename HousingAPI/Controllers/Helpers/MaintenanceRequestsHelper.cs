@@ -10,6 +10,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequests()
         {
             var content = db.MaintenanceRequests.ToList();
@@ -36,6 +37,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get One basic table
+        // DEFAULT CRUD
         public MaintenanceRequestMapper GetMaintenanceRequest(int maintenanceId)
         {
             MaintenanceRequest content = db.MaintenanceRequests.FirstOrDefault(i => i.maintenanceRequestId == maintenanceId);
@@ -57,6 +59,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table, used for housing maintenace request
+        // DEFAULT
+        // RETURNS A LIST OF MAINTENANCE REQUESTS BY TENANT ID
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByTenant(int tenantId)
         {
             var content = db.MaintenanceRequests.Where(j => j.tenantId == tenantId).ToList();

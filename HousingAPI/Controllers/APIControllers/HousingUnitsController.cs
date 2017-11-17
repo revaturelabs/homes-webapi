@@ -45,7 +45,7 @@ namespace HousingAPI.Controllers.APIControllers
         public IHttpActionResult GetHousingUnitsWithProviders()
         {
             var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitWithAddress();
+            var result = helper.GetHousingUnitsWithAddress();
             if (result != null)
                 return Ok(result);
 
@@ -56,7 +56,7 @@ namespace HousingAPI.Controllers.APIControllers
         public IHttpActionResult GetHousingUnitWithAddress()
         {
             var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitWithAddress();
+            var result = helper.GetHousingUnitsWithAddress();
             if (result != null)
                 return Ok(result);
 

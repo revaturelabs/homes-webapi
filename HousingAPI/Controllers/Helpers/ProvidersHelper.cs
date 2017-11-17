@@ -19,6 +19,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<ProviderMapper> GetProviders()
         {
             var content = db.Providers.ToList();
@@ -44,6 +45,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
+        // DEFAULT CRUD
         public ProviderMapper GetProvider(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
@@ -64,6 +66,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All providers with contact
+        // DEFAULT
+        // RETURNS ALL PROVIDERS WITH: Contacts
         public List<ProviderContactMapper> GetProvidersWithContact()
         {
             var content = db.Providers.ToList();
@@ -92,6 +96,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One provider with contact
+        // DEFAULT
+        // RETURNS ONE PROVIDER BY ID WITH: Contacts
         public ProviderContactMapper GetProviderWithContact(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
@@ -115,6 +121,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All providers with units
+        // DEFAULT
+        // RETURNS ALL PROVIDERS WITH: Housing Units with Address
         public List<ProviderUnitsMapper> GetProvidersWithUnits()
         {
             var content = db.Providers.ToList();
@@ -143,6 +151,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One provider with units
+        // DEFAULT
+        // RETURNS ONE PROVIDER WITH: Housing Units with Address
         public ProviderUnitsMapper GetProviderWithUnits(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
