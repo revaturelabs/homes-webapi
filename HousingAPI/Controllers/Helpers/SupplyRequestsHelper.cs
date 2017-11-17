@@ -87,7 +87,7 @@ namespace HousingAPI.Controllers.Helpers
                         TenantId = item.tenantId ?? default(int),
                         Active = item.active ?? default(bool),
 
-                        RequestSuppliesMaps = map.GetRequestSuppliesWithSupplyMapsByRequest(item.supplyRequestId)
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId)
                     };
                     requests.Add(request);
                 }
@@ -117,7 +117,7 @@ namespace HousingAPI.Controllers.Helpers
                         TenantId = item.tenantId ?? default(int),
                         Active = item.active ?? default(bool),
 
-                        RequestSuppliesMaps = map.GetRequestSuppliesWithSupplyMapsByRequest(item.supplyRequestId)
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId)
                     };
                     requests.Add(request);
                 }
