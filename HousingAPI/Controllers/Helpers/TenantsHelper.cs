@@ -288,6 +288,7 @@ namespace HousingAPI.Controllers.Helpers
             {
                 List<TenantSupplyMapper> tenants = new List<TenantSupplyMapper>();
                 SupplyRequestsHelper requests = new SupplyRequestsHelper();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
                     TenantSupplyMapper tenant = new TenantSupplyMapper
@@ -301,7 +302,8 @@ namespace HousingAPI.Controllers.Helpers
                         HasMoved = item.hasMoved ?? default(bool),
                         HasKey = item.hasKey ?? default(bool),
 
-                        SupplyRequests = requests.GetSupplyRequestWithSupplies(item.tenantId)
+                        SupplyRequests = requests.GetSupplyRequestWithSupplies(item.tenantId),
+                        Contact = contact.GetContact(item.contactId ?? 0)
                     };
                     tenants.Add(tenant);
                 }
@@ -323,6 +325,7 @@ namespace HousingAPI.Controllers.Helpers
             {
                 List<TenantMaintenanceMapper> tenants = new List<TenantMaintenanceMapper>();
                 MaintenanceRequestsHelper maintenance = new MaintenanceRequestsHelper();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
                     TenantMaintenanceMapper tenant = new TenantMaintenanceMapper
@@ -336,7 +339,8 @@ namespace HousingAPI.Controllers.Helpers
                         HasMoved = item.hasMoved ?? default(bool),
                         HasKey = item.hasKey ?? default(bool),
 
-                        MaintenanceRequests = maintenance.GetMaintenanceRequestsByTenant(item.tenantId)
+                        MaintenanceRequests = maintenance.GetMaintenanceRequestsByTenant(item.tenantId),
+                        Contact = contact.GetContact(item.contactId ?? 0)
                     };
                     tenants.Add(tenant);
                 }
