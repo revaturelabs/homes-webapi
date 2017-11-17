@@ -12,17 +12,18 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Web.Http.Description;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
 
-    public class ADUserModel
+    public class UserResponseModel
     {
-        //[JsonProperty("Something")]
-        //public int MyProperty { get; set; }
-
-        //[JsonProperty("semthing2")]
-        //public int Sem2 { get; set; }
+        public string ObjectId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     public class ADUsersController : ApiController
@@ -32,44 +33,55 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
         // Get users in active directory
         //[Authorize]
-        //public string GetADUser()
-        //{
-        //    string responseString = "";
-        //    HttpClient client = new HttpClient();
-        //    Task.Run(async () =>
-        //    {
-        //        HttpResponseMessage response = await client.GetAsync("https://graph.microsoft.com/v1.0/me");
-        //        responseString = await response.Content.ReadAsStringAsync();
+        [HttpGet]
+        [ResponseType(typeof(UserResponseModel))]
+        public UserResponseModel GetADUsers()
+        {
+            string responseString = "";
+            string token = Request.Headers.Authorization.Parameter;
+            HttpClient client = new HttpClient();
+            Task.Run(async () =>
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/users");
 
+                message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 
-        //        try
-        //        {
+                HttpResponseMessage response = await client.SendAsync(message);
+                responseString = await response.Content.ReadAsStringAsync();
+            }).Wait();
 
-        //            JToken parsed = JToken.Parse(responseString);
-        //            string sub = parsed["sub"].Value<string>();
-        //            return sub;
+            try
+            {
+                UserResponseModel urm = new UserResponseModel();
+                JToken parsed = JToken.Parse(responseString);
+                urm.Email = parsed["value"][0]["userPrincipalName"].Value<string>();
+                urm.FirstName = parsed["value"][0]["givenName"].Value<string>();
+                urm.LastName = parsed["value"][0]["surname"].Value<string>();
+                urm.ObjectId = parsed["value"][0]["id"].Value<string>();
+                urm.PhoneNumber = parsed["value"][0]["mobilePhone"].Value<string>();
 
-        //        }
-        //        catch
-        //        {
+                return urm;
 
-        //            return "Token Expired!";
+            }
+            catch
+            {
 
-        //        }
-        //        //HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me");
+                return null;
 
-        //        //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+            }
+            //HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me");
 
-        //        //HttpResponseMessage response = await client.SendAsync(message);
+            //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 
-        //        //string responseString = await response.Content.ReadAsStringAsync();
+            //HttpResponseMessage response = await client.SendAsync(message);
 
-        //        //if (response.IsSuccessStatusCode)
-        //        //{
-        //        //    JObject user = JObject.Parse(responseString);
-        //        //}
-        //    }).Wait();
-        //}
+            //string responseString = await response.Content.ReadAsStringAsync();
+
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    JObject user = JObject.Parse(responseString);
+            //}
+        }
 
 
 
