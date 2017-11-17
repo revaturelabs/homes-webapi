@@ -72,20 +72,21 @@ namespace HousingAPI.Controllers.APIControllers
                 return Ok(result);
 
             return NotFound();
-        }        // GET: api/HousingUnits/WithProviders/
-        [Route("api/HousingUnits/WithProviders")]
-        [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult GetHousingUnitsWithProvider()
-        {
-            var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitsWithProvider();
-            if (result == null)
-            {
-                return NotFound();
-            }
+        }       
+        // GET: api/HousingUnits/WithProviders/
+        //[Route("api/HousingUnits/WithProviders")]
+        //[ResponseType(typeof(HousingUnit))]
+        //public IHttpActionResult GetHousingUnitsWithProvider()
+        //{
+        //    var helper = new HousingUnitsHelper();
+        //    var result = helper.GetHousingUnitsWithProvider();
+        //    if (result == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
         // GET: api/HousingUnits/WithProviders/5
         [Route("api/HousingUnits/WithProviders/{id}")]
         [ResponseType(typeof(HousingUnit))]
