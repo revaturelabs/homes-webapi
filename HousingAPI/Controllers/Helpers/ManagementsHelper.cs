@@ -9,7 +9,55 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        public IEnumerable<ManagementContactMapper> GetManagements()
+        // Get all basic tables
+        public IEnumerable<ManagementMapper> GetManagements()
+        {
+            var content = db.Managements.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<ManagementMapper> managements = new List<ManagementMapper>();
+                foreach (var item in content)
+                {
+                    ContactsHelper contact = new ContactsHelper();
+                    ManagementMapper management = new ManagementMapper
+                    {
+                        ManagerId = item.managerId,
+                        ContactId = item.contactId ?? 0,
+                        DepartmentName = item.departmentName
+                    };
+                    managements.Add(management);
+                }
+                return managements;
+            }
+        }
+
+        // Get one basic table
+        public ManagementMapper GetManagement(int managerId)
+        {
+            var content = db.Managements.FirstOrDefault(j => j.managerId == managerId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                ContactsHelper contact = new ContactsHelper();
+                ManagementMapper management = new ManagementMapper
+                {
+                    ManagerId = content.managerId,
+                    ContactId = content.contactId ?? 0,
+                    DepartmentName = content.departmentName
+                };
+                return management;
+            }
+        }
+
+        // Get all management with contact
+        public IEnumerable<ManagementContactMapper> GetManagementsWithContact()
         {
             var content = db.Managements.ToList();
             if(content.Count() == 0)
@@ -36,9 +84,10 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        public ManagementContactMapper GetManagement(int managerId)
+        // Get one management with contact
+        public ManagementContactMapper GetManagementWithContact(int managerId)
         {
-            var content = db.Managements.Where(j => j.managerId == managerId).FirstOrDefault();
+            var content = db.Managements.FirstOrDefault(j => j.managerId == managerId);
             if (content == null)
             {
                 return null;
@@ -57,88 +106,5 @@ namespace HousingAPI.Controllers.Helpers
                 return management;
             }
         }
-
-
-        /*
-        // PUT: api/Managements/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutManagement(int id, Management management)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != management.managerId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(management).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ManagementExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Managements
-        [ResponseType(typeof(Management))]
-        public IHttpActionResult PostManagement(Management management)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Managements.Add(management);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = management.managerId }, management);
-        }
-
-        // DELETE: api/Managements/5
-        [ResponseType(typeof(Management))]
-        public IHttpActionResult DeleteManagement(int id)
-        {
-            Management management = db.Managements.Find(id);
-            if (management == null)
-            {
-                return NotFound();
-            }
-
-            db.Managements.Remove(management);
-            db.SaveChanges();
-
-            return Ok(management);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool ManagementExists(int id)
-        {
-            return db.Managements.Count(e => e.managerId == id) > 0;
-        }
-        */
     }
 }

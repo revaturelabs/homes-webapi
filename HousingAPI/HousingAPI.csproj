@@ -288,7 +288,6 @@
     <Compile Include="Models\PresentationModels\Contact\ContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Gender\GenderMapper.cs" />
     <Compile Include="Models\PresentationModels\Batch\BatchTenantAddressMapper.cs" />
-    <Compile Include="Models\PresentationModels\Batch\BatchTenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderMapper.cs" />

@@ -9,7 +9,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // Get all simple maintenance requests
+        // Get all basic tables
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequests()
         {
             var content = db.MaintenanceRequests.ToList();
@@ -35,7 +35,27 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get all simple maintenance requests by a tenant
+        //Get one basic table
+        public MaintenanceRequestMapper GetMaintenanceRequest(int maintenanceId)
+        {
+            MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.FirstOrDefault(i => i.maintenanceRequestId == maintenanceId);
+            if (maintenanceRequest == null)
+            {
+                return null;
+            }
+            else
+            {
+                MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
+                mrm.Active = maintenanceRequest.active ?? default(bool);
+                mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
+                mrm.Message = maintenanceRequest.message;
+                mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
+
+                return mrm;
+            }
+        }
+
+        // Get one basic table
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByTenant(int tenantId)
         {
             var content = db.MaintenanceRequests.Where(j => j.tenantId == tenantId).ToList();
@@ -61,25 +81,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        ////Get single simple maintenance request
-        //public MaintenanceRequestMapper GetMaintenanceRequest(int id)
-        //{
-        //    MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.FirstOrDefault(i => i.maintenanceRequestId == id);
-        //    if (maintenanceRequest == null)
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
-        //        mrm.Active = maintenanceRequest.active ?? default(bool);
-        //        mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
-        //        mrm.Message = maintenanceRequest.message;
-        //        mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
 
-        //        return mrm;
-        //    }
-        //}
 
         ////Get all maintenance requests with providers
         //public IEnumerable<MaintenanceRequestTenantProviderMapper> GetMaintenanceRequestsForProvider(int providerId)
@@ -117,87 +119,5 @@ namespace HousingAPI.Controllers.Helpers
 
 
         //}
-
-        /*
-        // PUT: api/MaintenanceRequests/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutMaintenanceRequest(int id, MaintenanceRequest maintenanceRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != maintenanceRequest.maintenanceRequestId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(maintenanceRequest).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MaintenanceRequestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/MaintenanceRequests
-        [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult PostMaintenanceRequest(MaintenanceRequest maintenanceRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.MaintenanceRequests.Add(maintenanceRequest);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = maintenanceRequest.maintenanceRequestId }, maintenanceRequest);
-        }
-
-        // DELETE: api/MaintenanceRequests/5
-        [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult DeleteMaintenanceRequest(int id)
-        {
-            MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.Find(id);
-            if (maintenanceRequest == null)
-            {
-                return NotFound();
-            }
-
-            db.MaintenanceRequests.Remove(maintenanceRequest);
-            db.SaveChanges();
-
-            return Ok(maintenanceRequest);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool MaintenanceRequestExists(int id)
-        {
-            return db.MaintenanceRequests.Count(e => e.maintenanceRequestId == id) > 0;
-        }
-        */
     }
 }

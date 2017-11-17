@@ -473,7 +473,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        //
+        // Get tenants of a housing unit with its maintenance request
         public List<TenantMaintenanceMapper> GetTenantsWithMaintenance(int housingUnitId)
         {
             var content = db.Tenants.Where(j => j.housingUnitId == housingUnitId).ToList();
@@ -484,10 +484,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<TenantMaintenanceMapper> tenants = new List<TenantMaintenanceMapper>();
+                MaintenanceRequestsHelper maintenance = new MaintenanceRequestsHelper();
                 foreach (var item in content)
                 {
-                    MaintenanceRequestsHelper maintenance = new MaintenanceRequestsHelper();
-
                     TenantMaintenanceMapper tenant = new TenantMaintenanceMapper
                     {
                         TenantId = item.tenantId,
@@ -507,37 +506,49 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        //
-        /*
-        public IEnumerable<TenantAddressMapper> GetTenantWithAddressByBatch(int batchId)
+        // 
+        public IEnumerable<TenantAddressMapper> GetTenantsInfoByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();
-            List<TenantAddressMapper> tenants = new List<TenantAddressMapper>();
-            foreach (var item in content)
+            if (content.Count() == 0)
             {
-                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
-
-                TenantAddressMapper tenant = new TenantAddressMapper
-                {
-                    TenantId = item.tenantId,
-                    ContactId = item.contactId ?? 0,
-                    BatchId = item.batchId ?? 0,
-                    HousingUnitId = item.housingUnitId ?? 0,
-                    GenderId = item.genderId ?? 0,
-                    MoveInDate = item.moveInDate,
-                    HasMoved = item.hasMoved ?? default(bool),
-                    HasKey = item.hasKey ?? default(bool),
-
-                    HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0)
-
-                };
-                tenants.Add(tenant);
+                return null;
             }
-            return tenants;
-        }
-        */
+            else
+            {
+                List<TenantAddressMapper> tenants = new List<TenantAddressMapper>();
+                
+                HousingUnitsHelper housingUnit = new HousingUnitsHelper();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper car = new TenantCarRelationshipsHelper();
 
-            /*
+                foreach (var item in content)
+                {
+                    TenantAddressMapper tenant = new TenantAddressMapper
+                    {
+                        TenantId = item.tenantId,
+                        ContactId = item.contactId ?? 0,
+                        BatchId = item.batchId ?? 0,
+                        HousingUnitId = item.housingUnitId ?? 0,
+                        GenderId = item.genderId ?? 0,
+                        MoveInDate = item.moveInDate,
+                        HasMoved = item.hasMoved ?? default(bool),
+                        HasKey = item.hasKey ?? default(bool),
+                        
+                        HousingUnit = housingUnit.GetHousingUnitWithAddress(item.housingUnitId ?? 0),
+                        Contact = contact.GetContact(item.contactId ?? 0),
+                        Gender = gender.GetGender(item.genderId ?? 0),
+                        TenantCarRelationships = car.GetTenantCarRelationship(item.tenantId)
+                    };
+                    tenants.Add(tenant);
+                }
+                return tenants;
+            }
+        }
+        
+
+        /*
         //
         public TenantAddressMapper GetTenantWithAddress(int id)
         {

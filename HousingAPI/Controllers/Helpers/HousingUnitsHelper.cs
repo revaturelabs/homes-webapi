@@ -9,7 +9,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // Get all basic table
+        // Get all basic tables
         public IEnumerable<HousingUnitMapper> GetHousingUnits()
         {
             var content = db.HousingUnits.ToList();
@@ -39,7 +39,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get One basic table
         public HousingUnitMapper GetHousingUnit(int housingUnitId)
         {
-            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
+            var content = db.HousingUnits.FirstOrDefault(j => j.housingUnitId == housingUnitId);
 
             if (content != null)
             {
@@ -68,10 +68,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
-
+                AddressesHelper address = new AddressesHelper();
                 foreach (var item in content)
                 {
-                    AddressesHelper address = new AddressesHelper();
                     HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
                     {
                         HousingUnitId = item.housingUnitId,
@@ -91,9 +90,12 @@ namespace HousingAPI.Controllers.Helpers
         // Get one with Address
         public HousingUnitAddressMapper GetHousingUnitWithAddress(int housingUnitId)
         {
-            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
-
-            if (content != null)
+            var content = db.HousingUnits.FirstOrDefault(j => j.housingUnitId == housingUnitId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 AddressesHelper address = new AddressesHelper();
                 HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
@@ -109,10 +111,9 @@ namespace HousingAPI.Controllers.Helpers
 
                 return housingUnit;
             }
-            return null;
         }
 
-        // Get all with Address, used in providers
+        // Get all housing units of a provider
         public List<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
         {
             var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
@@ -123,10 +124,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
-
+                AddressesHelper address = new AddressesHelper();
                 foreach (var item in content)
                 {
-                    AddressesHelper address = new AddressesHelper();
                     HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
                     {
                         HousingUnitId = item.housingUnitId,
@@ -143,7 +143,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get all with Address, used in providers
+        // Get all maintenance request by provider
         public List<HousingUnitProviderTenantMapper> GetHousingUnitsMaintenanceRequest(int providerId)
         {
             var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
@@ -159,7 +159,6 @@ namespace HousingAPI.Controllers.Helpers
                 {
                     AddressesHelper address = new AddressesHelper();
                     TenantsHelper tenants = new TenantsHelper();
-
                     HousingUnitProviderTenantMapper housingUnit = new HousingUnitProviderTenantMapper()
                     {
                         HousingUnitId = item.housingUnitId,
@@ -177,7 +176,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get all with Provider
+        // Get all housing units with Provider
         public List<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
         {
             var content = db.HousingUnits.ToList();
@@ -210,7 +209,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one with Provider
+        // Get one housing unit with Provider
         public HousingUnitProviderMapper GetHousingUnitWithProvider(int housingUnitId)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
@@ -236,7 +235,7 @@ namespace HousingAPI.Controllers.Helpers
             return null;
         }
 
-        // Get all with Provider
+        // Get all housing units with Tenants
         public List<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
         {
             var content = db.HousingUnits.ToList();
@@ -269,7 +268,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one with Provider
+        // Get one housing unit with Tenants
         public HousingUnitTenantInfoMapper GetHousingUnitWithTenats(int housingUnitId)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
@@ -294,88 +293,5 @@ namespace HousingAPI.Controllers.Helpers
             }
             return null;
         }
-
-
-        /*
-        // PUT: api/HousingUnits/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutHousingUnit(int id, HousingUnit housingUnit)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != housingUnit.housingUnitId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(housingUnit).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HousingUnitExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/HousingUnits
-        [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult PostHousingUnit(HousingUnit housingUnit)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.HousingUnits.Add(housingUnit);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = housingUnit.housingUnitId }, housingUnit);
-        }
-
-        // DELETE: api/HousingUnits/5
-        [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult DeleteHousingUnit(int id)
-        {
-            HousingUnit housingUnit = db.HousingUnits.Find(id);
-            if (housingUnit == null)
-            {
-                return NotFound();
-            }
-
-            db.HousingUnits.Remove(housingUnit);
-            db.SaveChanges();
-
-            return Ok(housingUnit);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool HousingUnitExists(int id)
-        {
-            return db.HousingUnits.Count(e => e.housingUnitId == id) > 0;
-        }
-        */
     }
 }
