@@ -18,7 +18,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // Get all basic table
+        // Get All basic tables
         public IEnumerable<ProviderMapper> GetProviders()
         {
             var content = db.Providers.ToList();
@@ -43,7 +43,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one basic table
+        // Get One basic table
         public ProviderMapper GetProvider(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
@@ -63,7 +63,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get all with contact
+        // Get All providers with contact
         public List<ProviderContactMapper> GetProvidersWithContact()
         {
             var content = db.Providers.ToList();
@@ -74,9 +74,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<ProviderContactMapper> providers = new List<ProviderContactMapper>();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
-                    ContactsHelper contact = new ContactsHelper();
                     ProviderContactMapper provider = new ProviderContactMapper
                     {
                         ProviderId = item.providerId,
@@ -91,7 +91,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one with contact
+        // Get One provider with contact
         public ProviderContactMapper GetProviderWithContact(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
@@ -114,7 +114,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get all with contact
+        // Get All providers with units
         public List<ProviderUnitsMapper> GetProvidersWithUnits()
         {
             var content = db.Providers.ToList();
@@ -125,10 +125,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<ProviderUnitsMapper> providers = new List<ProviderUnitsMapper>();
+                HousingUnitsHelper housing = new HousingUnitsHelper();
                 foreach (var item in content)
                 {
-                    HousingUnitsHelper housing = new HousingUnitsHelper();
-
                     ProviderUnitsMapper provider = new ProviderUnitsMapper
                     {
                         ProviderId = item.providerId,
@@ -143,7 +142,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one with contact
+        // Get One provider with units
         public ProviderUnitsMapper GetProviderWithUnits(int providerId)
         {
             var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
@@ -154,7 +153,6 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 HousingUnitsHelper housing = new HousingUnitsHelper();
-
                 ProviderUnitsMapper provider = new ProviderUnitsMapper
                 {
                     ProviderId = content.providerId,
@@ -166,112 +164,5 @@ namespace HousingAPI.Controllers.Helpers
                 return provider;
             }
         }
-
-        // Get one with contact
-        public ProviderUnitsMapper GetProviderWithMaintenanceRequest(int providerId)
-        {
-            var content = db.Providers.FirstOrDefault(p => p.providerId == providerId);
-            if (content == null)
-            {
-                return null;
-            }
-            else
-            {
-                HousingUnitsHelper housing = new HousingUnitsHelper();
-
-                ProviderUnitsMapper provider = new ProviderUnitsMapper
-                {
-                    ProviderId = content.providerId,
-                    ContactId = content.contactId ?? 0,
-                    CompanyName = content.companyName,
-
-                    HousingUnits = housing.GetHousingUnitsWithAddressbyProvider(content.providerId)
-                };
-                return provider;
-            }
-        }
-
-        /*
-        // PUT: api/Providers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutProvider(int id, Provider provider)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != provider.providerId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(provider).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProviderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Providers
-        [ResponseType(typeof(Provider))]
-        public IHttpActionResult PostProvider(Provider provider)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Providers.Add(provider);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = provider.providerId }, provider);
-        }
-
-        // DELETE: api/Providers/5
-        [ResponseType(typeof(Provider))]
-        public IHttpActionResult DeleteProvider(int id)
-        {
-            Provider provider = db.Providers.Find(id);
-            if (provider == null)
-            {
-                return NotFound();
-            }
-
-            db.Providers.Remove(provider);
-            db.SaveChanges();
-
-            return Ok(provider);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool ProviderExists(int id)
-        {
-            return db.Providers.Count(e => e.providerId == id) > 0;
-        }
-        */
     }
-
 }

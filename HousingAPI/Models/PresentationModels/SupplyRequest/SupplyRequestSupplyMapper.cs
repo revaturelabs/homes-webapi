@@ -9,6 +9,6 @@ namespace HousingAPI.Models.PresentationModels.SupplyRequest
 {
     public class SupplyRequestSupplyMapper : SupplyRequestMapper
     {
-        public IEnumerable<RequestSuppliesMapMapper> RequestSuppliesMaps { get; set; }
+        public IEnumerable<RequestSuppliesMapSupplyMapper> RequestSuppliesMaps { get; set; }
     }
 }

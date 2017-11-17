@@ -17,7 +17,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // Get all basic tables
+        // Get All basic tables
         public IEnumerable<ContactMapper> GetContacts()
         {
             var content = db.Contacts.ToList();
@@ -47,7 +47,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get single basic table
+        // Get Single basic table
         public ContactMapper GetContact(int contactId)
         {
             var content = db.Contacts.FirstOrDefault(i => i.contactId == contactId);

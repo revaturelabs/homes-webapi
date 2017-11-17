@@ -65,7 +65,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one batch with its tenants
+        // Get One batch with its tenants
         public BatchTenantMapper GetBatchwithHousingAddress(int batchId)
         {
             var content = db.Batches.FirstOrDefault(j => j.batchId == batchId);

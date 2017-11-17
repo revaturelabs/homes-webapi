@@ -17,123 +17,101 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        //Get all supply requests
+        //Get all basic tables
         public IEnumerable<SupplyRequestMapper> GetSupplyRequests()
         {
-            var tobeMapped = db.SupplyRequests.ToList();
-            List<SupplyRequestMapper> srml = new List<SupplyRequestMapper>();
-
-            foreach (var request in tobeMapped)
-            {
-                SupplyRequestMapper srm = new SupplyRequestMapper();
-                srm.SupplyRequestId = request.supplyRequestId;
-                srm.TenantId = request.tenantId ?? default(int);
-                srm.Active = request.active ?? default(bool);
-                srml.Add(srm);
-            }
-            return srml;
-        }
-
-        //Get single supply request
-        public SupplyRequestMapper GetSupplyRequest(int id)
-        {
-            SupplyRequest supplyRequest = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == id);
-            if (supplyRequest == null)
+            var content = db.SupplyRequests.ToList();
+            if (content.Count() == 0)
             {
                 return null;
             }
             else
             {
-                SupplyRequestMapper srm = new SupplyRequestMapper();
-                SuppliesHelper sh = new SuppliesHelper();
-                srm.Active = supplyRequest.active ?? default(bool);
-                srm.SupplyRequestId = supplyRequest.supplyRequestId;
-                srm.TenantId = supplyRequest.tenantId ?? default(int);
-                return srm;
-            }
-        }
+                List<SupplyRequestMapper> requests = new List<SupplyRequestMapper>();
 
-
-        /*
-        // PUT: api/SupplyRequests/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutSupplyRequest(int id, SupplyRequest supplyRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != supplyRequest.supplyRequestId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(supplyRequest).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SupplyRequestExists(id))
+                foreach (var item in content)
                 {
-                    return NotFound();
+                    SupplyRequestMapper request = new SupplyRequestMapper
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool)
+                    };
+                    requests.Add(request);
                 }
-                else
+                return requests;
+            }
+        }
+
+        //Get one basic table
+        public SupplyRequestMapper GetSupplyRequest(int supplyRequestId)
+        {
+            SupplyRequest content = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == supplyRequestId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                SupplyRequestMapper request = new SupplyRequestMapper
                 {
-                    throw;
+                    SupplyRequestId = content.supplyRequestId,
+                    TenantId = content.tenantId ?? default(int),
+                    Active = content.active ?? default(bool)
+                };
+                return request;
+            }
+        }
+
+        //Get all requests with supplies
+        public IEnumerable<SupplyRequestSupplyMapper> GetSupplyRequestsWithSupplies()
+        {
+            var content = db.SupplyRequests.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<SupplyRequestSupplyMapper> requests = new List<SupplyRequestSupplyMapper>();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                foreach (var item in content)
+                {
+                    SupplyRequestSupplyMapper request = new SupplyRequestSupplyMapper
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
+
+                        RequestSuppliesMaps = map.GetRequestSuppliesWithSupplyMapsByRequest(item.supplyRequestId)
+                    };
+                    requests.Add(request);
                 }
+                return requests;
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/SupplyRequests
-        [ResponseType(typeof(SupplyRequest))]
-        public IHttpActionResult PostSupplyRequest(SupplyRequest supplyRequest)
+        //Get one request with supplies
+        public SupplyRequestSupplyMapper GetSupplyRequestWithSupplies(int supplyRequestId)
         {
-            if (!ModelState.IsValid)
+            SupplyRequest content = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == supplyRequestId);
+            if (content == null)
             {
-                return BadRequest(ModelState);
+                return null;
             }
-
-            db.SupplyRequests.Add(supplyRequest);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = supplyRequest.supplyRequestId }, supplyRequest);
-        }
-
-        // DELETE: api/SupplyRequests/5
-        [ResponseType(typeof(SupplyRequest))]
-        public IHttpActionResult DeleteSupplyRequest(int id)
-        {
-            SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
-            if (supplyRequest == null)
+            else
             {
-                return NotFound();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                SupplyRequestSupplyMapper request = new SupplyRequestSupplyMapper
+                {
+                    SupplyRequestId = content.supplyRequestId,
+                    TenantId = content.tenantId ?? default(int),
+                    Active = content.active ?? default(bool),
+
+                    RequestSuppliesMaps = map.GetRequestSuppliesWithSupplyMapsByRequest(content.supplyRequestId)
+                };
+                return request;
             }
-
-            db.SupplyRequests.Remove(supplyRequest);
-            db.SaveChanges();
-
-            return Ok(supplyRequest);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool SupplyRequestExists(int id)
-        {
-            return db.SupplyRequests.Count(e => e.supplyRequestId == id) > 0;
-        }
-        */
     }
 }

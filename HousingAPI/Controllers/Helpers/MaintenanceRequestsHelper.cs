@@ -9,7 +9,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // Get all basic tables
+        // Get All basic tables
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequests()
         {
             var content = db.MaintenanceRequests.ToList();
@@ -35,27 +35,28 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        //Get one basic table
+        //Get One basic table
         public MaintenanceRequestMapper GetMaintenanceRequest(int maintenanceId)
         {
-            MaintenanceRequest maintenanceRequest = db.MaintenanceRequests.FirstOrDefault(i => i.maintenanceRequestId == maintenanceId);
-            if (maintenanceRequest == null)
+            MaintenanceRequest content = db.MaintenanceRequests.FirstOrDefault(i => i.maintenanceRequestId == maintenanceId);
+            if (content == null)
             {
                 return null;
             }
             else
             {
-                MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
-                mrm.Active = maintenanceRequest.active ?? default(bool);
-                mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
-                mrm.Message = maintenanceRequest.message;
-                mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
-
-                return mrm;
+                MaintenanceRequestMapper maintenance = new MaintenanceRequestMapper
+                {
+                    Active = content.active ?? default(bool),
+                    MaintenanceRequestId = content.maintenanceRequestId,
+                    Message = content.message,
+                    TenantId = content.tenantId ?? default(int)
+                };
+                return maintenance;
             }
         }
 
-        // Get one basic table
+        // Get One basic table, used for housing maintenace request
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByTenant(int tenantId)
         {
             var content = db.MaintenanceRequests.Where(j => j.tenantId == tenantId).ToList();
@@ -80,44 +81,5 @@ namespace HousingAPI.Controllers.Helpers
                 return requests;
             }
         }
-
-
-
-        ////Get all maintenance requests with providers
-        //public IEnumerable<MaintenanceRequestTenantProviderMapper> GetMaintenanceRequestsForProvider(int providerId)
-        //{
-        //    TenantsHelper tenantsHelper = new TenantsHelper();
-        //    ProvidersHelper providersHelper = new ProvidersHelper();
-
-        //    var housingUnitsForSpecificProvider = providersHelper.GetProviderWithUnit(providerId).HousingUnits;
-        //    var tenants = tenantsHelper.GetTenants();
-        //    var maintenanceRequests = GetMaintenanceRequests();
-
-        //    if (tenantsWithProvider.Count() == 0 || maintenanceRequests.Count() == 0)
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        var maintenanceRequestForSpecificProvider = 
-
-        //        List<MaintenanceRequestTenantProviderMapper> mrtpm = new List<MaintenanceRequestTenantProviderMapper>();
-        //        foreach (var maintenanceRequest in maintenanceRequests)
-        //        {
-        //            MaintenanceRequestMapper mrm = new MaintenanceRequestMapper();
-        //            mrm.Active = maintenanceRequest.active ?? default(bool);
-        //            mrm.MaintenanceRequestId = maintenanceRequest.maintenanceRequestId;
-        //            mrm.Message = maintenanceRequest.message;
-        //            mrm.TenantId = maintenanceRequest.tenantId ?? default(int);
-
-        //            mrml.Add(mrm);
-
-        //        }
-
-        //        return mrml;
-        //    }
-
-
-        //}
     }
 }

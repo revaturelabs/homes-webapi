@@ -17,125 +17,128 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // Get all request supplies maps
+        // Get all basic tables
         public IEnumerable<RequestSuppliesMapMapper> GetRequestSuppliesMaps()
         {
-            var toBeMapped = db.RequestSuppliesMaps.ToList();
-            List<RequestSuppliesMapMapper> rsmml = new List<RequestSuppliesMapMapper>();
-            foreach (var rsm in toBeMapped)
-            {
-                RequestSuppliesMapMapper rsmm = new RequestSuppliesMapMapper();
-                rsmm.RequestSupplyMapId = rsm.requestSupplyMapId;
-                rsmm.SuppliesRequestId = rsm.suppliesRequestId ?? default(int);
-                rsmm.SupplyId = rsm.supplyId ?? default(int);
-                rsmml.Add(rsmm);
-            }
-
-            return rsmml;
-
-        }
-
-        // Get a single request supplies map
-        public RequestSuppliesMapMapper GetRequestSuppliesMap(int id)
-        {
-            RequestSuppliesMap requestSuppliesMap = db.RequestSuppliesMaps.FirstOrDefault();
-            if (requestSuppliesMap == null)
+            var content = db.RequestSuppliesMaps.ToList();
+            if (content.Count() == 0)
             {
                 return null;
             }
             else
             {
-                RequestSuppliesMapMapper rsmm = new RequestSuppliesMapMapper();
-                rsmm.RequestSupplyMapId = requestSuppliesMap.requestSupplyMapId;
-                rsmm.SuppliesRequestId = requestSuppliesMap.suppliesRequestId ?? default(int);
-                rsmm.SupplyId = requestSuppliesMap.supplyId ?? default(int);
-
-                return rsmm;
-            }
-
-        }
-
-
-        /*
-        // PUT: api/RequestSuppliesMaps/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutRequestSuppliesMap(int id, RequestSuppliesMap requestSuppliesMap)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != requestSuppliesMap.requestSupplyMapId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(requestSuppliesMap).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RequestSuppliesMapExists(id))
+                List<RequestSuppliesMapMapper> maps = new List<RequestSuppliesMapMapper>();
+                foreach (var item in content)
                 {
-                    return NotFound();
+                    RequestSuppliesMapMapper map = new RequestSuppliesMapMapper()
+                    {
+                        RequestSupplyMapId = item.requestSupplyMapId,
+                        SuppliesRequestId = item.suppliesRequestId ?? default(int),
+                        SupplyId = item.supplyId ?? default(int)
+                    };
+                    maps.Add(map);
                 }
-                else
+                return maps;
+            }
+        }
+
+        // Get one basic table
+        public RequestSuppliesMapMapper GetRequestSuppliesMap(int requestSupplyMapId)
+        {
+            RequestSuppliesMap content = db.RequestSuppliesMaps.FirstOrDefault(j => j.requestSupplyMapId == requestSupplyMapId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                RequestSuppliesMapMapper map = new RequestSuppliesMapMapper()
                 {
-                    throw;
+                    RequestSupplyMapId = content.requestSupplyMapId,
+                    SuppliesRequestId = content.suppliesRequestId ?? default(int),
+                    SupplyId = content.supplyId ?? default(int)
+                };
+                return map;
+            }
+        }
+
+        // Get all mapping with supply
+        public IEnumerable<RequestSuppliesMapSupplyMapper> GetRequestSuppliesWithSupplyMaps()
+        {
+            var content = db.RequestSuppliesMaps.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<RequestSuppliesMapSupplyMapper> maps = new List<RequestSuppliesMapSupplyMapper>();
+                SuppliesHelper supply = new SuppliesHelper();
+                foreach (var item in content)
+                {
+                    RequestSuppliesMapSupplyMapper map = new RequestSuppliesMapSupplyMapper()
+                    {
+                        RequestSupplyMapId = item.requestSupplyMapId,
+                        SuppliesRequestId = item.suppliesRequestId ?? default(int),
+                        SupplyId = item.supplyId ?? default(int),
+
+                        Supply = supply.GetSupply(item.supplyId ?? 0)
+                    };
+                    maps.Add(map);
                 }
+                return maps;
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/RequestSuppliesMaps
-        [ResponseType(typeof(RequestSuppliesMap))]
-        public IHttpActionResult PostRequestSuppliesMap(RequestSuppliesMap requestSuppliesMap)
+        // Get one mapping with supply
+        public RequestSuppliesMapSupplyMapper GetRequestSuppliesMapWithSupply(int requestSupplyMapId)
         {
-            if (!ModelState.IsValid)
+            RequestSuppliesMap content = db.RequestSuppliesMaps.FirstOrDefault(j => j.requestSupplyMapId == requestSupplyMapId);
+            if (content == null)
             {
-                return BadRequest(ModelState);
+                return null;
             }
-
-            db.RequestSuppliesMaps.Add(requestSuppliesMap);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = requestSuppliesMap.requestSupplyMapId }, requestSuppliesMap);
-        }
-
-        // DELETE: api/RequestSuppliesMaps/5
-        [ResponseType(typeof(RequestSuppliesMap))]
-        public IHttpActionResult DeleteRequestSuppliesMap(int id)
-        {
-            RequestSuppliesMap requestSuppliesMap = db.RequestSuppliesMaps.Find(id);
-            if (requestSuppliesMap == null)
+            else
             {
-                return NotFound();
+                SuppliesHelper supply = new SuppliesHelper();
+                RequestSuppliesMapSupplyMapper map = new RequestSuppliesMapSupplyMapper()
+                {
+                    RequestSupplyMapId = content.requestSupplyMapId,
+                    SuppliesRequestId = content.suppliesRequestId ?? default(int),
+                    SupplyId = content.supplyId ?? default(int),
+
+                    Supply = supply.GetSupply(content.supplyId ?? 0)
+                };
+                return map;
             }
-
-            db.RequestSuppliesMaps.Remove(requestSuppliesMap);
-            db.SaveChanges();
-
-            return Ok(requestSuppliesMap);
         }
 
-        protected override void Dispose(bool disposing)
+        // Get all mapping with supply by request - USED IN REQUEST
+        public IEnumerable<RequestSuppliesMapSupplyMapper> GetRequestSuppliesWithSupplyMapsByRequest(int suppliesRequestId)
         {
-            if (disposing)
+            var content = db.RequestSuppliesMaps.Where(j => j.suppliesRequestId == suppliesRequestId).ToList();
+            if (content.Count() == 0)
             {
-                db.Dispose();
+                return null;
             }
-            base.Dispose(disposing);
-        }
+            else
+            {
+                List<RequestSuppliesMapSupplyMapper> maps = new List<RequestSuppliesMapSupplyMapper>();
+                SuppliesHelper supply = new SuppliesHelper();
+                foreach (var item in content)
+                {
+                    RequestSuppliesMapSupplyMapper map = new RequestSuppliesMapSupplyMapper()
+                    {
+                        RequestSupplyMapId = item.requestSupplyMapId,
+                        SuppliesRequestId = item.suppliesRequestId ?? default(int),
+                        SupplyId = item.supplyId ?? default(int),
 
-        private bool RequestSuppliesMapExists(int id)
-        {
-            return db.RequestSuppliesMaps.Count(e => e.requestSupplyMapId == id) > 0;
+                        Supply = supply.GetSupply(item.supplyId ?? 0)
+                    };
+                    maps.Add(map);
+                }
+                return maps;
+            }
         }
-        */
     }
 }
