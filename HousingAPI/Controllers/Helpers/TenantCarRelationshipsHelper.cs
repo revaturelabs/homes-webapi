@@ -31,7 +31,7 @@ namespace HousingAPI.Controllers.Helpers
                     };
                     tenantCarRelationships.Add(tenantCarRelationship);
                 }
-                return null;
+                return tenantCarRelationships;
             }
         }
 
