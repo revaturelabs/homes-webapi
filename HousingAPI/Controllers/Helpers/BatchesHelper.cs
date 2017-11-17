@@ -18,6 +18,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable <BatchMapper> GetBatches()
         {
             var content = db.Batches.ToList();
@@ -44,6 +45,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
+        // DEFAULT CRUD
         public BatchMapper GetBatch(int batchId)
         {
             var content = db.Batches.FirstOrDefault(j => j.batchId == batchId);
@@ -66,6 +68,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One batch with its tenants
+        // DEFAULT
+        // RETURNS A BATCH WITH: Tenants with Housing unitt with Address, Contact, Gender and Car relationship
         public BatchTenantMapper GetBatchwithHousingAddress(int batchId)
         {
             var content = db.Batches.FirstOrDefault(j => j.batchId == batchId);

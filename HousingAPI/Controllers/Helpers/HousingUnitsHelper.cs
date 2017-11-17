@@ -10,6 +10,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<HousingUnitMapper> GetHousingUnits()
         {
             var content = db.HousingUnits.ToList();
@@ -37,6 +38,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
+        // DEFAULT CRUD
         public HousingUnitMapper GetHousingUnit(int housingUnitId)
         {
             var content = db.HousingUnits.FirstOrDefault(j => j.housingUnitId == housingUnitId);
@@ -61,7 +63,9 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All with Address
-        public List<HousingUnitAddressMapper> GetHousingUnitWithAddress()
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Address
+        public List<HousingUnitAddressMapper> GetHousingUnitsWithAddress()
         {
             var content = db.HousingUnits.ToList();
             if (content.Count() == 0)
@@ -91,6 +95,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One with Address
+        // INSIDE HELPER: USED IN TENANTS
+        // RETURNS ALL THE HOUSING UNITS BY ID WITH: Address
         public HousingUnitAddressMapper GetHousingUnitWithAddress(int housingUnitId)
         {
             var content = db.HousingUnits.FirstOrDefault(j => j.housingUnitId == housingUnitId);
@@ -117,6 +123,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All housing units of a provider
+        // INSIDE HELPER: USED IN PROVIDERS
+        // RETURNS ALL THE HOUSING BY PROVIDER UNITS WITH: Address
         public List<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
         {
             var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
@@ -147,6 +155,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All maintenance request by provider
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS BY PROVIDER WITH: Address, and Tenants with Maintenance Requests
         public List<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequest(int providerId)
         {
             var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
@@ -179,9 +189,11 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All supply request by provider
-        public List<HousingUnitProviderTenantSupplyMapper> GetHousingUnitsSupplyRequest(int providerId)
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Address, and Tenants with Supply Requests
+        public List<HousingUnitProviderTenantSupplyMapper> GetHousingUnitsSupplyRequest()
         {
-            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            var content = db.HousingUnits.ToList();
             if (content.Count() == 0)
             {
                 return null;
@@ -211,6 +223,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All housing units with Provider
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Address, and  Provider with Contact
         public List<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
         {
             var content = db.HousingUnits.ToList();
@@ -243,6 +257,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One housing unit with Provider
+        // DEFAULT
+        // RETURNS ONE HOUSING UNIT BY ID WITH: Address, and Provider with Contact
         public HousingUnitProviderMapper GetHousingUnitWithProvider(int housingUnitId)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
@@ -270,6 +286,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All housing units with Tenants
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Tenants with Batch, Contact, Gender, and Car Relationship
         public List<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
         {
             var content = db.HousingUnits.ToList();
@@ -302,6 +320,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One housing unit with Tenants
+        // DEFAULT
+        // RETURNS ONE HOUSING UNIT WITH: Tenants with Batch, Contact, Gender, and Car Relationship
         public HousingUnitTenantInfoMapper GetHousingUnitWithTenats(int housingUnitId)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();

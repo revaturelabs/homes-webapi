@@ -11,6 +11,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get all basic tables
+        // DEFAULT CRUD
         public IEnumerable<TenantMapper> GetTenants()
         {
             var content = db.Tenants.ToList();
@@ -41,6 +42,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get one basic table
+        // DEFAULT CRUD
         public TenantMapper GetTenant(int id)
         {
             var content = db.Tenants.FirstOrDefault(j => j.tenantId == id);
@@ -67,7 +69,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // DEFAULT
-        // RETURNS TENANTS WITH: Housing unitt with Address, batch, contact, gender and car relationship
+        // RETURNS TENANTS WITH: Housing unitt with Address, batch, contact, gender and car Relationship
         public IEnumerable<TenantInfoMapper> GetTenantsInfo()
         {
             var content = db.Tenants.ToList();
@@ -109,7 +111,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // DEFAULT: ONE TENANT WITH ALL INFO
-        // RETURNS A TENANT WITH BY ID: Housing unitt with Address, Batch, Contact, Gender and Car relationship
+        // RETURNS A TENANT BY ID WITH: Housing unitt with Address, Batch, Contact, Gender and Car Relationship
         public TenantInfoMapper GetTenantInfo(int tenantId)
         {
             var content = db.Tenants.FirstOrDefault(j => j.tenantId == tenantId);
@@ -145,9 +147,9 @@ namespace HousingAPI.Controllers.Helpers
                 return tenant;
             }
         }
-        
+
         // DEFAULT BY BATCH: ALL TENATS WITH ALL INFO
-        // RETURNS TENANTS WITH BY BATCH: Housing unitt with Address, Batch, Contact, Gender and Car relationship
+        // RETURNS TENANTS BY BATCH WITH: Housing unitt with Address, Batch, Contact, Gender and Car Relationship
         public IEnumerable<TenantInfoMapper> GetTenantsInfoByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();
@@ -190,7 +192,7 @@ namespace HousingAPI.Controllers.Helpers
 
         // Get a list of tenants by BATCH
         // INSIDE HELPER: USED IN BATCH
-        // RETURNS TENANTS WITH BY BATCH: Housing unitt with Address, Contact, Gender and Car relationship
+        // RETURNS TENANTS BY BATCH WITH: Housing unitt with Address, Contact, Gender and Car Relationship
         public IEnumerable<TenantAddressMapper> GetTenantsAddressByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();

@@ -10,6 +10,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<ManagementMapper> GetManagements()
         {
             var content = db.Managements.ToList();
@@ -36,6 +37,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
+        // DEFAULT CRUD
         public ManagementMapper GetManagement(int managerId)
         {
             var content = db.Managements.FirstOrDefault(j => j.managerId == managerId);
@@ -57,6 +59,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All management with contact
+        // DEFAULT
+        // RETURNS ALL MANAGERS WITH: Contacts
         public IEnumerable<ManagementContactMapper> GetManagementsWithContact()
         {
             var content = db.Managements.ToList();
@@ -85,6 +89,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One management with contact
+        // DEFAULT
+        // RETURNS ONE MANAGER BY ID WITH: Contacts
         public ManagementContactMapper GetManagementWithContact(int managerId)
         {
             var content = db.Managements.FirstOrDefault(j => j.managerId == managerId);

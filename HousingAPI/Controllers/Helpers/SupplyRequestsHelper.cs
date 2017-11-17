@@ -18,6 +18,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         //Get all basic tables
+        // DEFAULT CRUD
         public IEnumerable<SupplyRequestMapper> GetSupplyRequests()
         {
             var content = db.SupplyRequests.ToList();
@@ -44,6 +45,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get one basic table
+        // DEFAULT CRUD
         public SupplyRequestMapper GetSupplyRequest(int supplyRequestId)
         {
             SupplyRequest content = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == supplyRequestId);
@@ -64,6 +66,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get all requests with supplies
+        // DEFAULT
+        // RETURNS ALL SUPPLY REQUESTS WITH: Mapping with Supplies
         public IEnumerable<SupplyRequestSupplyMapper> GetSupplyRequestsWithSupplies()
         {
             var content = db.SupplyRequests.ToList();
@@ -92,6 +96,8 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get all requests with supplies
+        // DEFAULT
+        // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         public List<SupplyRequestSupplyMapper> GetSupplyRequestWithSupplies(int tenantId)
         {
             var content = db.SupplyRequests.Where(i => i.tenantId == tenantId).ToList();

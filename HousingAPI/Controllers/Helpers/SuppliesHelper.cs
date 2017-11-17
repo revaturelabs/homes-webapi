@@ -18,6 +18,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get All basic tables
+        // DEFAULT CRUD
         public IEnumerable<SupplyMapper> GetSupplies()
         {
             var content = db.Supplies.ToList();
@@ -42,7 +43,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table
-        [ResponseType(typeof(Supply))]
+        // DEFAULT CRUD
         public SupplyMapper GetSupply(int supplyId)
         {
             var content = db.Supplies.FirstOrDefault(s => s.supplyId == supplyId);

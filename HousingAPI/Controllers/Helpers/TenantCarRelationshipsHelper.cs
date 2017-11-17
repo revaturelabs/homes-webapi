@@ -10,6 +10,7 @@ namespace HousingAPI.Controllers.Helpers
         private HousingDBEntities db = new HousingDBEntities();
 
         // Get all basic tables
+        // DEFAULT CRUD
         public IEnumerable<TenantCarRelationshipMapper> GetTenantCarRelationships()
         {
             var content = db.TenantCarRelationships.ToList();
@@ -35,6 +36,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get one basic table
+        // DEFAULT CRUD
         public TenantCarRelationshipMapper GetTenantCarRelationship(int tenantId)
         {
             var content = db.TenantCarRelationships.Where(j => j.tenantId == tenantId).FirstOrDefault();
