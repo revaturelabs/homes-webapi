@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
+using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -17,22 +18,54 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/SupplyRequests
-        public IQueryable<SupplyRequest> GetSupplyRequests()
+        public IHttpActionResult GetSupplyRequests()
         {
-            return db.SupplyRequests;
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequests();
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // GET: api/SupplyRequests/5
         [ResponseType(typeof(SupplyRequest))]
         public IHttpActionResult GetSupplyRequest(int id)
         {
-            SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
-            if (supplyRequest == null)
+            //SupplyRequest supplyRequest = db.SupplyRequests.Find(id);
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequest(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(supplyRequest);
+            return Ok(result);
+        }
+        
+        // GET: api/SupplyRequests/WithSupplies
+        [Route("api/SupplyRequests/WithSupplies")]
+        public IHttpActionResult GetSupplyRequestsWithSupplies()
+        {
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequestsWithSupplies();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+        
+        // GET api/SupplyRequests/WithSupplies
+        [Route("api/SupplyRequests/WithSupplies/{id}")]
+        public IHttpActionResult GetSupplyRequestWithSupplies(int id)
+        {
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequestWithSupplies(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
         }
 
         // PUT: api/SupplyRequests/5

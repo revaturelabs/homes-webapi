@@ -192,7 +192,7 @@ namespace HousingAPI.Controllers.Helpers
 
         // Get a list of tenants by BATCH
         // INSIDE HELPER: USED IN BATCH
-        // RETURNS TENANTS BY BATCH WITH: Housing unitt with Address, Contact, Gender and Car Relationship
+        // RETURNS TENANTS BY BATCH WITH: Housing units with Address, Contact, Gender and Car Relationship
         public IEnumerable<TenantAddressMapper> GetTenantsAddressByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();
