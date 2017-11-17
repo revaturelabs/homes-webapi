@@ -91,18 +91,6 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
-        
-        // GET api/Providers/WithMaintenanceRequest
-        [Route("api/Providers/WithMaintenanceRequest/{id}")]
-        public IHttpActionResult GetProviderWithMaintenanceRequest(int id)
-        {
-            var helper = new ProvidersHelper();
-            var result = helper.GetProviderWithMaintenanceRequest(id);
-            if (result != null)
-                return Ok(result);
-
-            return NotFound();
-        }
 
         // PUT: api/Providers/5
         [ResponseType(typeof(void))]
