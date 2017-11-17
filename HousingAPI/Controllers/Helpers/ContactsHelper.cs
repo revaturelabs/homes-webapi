@@ -42,7 +42,6 @@ namespace HousingAPI.Controllers.Helpers
                     };
                     contacts.Add(contact);
                 }
-
                 return contacts;
             }
         }

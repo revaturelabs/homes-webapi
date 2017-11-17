@@ -41,7 +41,11 @@ namespace HousingAPI.Controllers.Helpers
         {
             var content = db.HousingUnits.FirstOrDefault(j => j.housingUnitId == housingUnitId);
 
-            if (content != null)
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 HousingUnitMapper housingUnit = new HousingUnitMapper()
                 {
@@ -54,7 +58,6 @@ namespace HousingAPI.Controllers.Helpers
 
                 return housingUnit;
             }
-            return null;
         }
 
         // Get All with Address
@@ -154,11 +157,10 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<HousingUnitProviderTenantMaintenanceMapper> housingUnits = new List<HousingUnitProviderTenantMaintenanceMapper>();
-
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
                 foreach (var item in content)
                 {
-                    AddressesHelper address = new AddressesHelper();
-                    TenantsHelper tenants = new TenantsHelper();
                     HousingUnitProviderTenantMaintenanceMapper housingUnit = new HousingUnitProviderTenantMaintenanceMapper()
                     {
                         HousingUnitId = item.housingUnitId,
@@ -187,11 +189,10 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<HousingUnitProviderTenantSupplyMapper> housingUnits = new List<HousingUnitProviderTenantSupplyMapper>();
-
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
                 foreach (var item in content)
                 {
-                    AddressesHelper address = new AddressesHelper();
-                    TenantsHelper tenants = new TenantsHelper();
                     HousingUnitProviderTenantSupplyMapper housingUnit = new HousingUnitProviderTenantSupplyMapper
                     {
                         HousingUnitId = item.housingUnitId,
@@ -220,11 +221,10 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<HousingUnitProviderMapper> housingUnits = new List<HousingUnitProviderMapper>();
-
+                AddressesHelper address = new AddressesHelper();
+                ProvidersHelper provider = new ProvidersHelper();
                 foreach (var item in content)
                 {
-                    AddressesHelper address = new AddressesHelper();
-                    ProvidersHelper provider = new ProvidersHelper();
                     HousingUnitProviderMapper housingUnit = new HousingUnitProviderMapper()
                     {
                         HousingUnitId = item.housingUnitId,
@@ -246,8 +246,11 @@ namespace HousingAPI.Controllers.Helpers
         public HousingUnitProviderMapper GetHousingUnitWithProvider(int housingUnitId)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
-
-            if (content != null)
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 AddressesHelper address = new AddressesHelper();
                 ProvidersHelper provider = new ProvidersHelper();
@@ -262,10 +265,8 @@ namespace HousingAPI.Controllers.Helpers
                     Address = address.GetAddress(housingUnitId),
                     Provider = provider.GetProviderWithContact(housingUnitId)
                 };
-
                 return housingUnit;
             }
-            return null;
         }
 
         // Get All housing units with Tenants
@@ -279,11 +280,10 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<HousingUnitTenantInfoMapper> housingUnits = new List<HousingUnitTenantInfoMapper>();
-
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
                 foreach (var item in content)
                 {
-                    AddressesHelper address = new AddressesHelper();
-                    TenantsHelper tenants = new TenantsHelper();
                     HousingUnitTenantInfoMapper housingUnit = new HousingUnitTenantInfoMapper()
                     {
                         HousingUnitId = item.housingUnitId,
@@ -306,7 +306,11 @@ namespace HousingAPI.Controllers.Helpers
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
 
-            if (content != null)
+            if (content == null)
+            {
+                return null;
+            }
+            else
             {
                 AddressesHelper address = new AddressesHelper();
                 TenantsHelper tenants = new TenantsHelper();
@@ -321,10 +325,8 @@ namespace HousingAPI.Controllers.Helpers
                     Address = address.GetAddress(housingUnitId),
                     Tenants = tenants.GetTenantsWithInfoByHousing(content.housingUnitId)
                 };
-
                 return housingUnit;
             }
-            return null;
         }
     }
 }

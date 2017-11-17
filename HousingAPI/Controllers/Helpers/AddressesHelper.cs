@@ -52,7 +52,6 @@ namespace HousingAPI.Controllers.Helpers
         public AddressMapper GetAddress(int addressId)
         {
             var content = db.Addresses.FirstOrDefault(j => j.addressId == addressId);
-            
             if (content == null)
             {
                 return null;

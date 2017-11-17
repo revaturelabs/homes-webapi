@@ -20,9 +20,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<ManagementMapper> managements = new List<ManagementMapper>();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
-                    ContactsHelper contact = new ContactsHelper();
                     ManagementMapper management = new ManagementMapper
                     {
                         ManagerId = item.managerId,
@@ -67,9 +67,9 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 List<ManagementContactMapper> managements = new List<ManagementContactMapper>();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
-                    ContactsHelper contact = new ContactsHelper();
                     ManagementContactMapper management = new ManagementContactMapper
                     {
                         ManagerId = item.managerId,

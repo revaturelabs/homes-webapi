@@ -69,7 +69,6 @@ namespace HousingAPI.Controllers.Helpers
         public BatchTenantMapper GetBatchwithHousingAddress(int batchId)
         {
             var content = db.Batches.FirstOrDefault(j => j.batchId == batchId);
-
             if (content == null)
             {
                 return null;
@@ -86,7 +85,6 @@ namespace HousingAPI.Controllers.Helpers
 
                     Tenant = tenants.GetTenantsInfoByBatch(content.batchId)
                 };
-
                 return batch;
             }
         }
