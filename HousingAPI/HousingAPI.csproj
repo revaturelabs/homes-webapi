@@ -274,7 +274,6 @@
     <Compile Include="Controllers\Helpers\HousingUnitsHelper.cs" />
     <Compile Include="Controllers\Helpers\MaintenanceRequestsHelper.cs" />
     <Compile Include="Controllers\Helpers\ManagementsHelper.cs" />
-    <Compile Include="Controllers\Helpers\ObjectHelpers.cs" />
     <Compile Include="Controllers\Helpers\ProvidersHelper.cs" />
     <Compile Include="Controllers\Helpers\RequestSuppliesMapsHelper.cs" />
     <Compile Include="Controllers\Helpers\SuppliesHelper.cs" />
