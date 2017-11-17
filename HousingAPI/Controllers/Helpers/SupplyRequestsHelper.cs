@@ -124,5 +124,35 @@ namespace HousingAPI.Controllers.Helpers
                 return requests;
             }
         }
+
+        //Get all requests with supplies
+        // DEFAULT
+        // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
+        public List<SupplyRequestSupplyMapper> GetSupplyRequestWithSuppliesById(int supplyRequestId)
+        {
+            var content = db.SupplyRequests.Where(i => i.supplyRequestId == supplyRequestId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<SupplyRequestSupplyMapper> requests = new List<SupplyRequestSupplyMapper>();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                foreach (var item in content)
+                {
+                    SupplyRequestSupplyMapper request = new SupplyRequestSupplyMapper
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
+
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
     }
 }
