@@ -83,7 +83,7 @@ namespace HousingAPI.Controllers.Helpers
                     EndDate = content.endDate ?? default(DateTime),
                     Name = content.name,
 
-                    Tenant = tenants.GetTenantsInfoByBatch(content.batchId)
+                    Tenant = tenants.GetTenantsAddressByBatch(content.batchId)
                 };
                 return batch;
             }
