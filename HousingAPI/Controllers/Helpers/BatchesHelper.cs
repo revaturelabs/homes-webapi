@@ -17,30 +17,36 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // All Batches with no connection
+        // Get All basic tables
         public IEnumerable <BatchMapper> GetBatches()
         {
             var content = db.Batches.ToList();
-            List<BatchMapper> batches = new List<BatchMapper>();
-            foreach(var item in content)
+            if (content.Count() == 0)
             {
-                BatchMapper batch = new BatchMapper
-                {
-                    BatchId = item.batchId,
-                    StartDate = item.startDate ?? default(DateTime),
-                    EndDate = item.endDate ?? default(DateTime),
-                    Name = item.name
-                };
-                batches.Add(batch);
+                return null;
             }
-            return batches;
+            else
+            {
+                List<BatchMapper> batches = new List<BatchMapper>();
+                foreach (var item in content)
+                {
+                    BatchMapper batch = new BatchMapper
+                    {
+                        BatchId = item.batchId,
+                        StartDate = item.startDate ?? default(DateTime),
+                        EndDate = item.endDate ?? default(DateTime),
+                        Name = item.name
+                    };
+                    batches.Add(batch);
+                }
+                return batches;
+            }
         }
 
-        // A Batch with no connection, not used
+        // Get One basic table
         public BatchMapper GetBatch(int batchId)
         {
-            var content = db.Batches.Where(j => j.batchId == batchId).FirstOrDefault();
-
+            var content = db.Batches.FirstOrDefault(j => j.batchId == batchId);
             if (content == null)
             {
                 return null;
@@ -59,10 +65,10 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // 
-        public BatchTenantAddressMapper GetBatchwithHousingAddress(int batchId)
+        // Get one batch with its tenants
+        public BatchTenantMapper GetBatchwithHousingAddress(int batchId)
         {
-            var content = db.Batches.Where(j => j.batchId == batchId).FirstOrDefault();
+            var content = db.Batches.FirstOrDefault(j => j.batchId == batchId);
 
             if (content == null)
             {
@@ -71,102 +77,19 @@ namespace HousingAPI.Controllers.Helpers
             else
             {
                 TenantsHelper tenants = new TenantsHelper();
-                BatchTenantAddressMapper batch = new BatchTenantAddressMapper
+                BatchTenantMapper batch = new BatchTenantMapper
                 {
                     BatchId = content.batchId,
                     StartDate = content.startDate ?? default(DateTime),
                     EndDate = content.endDate ?? default(DateTime),
                     Name = content.name,
 
-                    Tenant = null//tenants.GetTenantWithAddressByBatch(content.batchId)
+                    Tenant = tenants.GetTenantsInfoByBatch(content.batchId)
                 };
 
                 return batch;
             }
         }
-
-
-        /*
-         // PUT: api/Batches/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutBatch(int id, Batch batch)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != batch.batchId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(batch).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BatchExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Batches
-        [ResponseType(typeof(Batch))]
-        public IHttpActionResult PostBatch(Batch batch)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Batches.Add(batch);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = batch.batchId }, batch);
-        }
-
-        // DELETE: api/Batches/5
-        [ResponseType(typeof(Batch))]
-        public IHttpActionResult DeleteBatch(int id)
-        {
-            Batch batch = db.Batches.Find(id);
-            if (batch == null)
-            {
-                return NotFound();
-            }
-
-            db.Batches.Remove(batch);
-            db.SaveChanges();
-
-            return Ok(batch);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool BatchExists(int id)
-        {
-            return db.Batches.Count(e => e.batchId == id) > 0;
-        }
-        */
     }
 }
  

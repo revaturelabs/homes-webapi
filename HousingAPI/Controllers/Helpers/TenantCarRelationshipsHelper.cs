@@ -34,9 +34,9 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        public TenantCarRelationshipMapper GetTenantCarRelationship(int relationshipId)
+        public TenantCarRelationshipMapper GetTenantCarRelationship(int tenantId)
         {
-            var content = db.TenantCarRelationships.Where(j => j.relationshipId == relationshipId).FirstOrDefault();
+            var content = db.TenantCarRelationships.Where(j => j.tenantId == tenantId).FirstOrDefault();
             if (content == null)
             {
                 return null;

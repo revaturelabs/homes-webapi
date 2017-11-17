@@ -288,10 +288,10 @@
     <Compile Include="Models\PresentationModels\Contact\ContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Gender\GenderMapper.cs" />
     <Compile Include="Models\PresentationModels\Batch\BatchTenantAddressMapper.cs" />
-    <Compile Include="Models\PresentationModels\Batch\BatchTenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderMapper.cs" />
+    <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderTenantMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitTenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\Management\ManagementMapper.cs" />
     <Compile Include="Models\PresentationModels\RequestSuppliesMap\RequestSuppliesMapSupplyMapper.cs" />
@@ -302,7 +302,7 @@
     <Compile Include="Models\PresentationModels\Provider\ProviderUnitsMapper.cs" />
     <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\TenantCarRelationship\TenantCarRelationshipMapper.cs" />
-    <Compile Include="Models\PresentationModels\Tenant\TenantInfo.cs" />
+    <Compile Include="Models\PresentationModels\Tenant\TenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantMaintenanceMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantMapper.cs" />
     <Compile Include="Models\PresentationModels\MaintenanceRequest\MaintenanceRequestMapper.cs" />

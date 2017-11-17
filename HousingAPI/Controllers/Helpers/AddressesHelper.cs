@@ -18,7 +18,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
         
-        // Get all basic table
+        // Get All basic tables
         public IEnumerable<AddressMapper> GetAddresses()
         {
             List<Address> content = db.Addresses.ToList();
@@ -48,10 +48,10 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
         
-        // Get one basic table
+        // Get One basic table
         public AddressMapper GetAddress(int addressId)
         {
-            var content = db.Addresses.Where(j => j.addressId == addressId).FirstOrDefault();
+            var content = db.Addresses.FirstOrDefault(j => j.addressId == addressId);
             
             if (content == null)
             {
@@ -73,87 +73,5 @@ namespace HousingAPI.Controllers.Helpers
                 return address;
             }
         }
-
-        /*
-        // PUT: api/Addresses/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutAddress(int id, Address address)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != address.addressId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(address).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AddressExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Addresses
-        [ResponseType(typeof(Address))]
-        public IHttpActionResult PostAddress(Address address)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Addresses.Add(address);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = address.addressId }, address);
-        }
-
-        // DELETE: api/Addresses/5
-        [ResponseType(typeof(Address))]
-        public IHttpActionResult DeleteAddress(int id)
-        {
-            Address address = db.Addresses.Find(id);
-            if (address == null)
-            {
-                return NotFound();
-            }
-
-            db.Addresses.Remove(address);
-            db.SaveChanges();
-
-            return Ok(address);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool AddressExists(int id)
-        {
-            return db.Addresses.Count(e => e.addressId == id) > 0;
-        }
-        */
     }
 }

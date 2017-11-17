@@ -17,7 +17,7 @@ namespace HousingAPI.Controllers.Helpers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        // GET: api/Genders
+        // Get all basic tables
         public IEnumerable<GenderMapper> GetGenders()
         {
             var content = db.Genders.ToList();
@@ -41,9 +41,10 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        // Get one basic table
         public GenderMapper GetGender(int genderId)
         {
-            var content = db.Genders.Where(j => j.genderId == genderId).FirstOrDefault();
+            var content = db.Genders.FirstOrDefault(j => j.genderId == genderId);
             if (content == null)
             {
                 return null;
@@ -58,88 +59,5 @@ namespace HousingAPI.Controllers.Helpers
                 return gender;
             }
         }
-
-
-        /*
-        // PUT: api/Genders/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutGender(int id, Gender gender)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != gender.genderId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(gender).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GenderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Genders
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult PostGender(Gender gender)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Genders.Add(gender);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = gender.genderId }, gender);
-        }
-
-        // DELETE: api/Genders/5
-        [ResponseType(typeof(Gender))]
-        public IHttpActionResult DeleteGender(int id)
-        {
-            Gender gender = db.Genders.Find(id);
-            if (gender == null)
-            {
-                return NotFound();
-            }
-
-            db.Genders.Remove(gender);
-            db.SaveChanges();
-
-            return Ok(gender);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool GenderExists(int id)
-        {
-            return db.Genders.Count(e => e.genderId == id) > 0;
-        }
-        */
     }
 }
