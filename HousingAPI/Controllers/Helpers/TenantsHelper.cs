@@ -192,7 +192,7 @@ namespace HousingAPI.Controllers.Helpers
 
         // Get a list of tenants by BATCH
         // INSIDE HELPER: USED IN BATCH
-        // RETURNS TENANTS BY BATCH WITH: Housing unitt with Address, Contact, Gender and Car Relationship
+        // RETURNS TENANTS BY BATCH WITH: Housing units with Address, Contact, Gender and Car Relationship
         public IEnumerable<TenantAddressMapper> GetTenantsAddressByBatch(int batchId)
         {
             var content = db.Tenants.Where(j => j.batchId == batchId).ToList();
@@ -288,6 +288,7 @@ namespace HousingAPI.Controllers.Helpers
             {
                 List<TenantSupplyMapper> tenants = new List<TenantSupplyMapper>();
                 SupplyRequestsHelper requests = new SupplyRequestsHelper();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
                     TenantSupplyMapper tenant = new TenantSupplyMapper
@@ -301,7 +302,8 @@ namespace HousingAPI.Controllers.Helpers
                         HasMoved = item.hasMoved ?? default(bool),
                         HasKey = item.hasKey ?? default(bool),
 
-                        SupplyRequests = requests.GetSupplyRequestWithSupplies(item.tenantId)
+                        SupplyRequests = requests.GetSupplyRequestWithSupplies(item.tenantId),
+                        Contact = contact.GetContact(item.contactId ?? 0)
                     };
                     tenants.Add(tenant);
                 }
@@ -323,6 +325,7 @@ namespace HousingAPI.Controllers.Helpers
             {
                 List<TenantMaintenanceMapper> tenants = new List<TenantMaintenanceMapper>();
                 MaintenanceRequestsHelper maintenance = new MaintenanceRequestsHelper();
+                ContactsHelper contact = new ContactsHelper();
                 foreach (var item in content)
                 {
                     TenantMaintenanceMapper tenant = new TenantMaintenanceMapper
@@ -336,7 +339,8 @@ namespace HousingAPI.Controllers.Helpers
                         HasMoved = item.hasMoved ?? default(bool),
                         HasKey = item.hasKey ?? default(bool),
 
-                        MaintenanceRequests = maintenance.GetMaintenanceRequestsByTenant(item.tenantId)
+                        MaintenanceRequests = maintenance.GetMaintenanceRequestsByTenant(item.tenantId),
+                        Contact = contact.GetContact(item.contactId ?? 0)
                     };
                     tenants.Add(tenant);
                 }
