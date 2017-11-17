@@ -34,13 +34,16 @@ namespace HousingAPI.Controllers.APIControllers
         [ResponseType(typeof(TenantCarRelationship))]
         public IHttpActionResult GetTenantCarRelationship(int id)
         {
-            TenantCarRelationship tenantCarRelationship = db.TenantCarRelationships.Find(id);
-            if (tenantCarRelationship == null)
+            //TenantCarRelationship tenantCarRelationship = db.TenantCarRelationships.Find(id);
+            var helper = new TenantCarRelationshipsHelper();
+            var result = helper.GetTenantCarRelationship(id);
+
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(tenantCarRelationship);
+            return Ok(result);
         }
 
         // PUT: api/TenantCarRelationships/5
