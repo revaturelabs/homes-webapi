@@ -8,6 +8,6 @@ namespace HousingAPI.Models.PresentationModels.Tenant
 {
     public class TenantSupplyMapper : TenantMapper
     {
-        public IEnumerable<SupplyRequestMapper> SupplyRequests { get; set; }
+        public IEnumerable<SupplyRequestSupplyMapper> SupplyRequests { get; set; }
     }
 }

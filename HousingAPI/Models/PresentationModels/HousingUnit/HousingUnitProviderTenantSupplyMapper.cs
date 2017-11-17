@@ -8,9 +8,9 @@ using System.Web;
 
 namespace HousingAPI.Models.PresentationModels.HousingUnit
 {
-    public class HousingUnitProviderTenantMapper : HousingUnitMapper
+    public class HousingUnitProviderTenantSupplyMapper : HousingUnitMapper
     {
         public AddressMapper Address { get; set; }
-        public IEnumerable<TenantMaintenanceMapper> Tenants { set; get; }
+        public IEnumerable<TenantSupplyMapper> Tenants { set; get; }
     }
 }

@@ -291,7 +291,8 @@
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitAddressMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderMapper.cs" />
-    <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderTenantMapper.cs" />
+    <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderTenantSupplyMapper.cs" />
+    <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderTenantMaintenanceMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitTenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\Management\ManagementMapper.cs" />
     <Compile Include="Models\PresentationModels\RequestSuppliesMap\RequestSuppliesMapSupplyMapper.cs" />

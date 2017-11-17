@@ -144,7 +144,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get All maintenance request by provider
-        public List<HousingUnitProviderTenantMapper> GetHousingUnitsMaintenanceRequest(int providerId)
+        public List<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequest(int providerId)
         {
             var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
             if (content.Count() == 0)
@@ -153,13 +153,13 @@ namespace HousingAPI.Controllers.Helpers
             }
             else
             {
-                List<HousingUnitProviderTenantMapper> housingUnits = new List<HousingUnitProviderTenantMapper>();
+                List<HousingUnitProviderTenantMaintenanceMapper> housingUnits = new List<HousingUnitProviderTenantMaintenanceMapper>();
 
                 foreach (var item in content)
                 {
                     AddressesHelper address = new AddressesHelper();
                     TenantsHelper tenants = new TenantsHelper();
-                    HousingUnitProviderTenantMapper housingUnit = new HousingUnitProviderTenantMapper()
+                    HousingUnitProviderTenantMaintenanceMapper housingUnit = new HousingUnitProviderTenantMaintenanceMapper()
                     {
                         HousingUnitId = item.housingUnitId,
                         ProviderId = item.providerId ?? 0,
@@ -169,6 +169,39 @@ namespace HousingAPI.Controllers.Helpers
 
                         Address = address.GetAddress(item.addressId ?? 0),
                         Tenants = tenants.GetTenantsWithMaintenance(item.housingUnitId)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
+        // Get All supply request by provider
+        public List<HousingUnitProviderTenantSupplyMapper> GetHousingUnitsSupplyRequest(int providerId)
+        {
+            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitProviderTenantSupplyMapper> housingUnits = new List<HousingUnitProviderTenantSupplyMapper>();
+
+                foreach (var item in content)
+                {
+                    AddressesHelper address = new AddressesHelper();
+                    TenantsHelper tenants = new TenantsHelper();
+                    HousingUnitProviderTenantSupplyMapper housingUnit = new HousingUnitProviderTenantSupplyMapper
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithSupplies(item.housingUnitId)
                     };
                     housingUnits.Add(housingUnit);
                 }

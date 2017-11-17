@@ -91,26 +91,31 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        //Get one request with supplies
-        public SupplyRequestSupplyMapper GetSupplyRequestWithSupplies(int supplyRequestId)
+        //Get all requests with supplies
+        public List<SupplyRequestSupplyMapper> GetSupplyRequestWithSupplies(int tenantId)
         {
-            SupplyRequest content = db.SupplyRequests.FirstOrDefault(i => i.supplyRequestId == supplyRequestId);
-            if (content == null)
+            var content = db.SupplyRequests.Where(i => i.tenantId == tenantId).ToList();
+            if (content.Count() == 0)
             {
                 return null;
             }
             else
             {
+                List<SupplyRequestSupplyMapper> requests = new List<SupplyRequestSupplyMapper>();
                 RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
-                SupplyRequestSupplyMapper request = new SupplyRequestSupplyMapper
+                foreach (var item in content)
                 {
-                    SupplyRequestId = content.supplyRequestId,
-                    TenantId = content.tenantId ?? default(int),
-                    Active = content.active ?? default(bool),
+                    SupplyRequestSupplyMapper request = new SupplyRequestSupplyMapper
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
 
-                    RequestSuppliesMaps = map.GetRequestSuppliesWithSupplyMapsByRequest(content.supplyRequestId)
-                };
-                return request;
+                        RequestSuppliesMaps = map.GetRequestSuppliesWithSupplyMapsByRequest(item.supplyRequestId)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
             }
         }
     }
