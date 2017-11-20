@@ -95,7 +95,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One with Address
-        // INSIDE HELPER: USED IN TENANTS
+        // DEAFULT
         // RETURNS ALL THE HOUSING UNITS BY ID WITH: Address
         public HousingUnitAddressMapper GetHousingUnitWithAddress(int housingUnitId)
         {

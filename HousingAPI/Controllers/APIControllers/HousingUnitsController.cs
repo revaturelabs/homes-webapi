@@ -27,6 +27,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         // GET: api/HousingUnits/5
         [ResponseType(typeof(HousingUnit))]
         public IHttpActionResult GetHousingUnit(int id)
@@ -40,6 +41,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
+
         // GET: api/HousingUnits/WithProviders
         [Route("api/HousingUnits/WithProviders")]
         public IHttpActionResult GetHousingUnitsWithProviders()
@@ -51,6 +53,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         // GET api/HousingUnits/WithAddresses
         [Route("api/HousingUnits/WithAddresses")]
         public IHttpActionResult GetHousingUnitWithAddress()
@@ -62,6 +65,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         // GET api/HousingUnits/WithAddresses
         [Route("api/HousingUnits/WithAddresses/{id}")]
         public IHttpActionResult GetHousingUnitWithAddress(int id)
@@ -73,6 +77,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }       
+
         // GET: api/HousingUnits/WithProviders/
         //[Route("api/HousingUnits/WithProviders")]
         //[ResponseType(typeof(HousingUnit))]
@@ -87,7 +92,9 @@ namespace HousingAPI.Controllers.APIControllers
 
         //    return Ok(result);
         //}
+
         // GET: api/HousingUnits/WithProviders/5
+
         [Route("api/HousingUnits/WithProviders/{id}")]
         [ResponseType(typeof(HousingUnit))]
         public IHttpActionResult GetHousingUnitWithProvider(int id)
