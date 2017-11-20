@@ -11,10 +11,11 @@ using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
 using System.Web.Http.Cors;
+using System.Security.Claims;
 
 namespace HousingAPI.Controllers.APIControllers
 {
-    [Authorize]
+    //[Authorize]
     //[EnableCors("*", "*", "*")]
     public class GendersController : ApiController
     {
