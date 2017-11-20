@@ -20,6 +20,19 @@ namespace HousingAPI.Controllers.APIControllers
         // GET: api/SupplyRequests
         public IHttpActionResult GetSupplyRequests()
         {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsSupplyRequest();
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        /*
+        // GET: api/SupplyRequests
+        public IHttpActionResult GetSupplyRequests()
+        {
             var helper = new SupplyRequestsHelper();
             var result = helper.GetSupplyRequests();
 
@@ -67,6 +80,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+        */
 
         // PUT: api/SupplyRequests/5
         [ResponseType(typeof(void))]
