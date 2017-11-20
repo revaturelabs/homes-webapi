@@ -42,18 +42,6 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
-        // GET: api/HousingUnits/WithProviders
-        [Route("api/HousingUnits/WithProviders")]
-        public IHttpActionResult GetHousingUnitsWithProviders()
-        {
-            var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitsWithAddress();
-            if (result != null)
-                return Ok(result);
-
-            return NotFound();
-        }
-
         // GET api/HousingUnits/WithAddresses
         [Route("api/HousingUnits/WithAddresses")]
         public IHttpActionResult GetHousingUnitWithAddress()
@@ -76,25 +64,24 @@ namespace HousingAPI.Controllers.APIControllers
                 return Ok(result);
 
             return NotFound();
-        }       
+        }
+        
+        //GET: api/HousingUnits/WithProviders/
+        [Route("api/HousingUnits/WithProviders")]
+        [ResponseType(typeof(HousingUnit))]
+        public IHttpActionResult GetHousingUnitsWithProvider()
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsWithProvider();
+            if (result == null)
+            {
+                return NotFound();
+            }
 
-        // GET: api/HousingUnits/WithProviders/
-        //[Route("api/HousingUnits/WithProviders")]
-        //[ResponseType(typeof(HousingUnit))]
-        //public IHttpActionResult GetHousingUnitsWithProvider()
-        //{
-        //    var helper = new HousingUnitsHelper();
-        //    var result = helper.GetHousingUnitsWithProvider();
-        //    if (result == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(result);
-        //}
+            return Ok(result);
+        }
 
         // GET: api/HousingUnits/WithProviders/5
-
         [Route("api/HousingUnits/WithProviders/{id}")]
         [ResponseType(typeof(HousingUnit))]
         public IHttpActionResult GetHousingUnitWithProvider(int id)
@@ -108,19 +95,6 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
-        // GET api/HousingUnits/WithAddresses/WithProviders
-        [Route("api/HousingUnits/WithAddresses/ByProvider/{id}")]
-        public IHttpActionResult GetHousingUnitsWithAddressbyProvider(int id)
-        {
-            var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitsWithAddressbyProvider(id);
-            if (result != null)
-                return Ok(result);
-
-            return NotFound();
-        }
-
-
 
         // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]
