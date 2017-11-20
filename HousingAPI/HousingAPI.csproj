@@ -280,7 +280,6 @@
     <Compile Include="Controllers\Helpers\SupplyRequestsHelper.cs" />
     <Compile Include="Controllers\Helpers\TenantCarRelationshipsHelper.cs" />
     <Compile Include="Controllers\Helpers\TenantsHelper.cs" />
-    <Compile Include="Controllers\APIControllers\TenantsGenderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\APIControllers\MaintenanceRequestsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

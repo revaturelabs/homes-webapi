@@ -59,7 +59,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table, used for housing maintenace request
-        // DEFAULT
+        // INSIDE HELPER: USED IN TENANTs
         // RETURNS A LIST OF MAINTENANCE REQUESTS BY TENANT ID
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByTenant(int tenantId)
         {
