@@ -16,6 +16,7 @@ namespace HousingAPI.Controllers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
+        /*
         // GET: api/MaintenanceRequests
         public IHttpActionResult GetMaintenanceRequests()
         {
@@ -26,6 +27,7 @@ namespace HousingAPI.Controllers
 
             return NotFound();
         }
+
         // GET: api/MaintenanceRequests/5
         [ResponseType(typeof(MaintenanceRequest))]
         public IHttpActionResult GetMaintenanceRequest(int id)
@@ -39,6 +41,7 @@ namespace HousingAPI.Controllers
 
             return Ok(result);
         }
+
         //GET: api/MaintenanceRequests/ByTenant/5
         [Route("api/MaintenanceRequests/ByTenant/{id}")]
         public IHttpActionResult GetMaintenanceRequestsByTenant(int id)
@@ -52,6 +55,30 @@ namespace HousingAPI.Controllers
 
             return Ok(result);
         }
+        */
+
+        // GET: api/MaintenanceRequests
+        public IHttpActionResult GetMaintenanceRequests()
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsMaintenanceRequest();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+        // GET: api/MaintenanceRequests/id
+        public IHttpActionResult GetMaintenanceRequests(int id)
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsMaintenanceRequestByProvider(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
         // PUT: api/MaintenanceRequests/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutMaintenanceRequest(int id, MaintenanceRequest maintenanceRequest)

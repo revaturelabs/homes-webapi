@@ -96,7 +96,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get all requests with supplies
-        // DEFAULT
+        // INSIDE HELPER: USED IN TENANTS
         // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         public List<SupplyRequestSupplyMapper> GetSupplyRequestWithSupplies(int tenantId)
         {
