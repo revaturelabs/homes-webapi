@@ -15,8 +15,12 @@ namespace HousingAPI.Models.ADModels
         public string PhoneNumber { get; set; }
     }
 
-    public class ADUserList
+    public class ADGetUsersJSONResponseModel
     {
+        [JsonProperty("@odata.context")]
+        public string Context { get; set; }
+
+        [JsonProperty("value")]
         public List<ADUserJsonModel> ADUserJsonModel { get; set; }
     }
 
