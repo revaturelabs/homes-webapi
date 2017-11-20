@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.Tenant;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Tenants
+        [ResponseType(typeof(IEnumerable<TenantMapper>))]
         public IHttpActionResult GetTenants()
         {
             var helper = new TenantsHelper();
@@ -27,8 +29,9 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         // GET: api/Tenants/5
-        [ResponseType(typeof(Tenant))]
+        [ResponseType(typeof(TenantMapper))]
         public IHttpActionResult GetTenant(int id)
         {
             var helper = new TenantsHelper();
@@ -40,8 +43,10 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
+
         //GET: api/Tenants/Info
         [Route("api/Tenants/Info")]
+        [ResponseType(typeof(IEnumerable<TenantInfoMapper>))]
         public IHttpActionResult GetTenantsInfo()
         {
             var helper = new TenantsHelper();
@@ -51,8 +56,10 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         //GET: api/Tenants/Info/{id}
         [Route("api/Tenants/Info/{id}")]
+        [ResponseType(typeof(TenantInfoMapper))]
         public IHttpActionResult GetTenantInfo(int id)
         {
             var helper = new TenantsHelper();
@@ -64,8 +71,10 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
+
         //GET: api/Tenants/Info/ByBatch/5
         [Route("api/Tenants/Info/ByBatch/{id}")]
+        [ResponseType(typeof(IEnumerable<TenantInfoMapper>))]
         public IHttpActionResult GetTenantsInfoByBatch(int id)
         {
             var helper = new TenantsHelper();
@@ -77,6 +86,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
+
         // PUT: api/Tenants/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTenant(int id, Tenant tenant)
@@ -111,6 +121,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
 
         // POST: api/Tenants
         [ResponseType(typeof(Tenant))]

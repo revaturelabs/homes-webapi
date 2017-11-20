@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.RequestSuppliesMap;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/RequestSuppliesMaps
+        [ResponseType(typeof(IEnumerable<RequestSuppliesMapMapper>))]
         public IHttpActionResult GetRequestSuppliesMap()
         {
             var helper = new RequestSuppliesMapsHelper();
@@ -29,7 +31,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/RequestSuppliesMaps/5
-        [ResponseType(typeof(RequestSuppliesMap))]
+        [ResponseType(typeof(RequestSuppliesMapMapper))]
         public IHttpActionResult GetRequestSuppliesMap(int id)
         {
             var helper = new RequestSuppliesMapsHelper();
@@ -42,84 +44,84 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
-       // PUT: api/RequestSuppliesMaps/5
-       // [ResponseType(typeof(void))]
-       // public IHttpActionResult PutRequestSuppliesMap(int id, RequestSuppliesMap requestSuppliesMap)
-       // {
-       //     if (!ModelState.IsValid)
-       //     {
-       //         return BadRequest(ModelState);
-       //     }
+        //PUT: api/RequestSuppliesMaps/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutRequestSuppliesMap(int id, RequestSuppliesMap requestSuppliesMap)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-       //     if (id != requestSuppliesMap.requestSupplyMapId)
-       //     {
-       //         return BadRequest();
-       //     }
+            if (id != requestSuppliesMap.requestSupplyMapId)
+            {
+                return BadRequest();
+            }
 
-       //     db.Entry(requestSuppliesMap).State = EntityState.Modified;
+            db.Entry(requestSuppliesMap).State = EntityState.Modified;
 
-       //     try
-       //     {
-       //         db.SaveChanges();
-       //     }
-       //     catch (DbUpdateConcurrencyException)
-       //     {
-       //         if (!RequestSuppliesMapExists(id))
-       //         {
-       //             return NotFound();
-       //         }
-       //         else
-       //         {
-       //             throw;
-       //         }
-       //     }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!RequestSuppliesMapExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-       //     return StatusCode(HttpStatusCode.NoContent);
-       // }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
-       // POST: api/RequestSuppliesMaps
-       //[ResponseType(typeof(RequestSuppliesMap))]
-       // public IHttpActionResult PostRequestSuppliesMap(RequestSuppliesMap requestSuppliesMap)
-       // {
-       //     if (!ModelState.IsValid)
-       //     {
-       //         return BadRequest(ModelState);
-       //     }
+        //POST: api/RequestSuppliesMaps
+       [ResponseType(typeof(RequestSuppliesMap))]
+        public IHttpActionResult PostRequestSuppliesMap(RequestSuppliesMap requestSuppliesMap)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-       //     db.RequestSuppliesMaps.Add(requestSuppliesMap);
-       //     db.SaveChanges();
+            db.RequestSuppliesMaps.Add(requestSuppliesMap);
+            db.SaveChanges();
 
-       //     return CreatedAtRoute("DefaultApi", new { id = requestSuppliesMap.requestSupplyMapId }, requestSuppliesMap);
-       // }
+            return CreatedAtRoute("DefaultApi", new { id = requestSuppliesMap.requestSupplyMapId }, requestSuppliesMap);
+        }
 
-       // DELETE: api/RequestSuppliesMaps/5
-       // [ResponseType(typeof(RequestSuppliesMap))]
-       // public IHttpActionResult DeleteRequestSuppliesMap(int id)
-       // {
-       //     RequestSuppliesMap requestSuppliesMap = db.RequestSuppliesMaps.Find(id);
-       //     if (requestSuppliesMap == null)
-       //     {
-       //         return NotFound();
-       //     }
+        //DELETE: api/RequestSuppliesMaps/5
+        [ResponseType(typeof(RequestSuppliesMap))]
+        public IHttpActionResult DeleteRequestSuppliesMap(int id)
+        {
+            RequestSuppliesMap requestSuppliesMap = db.RequestSuppliesMaps.Find(id);
+            if (requestSuppliesMap == null)
+            {
+                return NotFound();
+            }
 
-       //     db.RequestSuppliesMaps.Remove(requestSuppliesMap);
-       //     db.SaveChanges();
+            db.RequestSuppliesMaps.Remove(requestSuppliesMap);
+            db.SaveChanges();
 
-       //     return Ok(requestSuppliesMap);
-       // }
+            return Ok(requestSuppliesMap);
+        }
 
-       // protected override void Dispose(bool disposing)
-       // {
-       //     if (disposing)
-       //     {
-       //         db.Dispose();
-       //     }
-       //     base.Dispose(disposing);
-       // }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-       // private bool RequestSuppliesMapExists(int id)
-       // {
-       //     return db.RequestSuppliesMaps.Count(e => e.requestSupplyMapId == id) > 0;
-       // }
+        private bool RequestSuppliesMapExists(int id)
+        {
+            return db.RequestSuppliesMaps.Count(e => e.requestSupplyMapId == id) > 0;
+        }
     }
 }

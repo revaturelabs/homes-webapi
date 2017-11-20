@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.Provider;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Providers
+        [ResponseType(typeof(IEnumerable<ProviderMapper>))]
         public IHttpActionResult GetProviders()
         {
             var helper = new ProvidersHelper();
@@ -30,7 +32,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/Providers/5
-        [ResponseType(typeof(Provider))]
+        [ResponseType(typeof(ProviderMapper))]
         public IHttpActionResult GetProvider(int id)
         {
             var helper = new ProvidersHelper();
@@ -46,6 +48,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // GET: api/Providers/WithContact
         [Route("api/Providers/WithContact")]
+        [ResponseType(typeof(IEnumerable<ProviderContactMapper>))]
         public IHttpActionResult GetProvidersWithContact()
         {
             var helper = new ProvidersHelper();
@@ -58,6 +61,7 @@ namespace HousingAPI.Controllers.APIControllers
         
         // GET api/Providers/WithContact
         [Route("api/Providers/WithContact/{id}")]
+        [ResponseType(typeof(ProviderContactMapper))]
         public IHttpActionResult GetProviderWithContact(int id)
         {
             var helper = new ProvidersHelper();
@@ -70,6 +74,7 @@ namespace HousingAPI.Controllers.APIControllers
         
         // GET: api/Providers/WithUnits
         [Route("api/Providers/WithUnits")]
+        [ResponseType(typeof(IEnumerable<ProviderUnitsMapper>))]
         public IHttpActionResult GetProvidersWithUnits()
         {
             var helper = new ProvidersHelper();
@@ -82,6 +87,7 @@ namespace HousingAPI.Controllers.APIControllers
         
         // GET api/Providers/WithUnits
         [Route("api/Providers/WithUnits/{id}")]
+        [ResponseType(typeof(ProviderUnitsMapper))]
         public IHttpActionResult GetProviderWithUnits(int id)
         {
             var helper = new ProvidersHelper();

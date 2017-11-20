@@ -68,7 +68,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get All providers with contact
         // DEFAULT
         // RETURNS ALL PROVIDERS WITH: Contacts
-        public List<ProviderContactMapper> GetProvidersWithContact()
+        public IEnumerable<ProviderContactMapper> GetProvidersWithContact()
         {
             var content = db.Providers.ToList();
             if (content.Count() == 0)
@@ -123,7 +123,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get All providers with units
         // DEFAULT
         // RETURNS ALL PROVIDERS WITH: Housing Units with Address
-        public List<ProviderUnitsMapper> GetProvidersWithUnits()
+        public IEnumerable<ProviderUnitsMapper> GetProvidersWithUnits()
         {
             var content = db.Providers.ToList();
             if (content.Count() == 0)

@@ -19,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Addresses
+        [ResponseType(typeof(IEnumerable<AddressMapper>))]
         public IHttpActionResult GetAddresses()
         {
             var helper = new AddressesHelper();
@@ -30,7 +31,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/Addresses/5
-        [ResponseType(typeof(Address))]
+        [ResponseType(typeof(AddressMapper))]
         public IHttpActionResult GetAddress(int id)
         {
             var helper = new AddressesHelper();

@@ -65,7 +65,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get all mapping with supply by request - USED IN REQUEST
-        // DEFAULT
+        // INSIDE HELPER: USED IN SUPPLY REQUEST
         // RETURNS A SUPPLY REQUEST MAP BY SUPPLY REQUEST ID WITH: Supplies
         public IEnumerable<RequestSuppliesMapSupplyMapper> GetRequestSuppliesMapsWithSupplyByRequest(int suppliesRequestId)
         {

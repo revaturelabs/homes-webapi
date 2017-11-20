@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.TenantCarRelationship;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/TenantCarRelationships
+        [ResponseType(typeof(IEnumerable<TenantCarRelationshipMapper>))]
         public IHttpActionResult GetTenantCarRelationships()
         {
             //return db.TenantCarRelationships;
@@ -30,18 +32,16 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
-        // GET: api/TenantCarRelationships/5
-        [ResponseType(typeof(TenantCarRelationship))]
-        public IHttpActionResult GetTenantCarRelationship(int id)
+        // GET: api/TenantCarRelationships
+        [ResponseType(typeof(TenantCarRelationshipMapper))]
+        public IHttpActionResult GetTenantCarRelationships(int id)
         {
-            //TenantCarRelationship tenantCarRelationship = db.TenantCarRelationships.Find(id);
+            //return db.TenantCarRelationships;
             var helper = new TenantCarRelationshipsHelper();
-            var result = helper.GetTenantCarRelationship(id);
+            var result = helper.GetTenantCarRelationships(id);
 
             if (result == null)
-            {
                 return NotFound();
-            }
 
             return Ok(result);
         }

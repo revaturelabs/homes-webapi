@@ -277,7 +277,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get tenants of a housing unit with its supply request
         // INSIDE HELPER: USED IN HOUSING UNIT HELPER
         // RETURNS TENANTS BY HOUSING WITH: Supply Request with Mapping with Supplies
-        public List<TenantSupplyMapper> GetTenantsWithSupplies(int housingUnitId)
+        public IEnumerable<TenantSupplyMapper> GetTenantsWithSupplies(int housingUnitId)
         {
             var content = db.Tenants.Where(j => j.housingUnitId == housingUnitId).ToList();
             if (content.Count() == 0)
@@ -314,7 +314,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get tenants of a housing unit with its maintenance request
         // INSIDE HELPER: USED IN HOUSING UNIT HELPER
         // RETURNS TENANTS BY HOUSING WITH: Maintenance Request
-        public List<TenantMaintenanceMapper> GetTenantsWithMaintenance(int housingUnitId)
+        public IEnumerable<TenantMaintenanceMapper> GetTenantsWithMaintenance(int housingUnitId)
         {
             var content = db.Tenants.Where(j => j.housingUnitId == housingUnitId).ToList();
             if (content.Count() == 0)

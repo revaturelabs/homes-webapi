@@ -132,8 +132,8 @@
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.1\lib\net46\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
@@ -258,7 +258,6 @@
     <Compile Include="Controllers\APIControllers\BatchesController.cs" />
     <Compile Include="Controllers\APIControllers\ContactsController.cs" />
     <Compile Include="Controllers\APIControllers\GendersController.cs" />
-    <Compile Include="Controllers\APIControllers\HousingOccupantsController.cs" />
     <Compile Include="Controllers\APIControllers\HousingUnitsController.cs" />
     <Compile Include="Controllers\APIControllers\ManagementsController.cs" />
     <Compile Include="Controllers\APIControllers\ProvidersController.cs" />
@@ -281,7 +280,6 @@
     <Compile Include="Controllers\Helpers\SupplyRequestsHelper.cs" />
     <Compile Include="Controllers\Helpers\TenantCarRelationshipsHelper.cs" />
     <Compile Include="Controllers\Helpers\TenantsHelper.cs" />
-    <Compile Include="Controllers\APIControllers\TenantsGenderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\APIControllers\MaintenanceRequestsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -291,6 +289,7 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ADModels\ADUser.cs" />
     <Compile Include="Models\Batch.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
@@ -383,8 +382,6 @@
     <Compile Include="Models\TenantCarRelationship.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TenantsGenderViewModel.cs" />
-    <Compile Include="Models\TenantsHousingUnitViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

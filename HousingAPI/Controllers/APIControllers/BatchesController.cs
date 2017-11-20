@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.Batch;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Batches
+        [ResponseType(typeof(IEnumerable<BatchMapper>))]
         public IHttpActionResult GetBatches()
         {
             var helper = new BatchesHelpers();
@@ -27,8 +29,9 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         // GET: api/Batches/5
-        [ResponseType(typeof(Batch))]
+        [ResponseType(typeof(BatchMapper))]
         public IHttpActionResult GetBatch(int id)
         {
             var helper = new BatchesHelpers();
@@ -38,6 +41,20 @@ namespace HousingAPI.Controllers.APIControllers
                 return NotFound();
             }
 
+            return Ok(result);
+        }
+
+        // Get: api/Batches/WithTenants/5
+        [Route("api/Batches/WithTenants/{id}")]
+        [ResponseType(typeof(BatchTenantMapper))]
+        public IHttpActionResult GetBatchWithTenants(int id)
+        {
+            var helper = new BatchesHelpers();
+            var result = helper.GetBatchwithHousingAddress(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 

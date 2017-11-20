@@ -13,54 +13,83 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Configuration;
 using System.Web.Http.Description;
+using HousingAPI.Models.ADModels;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
 
-    public class UserResponseModel
-    {
-        public string ObjectId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-    }
-
     public class ADUsersController : ApiController
     {
-        private static string audience = ConfigurationManager.AppSettings["ida:Audience"];
-        private static string clientId = ConfigurationManager.AppSettings["ida:ClientID"];
+        public ADUserGraphTokenResponse GenerateAccessToken()
+        {
+            ADUserGraphTokenResponse aDUserGraphTokenResponse = new ADUserGraphTokenResponse();
+
+            HttpClient tokenClient = new HttpClient();
+
+            Task.Run(async () =>
+            {
+                tokenClient.BaseAddress = new Uri("https://login.microsoftonline.com/" + ConfigurationManager.AppSettings["ida:Tenant"] + "/oauth2/v2.0/token");
+                var content = new FormUrlEncodedContent(new[]
+                {
+                new KeyValuePair<string, string>("tenant", ConfigurationManager.AppSettings["ida:Tenant"]),
+                new KeyValuePair<string, string>("client_id", ConfigurationManager.AppSettings["ida:Audience2"]),
+                new KeyValuePair<string, string>("scope", "https://graph.microsoft.com/.default"),
+                new KeyValuePair<string, string>("client_secret", ConfigurationManager.AppSettings["ida:Secret2"]),
+                new KeyValuePair<string, string>("grant_type", "client_credentials")
+            });
+                var result = await tokenClient.PostAsync("", content);
+                string resultContent = await result.Content.ReadAsStringAsync();
+                JToken parsedResult = JToken.Parse(resultContent);
+
+                aDUserGraphTokenResponse.AccessToken = parsedResult["access_token"].Value<string>();
+                aDUserGraphTokenResponse.ExpiresIn = parsedResult["expires_in"].Value<string>();
+                aDUserGraphTokenResponse.TokenType = parsedResult["token_type"].Value<string>();
+
+            }).Wait();
+
+            return aDUserGraphTokenResponse;
+        }
 
         // Get users in active directory
-        //[Authorize]
+        [Authorize]
         [HttpGet]
-        [ResponseType(typeof(UserResponseModel))]
-        public UserResponseModel GetADUsers()
+        [ResponseType(typeof(ADUserJsonModel))]
+        public JToken GetADUsers()
         {
+            ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
+
+            HttpClient graphCRUDClient = new HttpClient();
             string responseString = "";
-            string token = Request.Headers.Authorization.Parameter;
-            HttpClient client = new HttpClient();
+
             Task.Run(async () =>
             {
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/users");
 
-                message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+                message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", aDUserGraphTokenResponse.AccessToken);
 
-                HttpResponseMessage response = await client.SendAsync(message);
+                HttpResponseMessage response = await graphCRUDClient.SendAsync(message);
                 responseString = await response.Content.ReadAsStringAsync();
             }).Wait();
 
             try
             {
-                UserResponseModel urm = new UserResponseModel();
                 JToken parsed = JToken.Parse(responseString);
-                urm.Email = parsed["value"][0]["userPrincipalName"].Value<string>();
-                urm.FirstName = parsed["value"][0]["givenName"].Value<string>();
-                urm.LastName = parsed["value"][0]["surname"].Value<string>();
-                urm.ObjectId = parsed["value"][0]["id"].Value<string>();
-                urm.PhoneNumber = parsed["value"][0]["mobilePhone"].Value<string>();
 
-                return urm;
+                ////Parse response into appropiate model
+                //ADGetUsersJSONResponseModel aDUserList = new ADGetUsersJSONResponseModel()
+                //{
+                //    Context = parsed["@odata.context"].Value<string>(),
+                //    //ADUserJsonModel = parsed["value"].Value<List<ADUserJsonModel>>()
+
+                //};
+
+                //foreach (var item in parsed["value"].Value<List<ADUserJsonModel>>())
+                //{
+                //    aDUserList.ADUserJsonModel.Add(item);
+                //}
+
+                //return aDUserList.ADUserJsonModel;
+                return parsed;
 
             }
             catch
@@ -69,21 +98,12 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 return null;
 
             }
-            //HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me");
-
-            //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-
-            //HttpResponseMessage response = await client.SendAsync(message);
-
-            //string responseString = await response.Content.ReadAsStringAsync();
-
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    JObject user = JObject.Parse(responseString);
-            //}
         }
 
+        //POST
 
+        //PUT
 
+        //DELETE
     }
 }

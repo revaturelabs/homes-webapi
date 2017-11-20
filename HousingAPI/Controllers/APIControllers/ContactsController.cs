@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.Contact;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Contacts
+        [ResponseType(typeof(IEnumerable<ContactMapper>))]
         public IHttpActionResult GetContacts()
         {
             var helper = new ContactsHelper();
@@ -29,7 +31,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/Contacts/5
-        [ResponseType(typeof(Contact))]
+        [ResponseType(typeof(ContactMapper))]
         public IHttpActionResult GetContact(int id)
         {
             var helper = new ContactsHelper();
