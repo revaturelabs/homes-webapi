@@ -22,8 +22,6 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Genders
-        
-        
         public IHttpActionResult GetGenders()
         {
             var helper = new GendersHelper();

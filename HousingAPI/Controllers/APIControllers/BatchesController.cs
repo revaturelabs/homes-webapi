@@ -27,6 +27,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+
         // GET: api/Batches/5
         [ResponseType(typeof(Batch))]
         public IHttpActionResult GetBatch(int id)
@@ -38,6 +39,20 @@ namespace HousingAPI.Controllers.APIControllers
                 return NotFound();
             }
 
+            return Ok(result);
+        }
+
+        // Get: api/Batches/WithTenants/5
+        [Route("api/Batches/WithTenants/{id}")]
+        [ResponseType(typeof(Batch))]
+        public IHttpActionResult GetBatchWithTenants(int id)
+        {
+            var helper = new BatchesHelpers();
+            var result = helper.GetBatchwithHousingAddress(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 

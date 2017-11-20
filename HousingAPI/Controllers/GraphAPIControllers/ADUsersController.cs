@@ -30,7 +30,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
             string token = Request.Headers.Authorization.Parameter;
 
             HttpClient client = new HttpClient();
-
+            
             Task.Run(async () =>
             {
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/users");
