@@ -291,6 +291,7 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ADModels\ADUser.cs" />
     <Compile Include="Models\Batch.cs">
       <DependentUpon>HousingDB.tt</DependentUpon>
     </Compile>
