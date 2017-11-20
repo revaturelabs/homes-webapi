@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.Management;
+using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +20,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Managements
+        [ResponseType(typeof(IEnumerable<ManagementMapper>))]
         public IHttpActionResult GetManagements()
         {
             var helper = new ManagementsHelper();
@@ -29,7 +32,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/Managements/5
-        [ResponseType(typeof(Management))]
+        [ResponseType(typeof(ManagementMapper))]
         public IHttpActionResult GetManagement(int id)
         {
             var helper = new ManagementsHelper();
@@ -41,7 +44,9 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
-        // GET: api/Managements/WithContact
+
+        // GET: api/Managements
+        [ResponseType(typeof(IEnumerable<ManagementContactMapper>))]
         [Route("api/Managements/WithContact")]
         public IHttpActionResult GetManagementsWithContact()
         {
@@ -54,7 +59,9 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
+
         // GET: api/Managements/WithContact/5
+        [ResponseType(typeof(ManagementContactMapper))]
         [Route("api/Managements/WithContact/{id}")]
         public IHttpActionResult GetManagementWithContact(int id)
         {

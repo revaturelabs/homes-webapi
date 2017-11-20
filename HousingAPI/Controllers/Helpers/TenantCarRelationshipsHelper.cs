@@ -35,8 +35,30 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
-        // Get one basic table
+        // Get all basic tables
         // DEFAULT CRUD
+        public TenantCarRelationshipMapper GetTenantCarRelationships(int relationshipId)
+        {
+            var content = db.TenantCarRelationships.FirstOrDefault(j => j.relationshipId == relationshipId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                TenantCarRelationshipMapper tenantCarRelationship = new TenantCarRelationshipMapper()
+                {
+                    RelationshipId = content.relationshipId,
+                    TenantId = content.tenantId ?? default(int),
+                    ParkingPassStatus = content.parkingPassStatus ?? default(bool),
+                };
+                return tenantCarRelationship;
+            }
+        }
+
+        // Get one basic table
+        // INSIDE HELPER: USED IN TENANT
+        // RETURNS A TENANT CAR RELATIONSHIP FOR A TENANT
         public TenantCarRelationshipMapper GetTenantCarRelationship(int tenantId)
         {
             var content = db.TenantCarRelationships.FirstOrDefault(j => j.tenantId == tenantId);

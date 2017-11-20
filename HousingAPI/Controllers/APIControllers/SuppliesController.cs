@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.PresentationModels.Supply;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -18,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Supplies
+        [ResponseType(typeof(IEnumerable<SupplyMapper>))]
         public IHttpActionResult GetSupplies()
         {
             var helper = new SuppliesHelper();
@@ -30,7 +32,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/Supplies/5
-        [ResponseType(typeof(Supply))]
+        [ResponseType(typeof(SupplyMapper))]
         public IHttpActionResult GetSupply(int id)
         {
 

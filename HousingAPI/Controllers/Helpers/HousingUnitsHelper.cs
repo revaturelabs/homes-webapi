@@ -65,7 +65,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get All with Address
         // DEFAULT
         // RETURNS ALL THE HOUSING UNITS WITH: Address
-        public List<HousingUnitAddressMapper> GetHousingUnitsWithAddress()
+        public IEnumerable<HousingUnitAddressMapper> GetHousingUnitsWithAddress()
         {
             var content = db.HousingUnits.ToList();
             if (content.Count() == 0)
@@ -121,145 +121,11 @@ namespace HousingAPI.Controllers.Helpers
                 return housingUnit;
             }
         }
-
-        // Get All housing units of a provider
-        // INSIDE HELPER: USED IN PROVIDERS
-        // RETURNS ALL THE HOUSING BY PROVIDER UNITS WITH: Address
-        public List<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
-        {
-            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
-            if (content.Count() == 0)
-            {
-                return null;
-            }
-            else
-            {
-                List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
-                AddressesHelper address = new AddressesHelper();
-                foreach (var item in content)
-                {
-                    HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
-                    {
-                        HousingUnitId = item.housingUnitId,
-                        ProviderId = item.providerId ?? 0,
-                        AddressId = item.addressId ?? 0,
-                        HousingSignature = item.housingSignature,
-                        Capacity = item.capacity,
-
-                        Address = address.GetAddress(item.addressId ?? 0)
-                    };
-                    housingUnits.Add(housingUnit);
-                }
-                return housingUnits;
-            }
-        }
-
-        // Get All maintenance request
-        // DEFAULT
-        // RETURNS ALL THE HOUSING UNITS: Address, and Tenants with Maintenance Requests
-        public List<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequest()
-        {
-            var content = db.HousingUnits.ToList();
-            if (content.Count() == 0)
-            {
-                return null;
-            }
-            else
-            {
-                List<HousingUnitProviderTenantMaintenanceMapper> housingUnits = new List<HousingUnitProviderTenantMaintenanceMapper>();
-                AddressesHelper address = new AddressesHelper();
-                TenantsHelper tenants = new TenantsHelper();
-                foreach (var item in content)
-                {
-                    HousingUnitProviderTenantMaintenanceMapper housingUnit = new HousingUnitProviderTenantMaintenanceMapper()
-                    {
-                        HousingUnitId = item.housingUnitId,
-                        ProviderId = item.providerId ?? 0,
-                        AddressId = item.addressId ?? 0,
-                        HousingSignature = item.housingSignature,
-                        Capacity = item.capacity,
-
-                        Address = address.GetAddress(item.addressId ?? 0),
-                        Tenants = tenants.GetTenantsWithMaintenance(item.housingUnitId)
-                    };
-                    housingUnits.Add(housingUnit);
-                }
-                return housingUnits;
-            }
-        }
-
-        // Get All maintenance request by provider
-        // DEFAULT
-        // RETURNS ALL THE HOUSING UNITS BY PROVIDER WITH: Address, and Tenants with Maintenance Requests
-        public List<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequestByProvider(int providerId)
-        {
-            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
-            if (content.Count() == 0)
-            {
-                return null;
-            }
-            else
-            {
-                List<HousingUnitProviderTenantMaintenanceMapper> housingUnits = new List<HousingUnitProviderTenantMaintenanceMapper>();
-                AddressesHelper address = new AddressesHelper();
-                TenantsHelper tenants = new TenantsHelper();
-                foreach (var item in content)
-                {
-                    HousingUnitProviderTenantMaintenanceMapper housingUnit = new HousingUnitProviderTenantMaintenanceMapper()
-                    {
-                        HousingUnitId = item.housingUnitId,
-                        ProviderId = item.providerId ?? 0,
-                        AddressId = item.addressId ?? 0,
-                        HousingSignature = item.housingSignature,
-                        Capacity = item.capacity,
-
-                        Address = address.GetAddress(item.addressId ?? 0),
-                        Tenants = tenants.GetTenantsWithMaintenance(item.housingUnitId)
-                    };
-                    housingUnits.Add(housingUnit);
-                }
-                return housingUnits;
-            }
-        }
-
-        // Get All supply request by provider
-        // DEFAULT
-        // RETURNS ALL THE HOUSING UNITS WITH: Address, and Tenants with Supply Requests
-        public List<HousingUnitProviderTenantSupplyMapper> GetHousingUnitsSupplyRequest()
-        {
-            var content = db.HousingUnits.ToList();
-            if (content.Count() == 0)
-            {
-                return null;
-            }
-            else
-            {
-                List<HousingUnitProviderTenantSupplyMapper> housingUnits = new List<HousingUnitProviderTenantSupplyMapper>();
-                AddressesHelper address = new AddressesHelper();
-                TenantsHelper tenants = new TenantsHelper();
-                foreach (var item in content)
-                {
-                    HousingUnitProviderTenantSupplyMapper housingUnit = new HousingUnitProviderTenantSupplyMapper
-                    {
-                        HousingUnitId = item.housingUnitId,
-                        ProviderId = item.providerId ?? 0,
-                        AddressId = item.addressId ?? 0,
-                        HousingSignature = item.housingSignature,
-                        Capacity = item.capacity,
-
-                        Address = address.GetAddress(item.addressId ?? 0),
-                        Tenants = tenants.GetTenantsWithSupplies(item.housingUnitId)
-                    };
-                    housingUnits.Add(housingUnit);
-                }
-                return housingUnits;
-            }
-        }
-
+        
         // Get All housing units with Provider
         // DEFAULT
         // RETURNS ALL THE HOUSING UNITS WITH: Address, and  Provider with Contact
-        public List<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
+        public IEnumerable<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
         {
             var content = db.HousingUnits.ToList();
             if (content.Count() == 0)
@@ -322,7 +188,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get All housing units with Tenants
         // DEFAULT
         // RETURNS ALL THE HOUSING UNITS WITH: Tenants with Batch, Contact, Gender, and Car Relationship
-        public List<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
+        public IEnumerable<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
         {
             var content = db.HousingUnits.ToList();
             if (content.Count() == 0)
@@ -356,7 +222,7 @@ namespace HousingAPI.Controllers.Helpers
         // Get One housing unit with Tenants
         // DEFAULT
         // RETURNS ONE HOUSING UNIT WITH: Tenants with Batch, Contact, Gender, and Car Relationship
-        public HousingUnitTenantInfoMapper GetHousingUnitWithTenats(int housingUnitId)
+        public HousingUnitTenantInfoMapper GetHousingUnitWithTenants(int housingUnitId)
         {
             var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
 
@@ -380,6 +246,179 @@ namespace HousingAPI.Controllers.Helpers
                     Tenants = tenants.GetTenantsWithInfoByHousing(content.housingUnitId)
                 };
                 return housingUnit;
+            }
+        }
+
+        // Get All housing units of a provider
+        // INSIDE HELPER: USED IN PROVIDERS
+        // RETURNS ALL THE HOUSING BY PROVIDER UNITS WITH: Address
+        public IEnumerable<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
+        {
+            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitAddressMapper> housingUnits = new List<HousingUnitAddressMapper>();
+                AddressesHelper address = new AddressesHelper();
+                foreach (var item in content)
+                {
+                    HousingUnitAddressMapper housingUnit = new HousingUnitAddressMapper()
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
+        /*
+         * Maintenance and Supply Requests
+         * Called in other controllers
+         */
+
+        // Get All maintenance request
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS: Address, and Tenants with Maintenance Requests
+        public IEnumerable<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequest()
+        {
+            var content = db.HousingUnits.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitProviderTenantMaintenanceMapper> housingUnits = new List<HousingUnitProviderTenantMaintenanceMapper>();
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    HousingUnitProviderTenantMaintenanceMapper housingUnit = new HousingUnitProviderTenantMaintenanceMapper()
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithMaintenance(item.housingUnitId)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
+        // Get All maintenance request by Provider
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS BY PROVIDER WITH: Address, and Tenants with Maintenance Requests
+        public IEnumerable<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequestByProvider(int providerId)
+        {
+            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitProviderTenantMaintenanceMapper> housingUnits = new List<HousingUnitProviderTenantMaintenanceMapper>();
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    HousingUnitProviderTenantMaintenanceMapper housingUnit = new HousingUnitProviderTenantMaintenanceMapper()
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithMaintenance(item.housingUnitId)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
+        // Get All supply request 
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Address, and Tenants with Supply Requests
+        public IEnumerable<HousingUnitProviderTenantSupplyMapper> GetHousingUnitsSupplyRequest()
+        {
+            var content = db.HousingUnits.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitProviderTenantSupplyMapper> housingUnits = new List<HousingUnitProviderTenantSupplyMapper>();
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    HousingUnitProviderTenantSupplyMapper housingUnit = new HousingUnitProviderTenantSupplyMapper
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithSupplies(item.housingUnitId)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
+        // Get All supply request by House Unit/tenat
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Address, and Tenants with Supply Requests
+        public IEnumerable<HousingUnitProviderTenantSupplyMapper> GetHousingUnitsSupplyRequest(int housingUnitId)
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitProviderTenantSupplyMapper> housingUnits = new List<HousingUnitProviderTenantSupplyMapper>();
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    HousingUnitProviderTenantSupplyMapper housingUnit = new HousingUnitProviderTenantSupplyMapper
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithSupplies(item.housingUnitId)
+                    };
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
             }
         }
     }

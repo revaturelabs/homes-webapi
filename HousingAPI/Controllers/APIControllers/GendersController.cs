@@ -12,6 +12,7 @@ using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
 using System.Web.Http.Cors;
 using System.Security.Claims;
+using HousingAPI.Models.PresentationModels.Gender;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -22,6 +23,7 @@ namespace HousingAPI.Controllers.APIControllers
         private HousingDBEntities db = new HousingDBEntities();
 
         // GET: api/Genders
+        [ResponseType(typeof(IEnumerable<GenderMapper>))]
         public IHttpActionResult GetGenders()
         {
             var helper = new GendersHelper();
@@ -33,8 +35,9 @@ namespace HousingAPI.Controllers.APIControllers
             return NotFound();
             //return db.Genders;
         }
+
         // GET: api/Genders/5
-        [ResponseType(typeof(Gender))]
+        [ResponseType(typeof(GenderMapper))]
         public IHttpActionResult GetGender(int id)
         {
             var helper = new GendersHelper();
