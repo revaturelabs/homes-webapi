@@ -110,7 +110,7 @@ namespace HousingAPI.Models.ADModels
     public class GUIReceivedUserJSONModel
     {
         [JsonProperty("firstName")]
-        public bool FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [JsonProperty("lastName")]
         public string LastName { get; set; }
