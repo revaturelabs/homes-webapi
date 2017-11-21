@@ -123,7 +123,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 Models.ADModels.PasswordProfile passwordProfile = new Models.ADModels.PasswordProfile()
                 {
                     Password = "Jutu9475",
-                    ForceChangePasswordNextSignIn = false
+                    ForceChangePasswordNextSignIn = true
                 };
 
                 GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel()
@@ -140,10 +140,9 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 };
 
-                //JavaScriptSerializer jss = new JavaScriptSerializer();
                 string postBody = JsonConvert.SerializeObject(graphUser);
 
-                var content = new StringContent(/*System.IO.File.ReadAllText(@"Y:\Visual Studio\Housing\homes-webapi\HousingAPI\UserPost.json")*/postBody, Encoding.UTF8, "application/json");
+                var content = new StringContent(postBody, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await graphCRUDClient.PostAsync("", content);
                 responseString = await response.Content.ReadAsStringAsync();
