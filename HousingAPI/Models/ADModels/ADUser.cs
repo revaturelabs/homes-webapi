@@ -97,6 +97,12 @@ namespace HousingAPI.Models.ADModels
         [JsonProperty("displayName")]
         public string DisplayName { get; set; }
 
+        [JsonProperty("givenName")]
+        public string GivenName { get; set; }
+
+        [JsonProperty("surname")]
+        public string Surname { get; set; }
+
         [JsonProperty("mailNickname")]
         public string MailNickname { get; set; }
 
