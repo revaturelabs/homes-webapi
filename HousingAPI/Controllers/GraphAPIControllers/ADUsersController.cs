@@ -53,45 +53,8 @@ namespace HousingAPI.Controllers.GraphAPIControllers
             return aDUserGraphTokenResponse;
         }
 
-        // Get users in active directory
-        [Authorize]
-        [HttpGet]
-        [ResponseType(typeof(ADUserJsonModel))]
-        public JToken GetADUsers()
-        {
-            ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
-
-            HttpClient graphCRUDClient = new HttpClient();
-            string responseString = "";
-
-            Task.Run(async () =>
-            {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/users");
-
-                message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", aDUserGraphTokenResponse.AccessToken);
-
-                HttpResponseMessage response = await graphCRUDClient.SendAsync(message);
-                responseString = await response.Content.ReadAsStringAsync();
-            }).Wait();
-
-            try
-            {
-                JToken parsed = JToken.Parse(responseString);
-
-                return parsed;
-
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        //POST
-        [Authorize]
-        [HttpPost]
-        //[ResponseType(typeof(ADUserJsonModel))]
-        public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel GUIReceivedUserJSONModel)
+        [NonAction]
+        public bool AddUsersToAdAndDb(GUIReceivedUserJSONModel guiReceivedUserJSONModel)
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
 
@@ -128,12 +91,12 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel()
                 {
                     AccountEnabled = true,
-                    DisplayName = GUIReceivedUserJSONModel.FirstName + GUIReceivedUserJSONModel.LastName,
-                    GivenName = GUIReceivedUserJSONModel.FirstName,
-                    Surname = GUIReceivedUserJSONModel.LastName,
-                    MobilePhone = GUIReceivedUserJSONModel.PhoneNumber,
-                    MailNickname = GUIReceivedUserJSONModel.FirstName + GUIReceivedUserJSONModel.LastName.Substring(0, 1),
-                    UserPrincipalName = GUIReceivedUserJSONModel.FirstName.ToLower() + "." + GUIReceivedUserJSONModel.LastName.ToLower() + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
+                    DisplayName = guiReceivedUserJSONModel.FirstName + guiReceivedUserJSONModel.LastName,
+                    GivenName = guiReceivedUserJSONModel.FirstName,
+                    Surname = guiReceivedUserJSONModel.LastName,
+                    MobilePhone = guiReceivedUserJSONModel.PhoneNumber,
+                    MailNickname = guiReceivedUserJSONModel.FirstName + guiReceivedUserJSONModel.LastName.Substring(0, 1),
+                    UserPrincipalName = guiReceivedUserJSONModel.FirstName.ToLower() + "." + guiReceivedUserJSONModel.LastName.ToLower() + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
                     PasswordPolicies = "DisablePasswordExpiration",
                     PasswordProfile = passwordProfile
 
@@ -167,7 +130,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 Models.Contact contact = new Models.Contact()
                 {
-                    email = GUIReceivedUserJSONModel.Email,
+                    email = guiReceivedUserJSONModel.Email,
                     objectId = adUserJson.Id,
                     firstName = adUserJson.GivenName,
                     lastName = adUserJson.surname,
@@ -178,19 +141,86 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 db.Contacts.Add(contact);
                 db.SaveChanges();
 
-                return Ok();
+                return true;
 
             }
             catch
             {
 
-                return InternalServerError();
+                return false;
 
+            }
+        }
+        // Get users in active directory
+        //[Authorize]
+        [HttpGet]
+        [ResponseType(typeof(ADUserJsonModel))]
+        public JToken GetADUsers()
+        {
+            ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
+
+            HttpClient graphCRUDClient = new HttpClient();
+            string responseString = "";
+
+            Task.Run(async () =>
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/users");
+
+                message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", aDUserGraphTokenResponse.AccessToken);
+
+                HttpResponseMessage response = await graphCRUDClient.SendAsync(message);
+                responseString = await response.Content.ReadAsStringAsync();
+            }).Wait();
+
+            try
+            {
+                JToken parsed = JToken.Parse(responseString);
+
+                return parsed;
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //POST
+        //[Authorize]
+        [HttpPost]
+        //[ResponseType(typeof(ADUserJsonModel))]
+        public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel guiReceivedUserJSONModel)
+        {
+            bool result = AddUsersToAdAndDb(guiReceivedUserJSONModel);
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
             }
 
         }
 
-        //PUT
+        //Postmultiple
+        // [Authorize]
+        [HttpPost]
+        [Route("api/adusers/addlistofusers")]
+        public IHttpActionResult ListofUsers([FromBody] GUIUserList guiUserList)
+        {
+            foreach (var item in guiUserList.GUIReceivedUsersList)
+            {
+                bool result = AddUsersToAdAndDb(item);
+                if (!result)
+                {
+                    return InternalServerError();
+                }
+
+            }
+
+            return Ok();
+        }
 
         //DELETE
         [Authorize]
@@ -228,6 +258,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 return Ok(contact);
             }
         }
+
 
 
         //Dispose database
