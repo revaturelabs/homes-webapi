@@ -100,7 +100,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Providers/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProvider(int id, Provider provider)
+        public IHttpActionResult PutProvider(int id, [FromBody]Provider provider)
         {
             if (!ModelState.IsValid)
             {
@@ -135,7 +135,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Providers
         [ResponseType(typeof(Provider))]
-        public IHttpActionResult PostProvider(Provider provider)
+        public IHttpActionResult PostProvider([FromBody]Provider provider)
         {
             if (!ModelState.IsValid)
             {

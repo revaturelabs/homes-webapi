@@ -73,7 +73,7 @@ namespace HousingAPI.Controllers
 
         // PUT: api/MaintenanceRequests/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMaintenanceRequest(int id, MaintenanceRequest maintenanceRequest)
+        public IHttpActionResult PutMaintenanceRequest(int id, [FromBody]MaintenanceRequest maintenanceRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace HousingAPI.Controllers
 
         // POST: api/MaintenanceRequests
         [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult PostMaintenanceRequest(MaintenanceRequest maintenanceRequest)
+        public IHttpActionResult PostMaintenanceRequest([FromBody]MaintenanceRequest maintenanceRequest)
         {
             if (!ModelState.IsValid)
             {

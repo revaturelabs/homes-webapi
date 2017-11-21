@@ -52,7 +52,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Genders/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutGender(int id, Gender gender)
+        public IHttpActionResult PutGender(int id, [FromBody]Gender gender)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Genders
         [ResponseType(typeof(Gender))]
-        public IHttpActionResult PostGender(Gender gender)
+        public IHttpActionResult PostGender([FromBody]Gender gender)
         {
             if (!ModelState.IsValid)
             {

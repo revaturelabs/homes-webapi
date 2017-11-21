@@ -46,7 +46,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         //PUT: api/RequestSuppliesMaps/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutRequestSuppliesMap(int id, RequestSuppliesMap requestSuppliesMap)
+        public IHttpActionResult PutRequestSuppliesMap(int id, [FromBody]RequestSuppliesMap requestSuppliesMap)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         //POST: api/RequestSuppliesMaps
        [ResponseType(typeof(RequestSuppliesMap))]
-        public IHttpActionResult PostRequestSuppliesMap(RequestSuppliesMap requestSuppliesMap)
+        public IHttpActionResult PostRequestSuppliesMap([FromBody]RequestSuppliesMap requestSuppliesMap)
         {
             if (!ModelState.IsValid)
             {
