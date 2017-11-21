@@ -48,6 +48,19 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
+        // GET: api/SupplyRequests/ByHouseUnit/5
+        [Route("api/SupplyRequests/ByHouseUnit/{id}")]
+        [ResponseType(typeof(IEnumerable<SupplyRequestSupplyMapper>))]
+        public IHttpActionResult GetMaintenanceRequestsByTenant(int id)
+        {
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequestWithSupplies(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
         // GET: api/SupplyRequests/ByHouseUnit
         [Route("api/SupplyRequests/ByHouseUnit")]
         [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantSupplyMapper>))]
