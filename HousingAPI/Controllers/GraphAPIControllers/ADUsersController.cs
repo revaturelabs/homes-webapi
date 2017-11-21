@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-//using System.Web.Mvc;
-using System.Net.Http.Headers;
-using Microsoft;
-using Microsoft.Graph;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Web.Http.Description;
+﻿using HousingAPI.Models;
 using HousingAPI.Models.ADModels;
+//using System.Web.Mvc;
+using Microsoft.Graph;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
 
     public class ADUsersController : ApiController
     {
+        private HousingDBEntities db = new HousingDBEntities();
         public ADUserGraphTokenResponse GenerateAccessToken()
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = new ADUserGraphTokenResponse();
@@ -75,6 +73,97 @@ namespace HousingAPI.Controllers.GraphAPIControllers
             {
                 JToken parsed = JToken.Parse(responseString);
 
+                return parsed;
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //POST
+        [Authorize]
+        [HttpPost]
+        //[ResponseType(typeof(ADUserJsonModel))]
+        public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel GUIReceivedUserJSONModel)
+        {
+            ADUserJsonModel adUserJson = new ADUserJsonModel();
+
+            HttpClient graphCRUDClient = new HttpClient();
+            string responseString = "";
+
+            Task.Run(async () =>
+            {
+                graphCRUDClient.BaseAddress = new Uri("https://graph.microsoft.com/v1.0/users");
+
+                Random rnd = new Random();
+                int num1 = rnd.Next(0, 9);
+                int num2 = rnd.Next(0, 9);
+                int num3 = rnd.Next(0, 9);
+                int num4 = rnd.Next(0, 9);
+
+                Models.ADModels.PasswordProfile passwordProfile = new Models.ADModels.PasswordProfile()
+                {
+                    ForceChangePasswordNextSignIn = true,
+                    Password = "Password123*"
+
+
+                };
+
+                GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel()
+                {
+                    AccountEnabled = true,
+                    DisplayName = GUIReceivedUserJSONModel.FirstName + GUIReceivedUserJSONModel.LastName,
+                    GivenName = GUIReceivedUserJSONModel.FirstName,
+                    Surname = GUIReceivedUserJSONModel.LastName,
+                    MobilePhone = GUIReceivedUserJSONModel.PhoneNumber,
+                    MailNickname = GUIReceivedUserJSONModel.FirstName + GUIReceivedUserJSONModel.LastName.Substring(0, 1),
+                    UserPrincipalName = GUIReceivedUserJSONModel.FirstName.ToLower() + "." + GUIReceivedUserJSONModel.LastName.ToLower() + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresjllive764.onmicrosoft.com",
+                    PasswordProfile = passwordProfile
+
+                };
+
+                var content = new StringContent(graphUser.ToString(), Encoding.UTF8, "application.jason");
+
+                HttpResponseMessage response = await graphCRUDClient.PostAsync("", content);
+                responseString = await response.Content.ReadAsStringAsync();
+            }).Wait();
+
+            try
+            {
+                JToken parsed = JToken.Parse(responseString);
+
+
+
+                adUserJson.Id = parsed["id"].Value<string>();
+                adUserJson.DisplayName = parsed["displayName"].Value<string>();
+                adUserJson.GivenName = parsed["givenName"].Value<string>();
+                adUserJson.JobTitle = parsed["jobTitle"].Value<string>();
+                adUserJson.Mail = parsed["mail"].Value<string>();
+                adUserJson.MobilePhone = parsed["mobilePhone"].Value<string>();
+                adUserJson.OfficeLocation = parsed["officeLocation"].Value<string>();
+                adUserJson.PreferredLanguage = parsed["preferredLanguage"].Value<string>();
+                adUserJson.surname = parsed["surname"].Value<string>();
+                adUserJson.UserPrincipalName = parsed["userPrincipalName"].Value<string>();
+
+
+                Models.Contact contact = new Models.Contact()
+                {
+                    email = adUserJson.UserPrincipalName,
+                    objectId = adUserJson.Id,
+                    firstName = adUserJson.GivenName,
+                    lastName = adUserJson.surname,
+                    phoneNumber = adUserJson.MobilePhone
+
+                };
+
+                db.Contacts.Add(contact);
+                db.SaveChanges();
+
+
+
+
                 ////Parse response into appropiate model
                 //ADGetUsersJSONResponseModel aDUserList = new ADGetUsersJSONResponseModel()
                 //{
@@ -89,21 +178,33 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 //}
 
                 //return aDUserList.ADUserJsonModel;
-                return parsed;
+                return Ok();
 
             }
             catch
             {
 
-                return null;
+                return InternalServerError();
 
             }
-        }
 
-        //POST
+        }
 
         //PUT
 
         //DELETE
+
+        //this thing
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }
+
+
