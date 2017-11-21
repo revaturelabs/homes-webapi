@@ -132,7 +132,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutHousingUnit(int id, HousingUnit housingUnit)
+        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnit housingUnit)
         {
             if (!ModelState.IsValid)
             {
@@ -167,7 +167,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/HousingUnits
         [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult PostHousingUnit(HousingUnit housingUnit)
+        public IHttpActionResult PostHousingUnit([FromBody]HousingUnit housingUnit)
         {
             if (!ModelState.IsValid)
             {

@@ -48,7 +48,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/TenantCarRelationships/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTenantCarRelationship(int id, TenantCarRelationship tenantCarRelationship)
+        public IHttpActionResult PutTenantCarRelationship(int id, [FromBody]TenantCarRelationship tenantCarRelationship)
         {
             if (!ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/TenantCarRelationships
         [ResponseType(typeof(TenantCarRelationship))]
-        public IHttpActionResult PostTenantCarRelationship(TenantCarRelationship tenantCarRelationship)
+        public IHttpActionResult PostTenantCarRelationship([FromBody]TenantCarRelationship tenantCarRelationship)
         {
             if (!ModelState.IsValid)
             {

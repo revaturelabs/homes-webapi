@@ -49,7 +49,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Supplies/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSupply(int id, Supply supply)
+        public IHttpActionResult PutSupply(int id, [FromBody]Supply supply)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Supplies
         [ResponseType(typeof(Supply))]
-        public IHttpActionResult PostSupply(Supply supply)
+        public IHttpActionResult PostSupply([FromBody]Supply supply)
         {
             if (!ModelState.IsValid)
             {

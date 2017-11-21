@@ -89,7 +89,7 @@ namespace HousingAPI.Models.ADModels
         public string Password { get; set; }
     }
 
-    public class ContactJSONModel
+    public class GraphAddUserJSONModel
     {
         [JsonProperty("accountEnabled")]
         public bool AccountEnabled { get; set; }
@@ -105,5 +105,20 @@ namespace HousingAPI.Models.ADModels
 
         [JsonProperty("passwordProfile")]
         public PasswordProfile PasswordProfile { get; set; }
+    }
+
+    public class GUIReceivedUserJSONModel
+    {
+        [JsonProperty("firstName")]
+        public string FirstName { get; set; }
+
+        [JsonProperty("lastName")]
+        public string LastName { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("phoneNumber")]
+        public string PhoneNumber { get; set; }
     }
 }
