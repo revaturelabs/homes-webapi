@@ -2,19 +2,18 @@
 using HousingAPI.Models.ADModels;
 //using System.Web.Mvc;
 using Microsoft.Graph;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Script.Serialization;
-using Newtonsoft.Json;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
@@ -194,6 +193,42 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         //PUT
 
         //DELETE
+        [Authorize]
+        [HttpDelete]
+        public IHttpActionResult DeleteADUsers(string ObjectId)
+        {
+            ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
+
+            HttpClient graphCRUDClient = new HttpClient();
+            string responseString = "";
+
+
+
+
+            Task.Run(async () =>
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Delete, "https://graph.microsoft.com/v1.0/users/" + ObjectId);
+
+                message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", aDUserGraphTokenResponse.AccessToken);
+
+                HttpResponseMessage response = await graphCRUDClient.SendAsync(message);
+                responseString = await response.Content.ReadAsStringAsync();
+            }).Wait();
+
+
+            Models.Contact contact = db.Contacts.FirstOrDefault(i => i.objectId == ObjectId);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                db.Contacts.Remove(contact);
+                db.SaveChanges();
+                return Ok(contact);
+            }
+        }
+
 
         //Dispose database
         protected override void Dispose(bool disposing)
