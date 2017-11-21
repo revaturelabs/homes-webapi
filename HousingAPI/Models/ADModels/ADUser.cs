@@ -109,6 +109,9 @@ namespace HousingAPI.Models.ADModels
         [JsonProperty("userPrincipalName")]
         public string UserPrincipalName { get; set; }
 
+        [JsonProperty("mobilePhone")]
+        public string MobilePhone { get; set; }
+
         [JsonProperty("passwordProfile")]
         public PasswordProfile PasswordProfile { get; set; }
     }
