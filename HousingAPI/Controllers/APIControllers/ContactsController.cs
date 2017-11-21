@@ -44,6 +44,21 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
+        // GET: api/Contacts/5
+        [Route("api/Contacts/GetContactByObjectId/{id}")]
+        [ResponseType(typeof(int))]
+        public IHttpActionResult GetContact(string id)
+        {
+            var helper = new ContactsHelper();
+            var result = helper.GetContactIdByObjectId(id);
+            if (result == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         // PUT: api/Contacts/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutContact(int id, [FromBody]Contact contact)

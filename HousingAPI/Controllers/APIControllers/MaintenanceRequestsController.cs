@@ -45,6 +45,19 @@ namespace HousingAPI.Controllers
             return Ok(result);
         }
 
+        // GET: api/MaintenanceRequests/ByTenant/5
+        [Route("api/MaintenanceRequests/ByTenant/{id}")]
+        [ResponseType(typeof(IEnumerable<MaintenanceRequestMapper>))]
+        public IHttpActionResult GetMaintenanceRequestsByTenant(int id)
+        {
+            var helper = new MaintenanceRequestsHelper();
+            var result = helper.GetMaintenanceRequestsByTenant(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
         // GET: api/MaintenanceRequests/ByProvider
         [Route("api/MaintenanceRequests/ByProvider")]
         [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantMaintenanceMapper>))]

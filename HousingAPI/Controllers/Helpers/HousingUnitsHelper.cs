@@ -252,9 +252,9 @@ namespace HousingAPI.Controllers.Helpers
         // Get All housing units of a provider
         // INSIDE HELPER: USED IN PROVIDERS
         // RETURNS ALL THE HOUSING BY PROVIDER UNITS WITH: Address
-        public IEnumerable<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int providerId)
+        public IEnumerable<HousingUnitAddressMapper> GetHousingUnitsWithAddressbyProvider(int contactID)
         {
-            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            var content = db.HousingUnits.Where(j => j.Provider.contactId == contactID).ToList();
             if (content.Count() == 0)
             {
                 return null;
@@ -323,9 +323,9 @@ namespace HousingAPI.Controllers.Helpers
         // Get All maintenance request by Provider
         // DEFAULT
         // RETURNS ALL THE HOUSING UNITS BY PROVIDER WITH: Address, and Tenants with Maintenance Requests
-        public IEnumerable<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequestByProvider(int providerId)
+        public IEnumerable<HousingUnitProviderTenantMaintenanceMapper> GetHousingUnitsMaintenanceRequestByProvider(int contactID)
         {
-            var content = db.HousingUnits.Where(j => j.providerId == providerId).ToList();
+            var content = db.HousingUnits.Where(j => j.Provider.contactId == contactID).ToList();
             if (content.Count() == 0)
             {
                 return null;
