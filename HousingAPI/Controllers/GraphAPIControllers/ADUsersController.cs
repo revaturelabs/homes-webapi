@@ -7,10 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
@@ -18,6 +22,8 @@ namespace HousingAPI.Controllers.GraphAPIControllers
     public class ADUsersController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
+
+        [NonAction]
         public ADUserGraphTokenResponse GenerateAccessToken()
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = new ADUserGraphTokenResponse();
@@ -88,6 +94,8 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         //[ResponseType(typeof(ADUserJsonModel))]
         public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel GUIReceivedUserJSONModel)
         {
+            ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
+
             ADUserJsonModel adUserJson = new ADUserJsonModel();
 
             HttpClient graphCRUDClient = new HttpClient();
@@ -97,6 +105,15 @@ namespace HousingAPI.Controllers.GraphAPIControllers
             {
                 graphCRUDClient.BaseAddress = new Uri("https://graph.microsoft.com/v1.0/users");
 
+                graphCRUDClient.DefaultRequestHeaders.Accept.Clear();
+
+                graphCRUDClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + aDUserGraphTokenResponse.AccessToken);
+
+                graphCRUDClient.DefaultRequestHeaders.Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", aDUserGraphTokenResponse.AccessToken);
+
                 Random rnd = new Random();
                 int num1 = rnd.Next(0, 9);
                 int num2 = rnd.Next(0, 9);
@@ -105,10 +122,8 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 Models.ADModels.PasswordProfile passwordProfile = new Models.ADModels.PasswordProfile()
                 {
-                    ForceChangePasswordNextSignIn = true,
-                    Password = "Password123*"
-
-
+                    Password = "Jutu9475",
+                    ForceChangePasswordNextSignIn = true
                 };
 
                 GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel()
@@ -119,12 +134,15 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                     Surname = GUIReceivedUserJSONModel.LastName,
                     MobilePhone = GUIReceivedUserJSONModel.PhoneNumber,
                     MailNickname = GUIReceivedUserJSONModel.FirstName + GUIReceivedUserJSONModel.LastName.Substring(0, 1),
-                    UserPrincipalName = GUIReceivedUserJSONModel.FirstName.ToLower() + "." + GUIReceivedUserJSONModel.LastName.ToLower() + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresjllive764.onmicrosoft.com",
+                    UserPrincipalName = GUIReceivedUserJSONModel.FirstName.ToLower() + "." + GUIReceivedUserJSONModel.LastName.ToLower() + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
+                    PasswordPolicies = "DisablePasswordExpiration",
                     PasswordProfile = passwordProfile
 
                 };
 
-                var content = new StringContent(graphUser.ToString(), Encoding.UTF8, "application.jason");
+                string postBody = JsonConvert.SerializeObject(graphUser);
+
+                var content = new StringContent(postBody, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await graphCRUDClient.PostAsync("", content);
                 responseString = await response.Content.ReadAsStringAsync();
@@ -161,23 +179,6 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 db.Contacts.Add(contact);
                 db.SaveChanges();
 
-
-
-
-                ////Parse response into appropiate model
-                //ADGetUsersJSONResponseModel aDUserList = new ADGetUsersJSONResponseModel()
-                //{
-                //    Context = parsed["@odata.context"].Value<string>(),
-                //    //ADUserJsonModel = parsed["value"].Value<List<ADUserJsonModel>>()
-
-                //};
-
-                //foreach (var item in parsed["value"].Value<List<ADUserJsonModel>>())
-                //{
-                //    aDUserList.ADUserJsonModel.Add(item);
-                //}
-
-                //return aDUserList.ADUserJsonModel;
                 return Ok();
 
             }
@@ -194,7 +195,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
         //DELETE
 
-        //this thing
+        //Dispose database
         protected override void Dispose(bool disposing)
         {
             if (disposing)
