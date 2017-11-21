@@ -82,11 +82,11 @@ namespace HousingAPI.Models.ADModels
 
     public class PasswordProfile
     {
-        [JsonProperty("forceChangePasswordNextSignIn")]
-        public bool ForceChangePasswordNextSignIn { get; set; }
-
         [JsonProperty("password")]
         public string Password { get; set; }
+
+        [JsonProperty("forceChangePasswordNextSignIn")]
+        public bool ForceChangePasswordNextSignIn { get; set; }
     }
 
     public class GraphAddUserJSONModel
@@ -111,6 +111,9 @@ namespace HousingAPI.Models.ADModels
 
         [JsonProperty("mobilePhone")]
         public string MobilePhone { get; set; }
+
+        [JsonProperty("passwordPolicies")]
+        public string PasswordPolicies { get; set; }
 
         [JsonProperty("passwordProfile")]
         public PasswordProfile PasswordProfile { get; set; }
