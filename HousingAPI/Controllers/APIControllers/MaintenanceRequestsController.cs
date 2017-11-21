@@ -48,10 +48,10 @@ namespace HousingAPI.Controllers
         // GET: api/MaintenanceRequests/ByTenant/5
         [Route("api/MaintenanceRequests/ByTenant/{id}")]
         [ResponseType(typeof(IEnumerable<MaintenanceRequestMapper>))]
-        public IHttpActionResult GetMaintenanceRequestsByTenant(int tenant)
+        public IHttpActionResult GetMaintenanceRequestsByTenant(int id)
         {
             var helper = new MaintenanceRequestsHelper();
-            var result = helper.GetMaintenanceRequestsByTenant(tenant);
+            var result = helper.GetMaintenanceRequestsByTenant(id);
             if (result != null)
                 return Ok(result);
 
