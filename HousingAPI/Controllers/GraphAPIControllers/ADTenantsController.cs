@@ -18,7 +18,7 @@ using System.Web.Http.Description;
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
 
-    public class ADUsersController : ApiController
+    public class ADTenantsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
 
@@ -57,7 +57,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         //[Authorize]
         [HttpGet]
         [ResponseType(typeof(ADUserJsonModel))]
-        public JToken GetADUsers()
+        public JToken GetADTenants()
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
 
@@ -66,7 +66,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
             Task.Run(async () =>
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/groups");
 
                 message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", aDUserGraphTokenResponse.AccessToken);
 
@@ -91,7 +91,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         //[Authorize]
         [HttpPost]
         //[ResponseType(typeof(ADUserJsonModel))]
-        public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel GUIReceivedUserJSONModel)
+        public IHttpActionResult PostADTenants([FromBody] GUIReceivedUserJSONModel GUIReceivedUserJSONModel)
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
 
@@ -164,6 +164,18 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 adUserJson.surname = parsed["surname"].Value<string>();
                 adUserJson.UserPrincipalName = parsed["userPrincipalName"].Value<string>();
 
+                Task.Run(async () =>
+                {
+                    graphCRUDClient.BaseAddress = new Uri("https://graph.microsoft.com/v1.0/users");
+
+                    graphCRUDClient.DefaultRequestHeaders.Accept.Clear();
+
+                    graphCRUDClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + aDUserGraphTokenResponse.AccessToken);
+
+                    graphCRUDClient.DefaultRequestHeaders.Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }).Wait();
+
 
                 Models.Contact contact = new Models.Contact()
                 {
@@ -195,7 +207,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         //DELETE
         //[Authorize]
         [HttpDelete]
-        public IHttpActionResult DeleteADUsers(int id)
+        public IHttpActionResult DeleteADTenants(int id)
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
 

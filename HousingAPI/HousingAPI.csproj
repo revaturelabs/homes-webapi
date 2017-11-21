@@ -266,6 +266,7 @@
     <Compile Include="Controllers\APIControllers\SupplyRequestsController.cs" />
     <Compile Include="Controllers\APIControllers\TenantCarRelationshipsController.cs" />
     <Compile Include="Controllers\APIControllers\TenantsController.cs" />
+    <Compile Include="Controllers\GraphAPIControllers\ADTenantsController.cs" />
     <Compile Include="Controllers\GraphAPIControllers\ADUsersController.cs" />
     <Compile Include="Controllers\Helpers\AddressesHelper.cs" />
     <Compile Include="Controllers\Helpers\BatchesHelper.cs" />
@@ -282,7 +283,6 @@
     <Compile Include="Controllers\Helpers\TenantsHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\APIControllers\MaintenanceRequestsController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

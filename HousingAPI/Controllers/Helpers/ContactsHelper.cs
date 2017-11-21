@@ -22,7 +22,7 @@ namespace HousingAPI.Controllers.Helpers
         public IEnumerable<ContactMapper> GetContacts()
         {
             var content = db.Contacts.ToList();
-            if(content.Count() == 0)
+            if (content.Count() == 0)
             {
                 return null;
             }
@@ -70,6 +70,21 @@ namespace HousingAPI.Controllers.Helpers
                 return contact;
             }
         }
+
+        // Get Single basic table
+        // DEFAULT CRUD
+        public int GetContactIdByObjectId(string objectId)
+        {
+            var content = db.Contacts.FirstOrDefault(i => i.objectId == objectId);
+            if (content == null)
+            {
+                return 0;
+            }
+            else
+            {
+
+                return content.contactId;
+            }
+        }
     }
 }
- 
