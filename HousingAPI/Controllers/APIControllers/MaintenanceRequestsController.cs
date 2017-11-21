@@ -45,8 +45,8 @@ namespace HousingAPI.Controllers
             return Ok(result);
         }
 
-        // GET: api/MaintenanceRequests/ByHouseUnit
-        [Route("api/MaintenanceRequests/ByHouseUnit")]
+        // GET: api/MaintenanceRequests/ByProvider
+        [Route("api/MaintenanceRequests/ByProvider")]
         [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantMaintenanceMapper>))]
         public IHttpActionResult GetMaintenanceRequestsByHouseUnit()
         {
@@ -58,8 +58,8 @@ namespace HousingAPI.Controllers
             return NotFound();
         }
 
-        // GET: api/MaintenanceRequests/ByHouseUnit/5
-        [Route("api/MaintenanceRequests/ByHouseUnit/{id}")]
+        // GET: api/MaintenanceRequests/ByProvider/5
+        [Route("api/MaintenanceRequests/ByProvider/{id}")]
         [ResponseType(typeof(HousingUnitProviderTenantMaintenanceMapper))]
         public IHttpActionResult GetMaintenanceRequestsByHouseUnit(int id)
         {
