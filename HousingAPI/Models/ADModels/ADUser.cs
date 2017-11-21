@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HousingAPI.Models.ADModels
 {
@@ -132,5 +129,15 @@ namespace HousingAPI.Models.ADModels
 
         [JsonProperty("phoneNumber")]
         public string PhoneNumber { get; set; }
+    }
+
+    public class GUIUserList
+    {
+        [JsonProperty("batchId")]
+        public int BatchId { get; set; }
+
+        [JsonProperty("contacts")]
+        public List<GUIReceivedUserJSONModel> GUIReceivedUsersList { get; set; }
+
     }
 }
