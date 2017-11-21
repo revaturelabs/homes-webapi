@@ -46,7 +46,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Contacts/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutContact(int id, Contact contact)
+        public IHttpActionResult PutContact(int id, [FromBody]Contact contact)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Contacts
         [ResponseType(typeof(Contact))]
-        public IHttpActionResult PostContact(Contact contact)
+        public IHttpActionResult PostContact([FromBody]Contact contact)
         {
             if (!ModelState.IsValid)
             {

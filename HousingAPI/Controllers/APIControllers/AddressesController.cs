@@ -45,7 +45,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Addresses/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAddress(int id, Address address)
+        public IHttpActionResult PutAddress(int id, [FromBody]Address address)
         {
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Addresses
         [ResponseType(typeof(Address))]
-        public IHttpActionResult PostAddress(Address address)
+        public IHttpActionResult PostAddress([FromBody]Address address)
         {
             if (!ModelState.IsValid)
             {

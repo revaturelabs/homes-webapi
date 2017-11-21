@@ -77,7 +77,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Managements/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutManagement(int id, Management management)
+        public IHttpActionResult PutManagement(int id, [FromBody]Management management)
         {
             if (!ModelState.IsValid)
             {
@@ -112,7 +112,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Managements
         [ResponseType(typeof(Management))]
-        public IHttpActionResult PostManagement(Management management)
+        public IHttpActionResult PostManagement([FromBody]Management management)
         {
             if (!ModelState.IsValid)
             {

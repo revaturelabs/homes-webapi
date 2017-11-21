@@ -60,7 +60,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Batches/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBatch(int id, Batch batch)
+        public IHttpActionResult PutBatch(int id, [FromBody]Batch batch)
         {
             if (!ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Batches
         [ResponseType(typeof(Batch))]
-        public IHttpActionResult PostBatch(Batch batch)
+        public IHttpActionResult PostBatch([FromBody]Batch batch)
         {
             if (!ModelState.IsValid)
             {
