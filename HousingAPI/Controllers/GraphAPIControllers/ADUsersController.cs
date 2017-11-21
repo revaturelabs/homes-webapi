@@ -122,7 +122,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 Models.ADModels.PasswordProfile passwordProfile = new Models.ADModels.PasswordProfile()
                 {
-                    Password = "Jutu9475",
+                    Password = "DotNet1709",
                     ForceChangePasswordNextSignIn = true
                 };
 
@@ -168,7 +168,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 Models.Contact contact = new Models.Contact()
                 {
-                    email = adUserJson.UserPrincipalName,
+                    email = GUIReceivedUserJSONModel.Email,
                     objectId = adUserJson.Id,
                     firstName = adUserJson.GivenName,
                     lastName = adUserJson.surname,
