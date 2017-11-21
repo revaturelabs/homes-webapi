@@ -266,6 +266,7 @@
     <Compile Include="Controllers\APIControllers\SupplyRequestsController.cs" />
     <Compile Include="Controllers\APIControllers\TenantCarRelationshipsController.cs" />
     <Compile Include="Controllers\APIControllers\TenantsController.cs" />
+    <Compile Include="Controllers\GraphAPIControllers\ADTenantsController.cs" />
     <Compile Include="Controllers\GraphAPIControllers\ADUsersController.cs" />
     <Compile Include="Controllers\Helpers\AddressesHelper.cs" />
     <Compile Include="Controllers\Helpers\BatchesHelper.cs" />
