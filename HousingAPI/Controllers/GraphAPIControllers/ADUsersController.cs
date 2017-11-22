@@ -151,6 +151,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
             }
         }
+
         // Get users in active directory
         //[Authorize]
         [HttpGet]
@@ -188,7 +189,6 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         //POST
         //[Authorize]
         [HttpPost]
-        //[ResponseType(typeof(ADUserJsonModel))]
         public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel guiReceivedUserJSONModel)
         {
             bool result = AddUsersToAdAndDb(guiReceivedUserJSONModel);
@@ -258,8 +258,6 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 return Ok(contact);
             }
         }
-
-
 
         //Dispose database
         protected override void Dispose(bool disposing)
