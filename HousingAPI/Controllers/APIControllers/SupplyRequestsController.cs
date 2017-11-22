@@ -19,6 +19,7 @@ namespace HousingAPI.Controllers.APIControllers
     {
         private HousingDBEntities db = new HousingDBEntities();
         
+        /*
         // GET: api/SupplyRequests
         [ResponseType(typeof(IEnumerable<SupplyRequestMapper>))]
         public IHttpActionResult GetSupplyRequests()
@@ -31,6 +32,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return Ok(result);
         }
+        */
 
         // GET: api/SupplyRequests/5
         [ResponseType(typeof(SupplyRequestMapper))]
@@ -48,6 +50,7 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
+        /*
         // GET: api/SupplyRequests/ByContact/5
         [Route("api/SupplyRequests/ByContact/{id}")]
         [ResponseType(typeof(IEnumerable<SupplyRequestSupplyMapper>))]
@@ -60,14 +63,15 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
+        */
 
         // GET: api/SupplyRequests/ByHouseUnit
-        [Route("api/SupplyRequests/ByHouseUnit")]
+        [Route("api/SupplyRequests/All")]
         [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantSupplyMapper>))]
         public IHttpActionResult GetMaintenanceRequestsByHouseUnit()
         {
-            var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitsSupplyRequest();
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequestWithSuppliesHouse();
             if (result != null)
                 return Ok(result);
 
@@ -76,11 +80,24 @@ namespace HousingAPI.Controllers.APIControllers
 
         // GET: api/SupplyRequests/ByHouseUnit/5
         [Route("api/SupplyRequests/ByHouseUnit/{id}")]
-        [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantSupplyMapper>))]
+        [ResponseType(typeof(IEnumerable<SupplyRequestWithTenant>))]
         public IHttpActionResult GetMaintenanceRequestsByHouseUnit(int id)
         {
-            var helper = new HousingUnitsHelper();
-            var result = helper.GetHousingUnitsSupplyRequest(id);
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequestWithSuppliesHouse(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+        // GET: api/SupplyRequests/ByHouseUnit/5
+        [Route("api/SupplyRequests/ByProvider/{id}")]
+        [ResponseType(typeof(IEnumerable<SupplyRequestWithTenant>))]
+        public IHttpActionResult GetSupplyRequestWithSuppliesContact(int id)
+        {
+            var helper = new SupplyRequestsHelper();
+            var result = helper.GetSupplyRequestWithSuppliesContact(id);
             if (result != null)
                 return Ok(result);
 

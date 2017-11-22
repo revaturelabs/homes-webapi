@@ -328,9 +328,11 @@
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderTenantSupplyMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitProviderTenantMaintenanceMapper.cs" />
     <Compile Include="Models\PresentationModels\HousingUnit\HousingUnitTenantInfoMapper.cs" />
+    <Compile Include="Models\PresentationModels\MaintenanceRequest\MaintenanceRequestWithTenantMapper.cs" />
     <Compile Include="Models\PresentationModels\Management\ManagementMapper.cs" />
     <Compile Include="Models\PresentationModels\RequestSuppliesMap\RequestSuppliesMapSupplyMapper.cs" />
     <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequestSupplyMapper.cs" />
+    <Compile Include="Models\PresentationModels\SupplyRequest\SupplyRequestWithTenant.cs" />
     <Compile Include="Models\PresentationModels\Supply\SupplyMapper.cs" />
     <Compile Include="Models\PresentationModels\Management\ManagementContactMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\ProviderContactMapper.cs" />
@@ -339,6 +341,7 @@
     <Compile Include="Models\PresentationModels\TenantCarRelationship\TenantCarRelationshipMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantInfoMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantMaintenanceMapper.cs" />
+    <Compile Include="Models\PresentationModels\Tenant\TenantRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\Tenant\TenantMapper.cs" />
     <Compile Include="Models\PresentationModels\MaintenanceRequest\MaintenanceRequestMapper.cs" />
     <Compile Include="Models\PresentationModels\Provider\ProviderMapper.cs" />

@@ -156,6 +156,105 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get all requests with supplies
+        // Default
+        // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
+        // change
+        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesContact(int contactId)
+        {
+            var content = db.SupplyRequests.Where(i => i.Tenant.HousingUnit.Provider.contactId == contactId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<SupplyRequestWithTenant> requests = new List<SupplyRequestWithTenant>();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                TenantsHelper tenant = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    SupplyRequestWithTenant request = new SupplyRequestWithTenant
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
+
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId),
+                        Tenant = tenant.GetTenantForRequests(item.tenantId ?? 0)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
+        //Get all requests with supplies
+        // Default
+        // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
+        // change
+        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesHouse(int housingID)
+        {
+            var content = db.SupplyRequests.Where(i => i.Tenant.housingUnitId == housingID).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<SupplyRequestWithTenant> requests = new List<SupplyRequestWithTenant>();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                TenantsHelper tenant = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    SupplyRequestWithTenant request = new SupplyRequestWithTenant
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
+
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId),
+                        Tenant = tenant.GetTenantForRequests(item.tenantId ?? 0)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
+        //Get all requests with supplies
+        // Default
+        // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
+        // change all
+        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesHouse()
+        {
+            var content = db.SupplyRequests.ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<SupplyRequestWithTenant> requests = new List<SupplyRequestWithTenant>();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                TenantsHelper tenant = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    SupplyRequestWithTenant request = new SupplyRequestWithTenant
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
+
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId),
+                        Tenant = tenant.GetTenantForRequests(item.tenantId ?? 0)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
+        //Get all requests with supplies
         // DEFAULT
         // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         public IEnumerable<SupplyRequestSupplyMapper> GetSupplyRequestWithSuppliesById(int supplyRequestId)

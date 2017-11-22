@@ -111,7 +111,7 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // DEFAULT: ONE TENANT WITH ALL INFO
-        // RETURNS A TENANT BY ID WITH: Housing unitt with Address, Batch, Contact, Gender and Car Relationship
+        // RETURNS A TENANT BY ID WITH: Housing unit with Address, Batch, Contact, Gender and Car Relationship
         public TenantInfoMapper GetTenantInfo(int tenantId)
         {
             var content = db.Tenants.FirstOrDefault(j => j.tenantId == tenantId);
@@ -143,6 +143,37 @@ namespace HousingAPI.Controllers.Helpers
                     Contact = contact.GetContact(content.contactId ?? 0),
                     Gender = gender.GetGender(content.genderId ?? 0),
                     TenantCarRelationships = car.GetTenantCarRelationship(content.tenantId)
+                };
+                return tenant;
+            }
+        }
+
+        // INSIDE HELPER: USED BY REQUESTS
+        // RETURNS A TENANT BY ID WITH: Housing unit with Address
+        public TenantRequestMapper GetTenantForRequests(int tenantId)
+        {
+            var content = db.Tenants.FirstOrDefault(j => j.tenantId == tenantId);
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                ContactsHelper contact = new ContactsHelper();
+                TenantRequestMapper tenant = new TenantRequestMapper
+                {
+                    TenantId = content.tenantId,
+                    ContactId = content.contactId ?? 0,
+                    BatchId = content.batchId ?? 0,
+                    HousingUnitId = content.housingUnitId ?? 0,
+                    GenderId = content.genderId ?? 0,
+                    MoveInDate = content.moveInDate,
+                    HasMoved = content.hasMoved ?? default(bool),
+                    HasKey = content.hasKey ?? default(bool),
+
+                    HousingUnit = housingUnits.GetHousingUnitWithAddress(content.housingUnitId ?? 0),
+                    Contact = contact.GetContact(content.contactId ?? 0)
                 };
                 return tenant;
             }
