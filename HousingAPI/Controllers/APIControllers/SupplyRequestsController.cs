@@ -68,7 +68,7 @@ namespace HousingAPI.Controllers.APIControllers
 
         // GET: api/SupplyRequests/ByHouseUnit
         [Route("api/SupplyRequests/All")]
-        [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantSupplyMapper>))]
+        [ResponseType(typeof(IEnumerable<SupplyRequestWithTenant>))]
         public IHttpActionResult GetSupplyRequestWithSuppliesAll()
         {
             var helper = new SupplyRequestsHelper();

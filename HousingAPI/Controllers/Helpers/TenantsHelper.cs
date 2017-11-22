@@ -112,9 +112,9 @@ namespace HousingAPI.Controllers.Helpers
 
         // DEFAULT: ONE TENANT WITH ALL INFO
         // RETURNS A TENANT BY ID WITH: Housing unit with Address, Batch, Contact, Gender and Car Relationship
-        public TenantInfoMapper GetTenantInfo(int tenantId)
+        public TenantInfoMapper GetTenantInfo(int contactId)
         {
-            var content = db.Tenants.FirstOrDefault(j => j.tenantId == tenantId);
+            var content = db.Tenants.FirstOrDefault(j => j.contactId == contactId);
             if (content == null)
             {
                 return null;
