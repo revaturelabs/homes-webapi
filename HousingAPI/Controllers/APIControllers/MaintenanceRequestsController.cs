@@ -20,7 +20,7 @@ namespace HousingAPI.Controllers
     {
         private HousingDBEntities db = new HousingDBEntities();
 
-        /*
+        
         // GET: api/MaintenanceRequests
         [ResponseType(typeof(IEnumerable<MaintenanceRequestMapper>))]
         public IHttpActionResult GetMaintenanceRequests()
@@ -32,7 +32,6 @@ namespace HousingAPI.Controllers
 
             return NotFound();
         }
-        */
 
         // GET: api/MaintenanceRequests/5
         [ResponseType(typeof(MaintenanceRequestMapper))]
@@ -80,12 +79,44 @@ namespace HousingAPI.Controllers
         [Route("api/MaintenanceRequests/ByProvider/{id}")]
         //[ResponseType(typeof(HousingUnitProviderTenantMaintenanceMapper))]
         [ResponseType(typeof(IEnumerable<MaintenanceRequestWithTenantMapper>))]
-        public IHttpActionResult GetMaintenanceRequestsByProvider(int id)
+        public IHttpActionResult GetMaintenanceRequestsByProviderContact(int id)
         {
 
             var helper = new MaintenanceRequestsHelper();
             //var result = helper.GetHousingUnitsMaintenanceRequestByProvider(id);
-            var result = helper.GetMaintenanceRequestsProvider(id);
+            var result = helper.GetMaintenanceRequestsByProviderContact(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+        // GET: api/MaintenanceRequests/ByTenant/5
+        [Route("api/MaintenanceRequests/ByTenant/{id}")]
+        //[ResponseType(typeof(HousingUnitProviderTenantMaintenanceMapper))]
+        [ResponseType(typeof(IEnumerable<MaintenanceRequestWithTenantMapper>))]
+        public IHttpActionResult GetMaintenanceRequestsByTenantContact(int id)
+        {
+
+            var helper = new MaintenanceRequestsHelper();
+            //var result = helper.GetHousingUnitsMaintenanceRequestByProvider(id);
+            var result = helper.GetMaintenanceRequestsByTenantContact(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+        // GET: api/MaintenanceRequests/ByHousingUnit/5
+        [Route("api/MaintenanceRequests/ByHousingUnit/{id}")]
+        //[ResponseType(typeof(HousingUnitProviderTenantMaintenanceMapper))]
+        [ResponseType(typeof(IEnumerable<MaintenanceRequestWithTenantMapper>))]
+        public IHttpActionResult GetMaintenanceRequestsByTenantHousingUnit(int id)
+        {
+
+            var helper = new MaintenanceRequestsHelper();
+            //var result = helper.GetHousingUnitsMaintenanceRequestByProvider(id);
+            var result = helper.GetMaintenanceRequestsByTenantContact(id);
             if (result != null)
                 return Ok(result);
 

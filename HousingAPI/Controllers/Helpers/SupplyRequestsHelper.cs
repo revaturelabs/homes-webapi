@@ -159,9 +159,9 @@ namespace HousingAPI.Controllers.Helpers
         // Default
         // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         // change
-        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesContact(int contactId)
+        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSupplieByTenant(int contactId)
         {
-            var content = db.SupplyRequests.Where(i => i.Tenant.HousingUnit.Provider.contactId == contactId).ToList();
+            var content = db.SupplyRequests.Where(i => i.Tenant.contactId == contactId).ToList();
             if (content.Count() == 0)
             {
                 return null;
@@ -188,11 +188,13 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+
+
         //Get all requests with supplies
         // Default
         // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         // change
-        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesHouse(int housingID)
+        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesByHousingUnit(int housingID)
         {
             var content = db.SupplyRequests.Where(i => i.Tenant.housingUnitId == housingID).ToList();
             if (content.Count() == 0)
@@ -225,7 +227,7 @@ namespace HousingAPI.Controllers.Helpers
         // Default
         // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         // change all
-        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesHouse()
+        public IEnumerable<SupplyRequestWithTenant> GetSupplyRequestWithSuppliesAll()
         {
             var content = db.SupplyRequests.ToList();
             if (content.Count() == 0)
