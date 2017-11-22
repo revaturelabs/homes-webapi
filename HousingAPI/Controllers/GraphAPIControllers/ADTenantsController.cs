@@ -1,4 +1,5 @@
-﻿using HousingAPI.Models;
+﻿using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models;
 using HousingAPI.Models.ADModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -58,6 +59,8 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
             ADUserJsonModel adUserJson = new ADUserJsonModel();
 
+            GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel();
+
             HttpClient graphCRUDClient = new HttpClient();
             string responseString = "";
 
@@ -86,20 +89,19 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                     ForceChangePasswordNextSignIn = true
                 };
 
-                GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel()
-                {
-                    AccountEnabled = true,
-                    DisplayName = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Replace(" ", String.Empty),
-                    GivenName = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty),
-                    Surname = guiReceivedUserJSONModel.LastName.Replace(" ", String.Empty),
-                    MobilePhone = guiReceivedUserJSONModel.PhoneNumber.Replace(" ", String.Empty),
-                    MailNickname = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Substring(0, 1).Replace(" ", String.Empty),
-                    UserPrincipalName = guiReceivedUserJSONModel.FirstName.ToLower().Replace(" ", String.Empty) + "." + guiReceivedUserJSONModel.LastName.ToLower().Replace(" ", String.Empty) + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
-                    PasswordPolicies = "DisablePasswordExpiration",
-                    PasswordProfile = passwordProfile,
-                    JobTitle = "Tenant"
 
-                };
+                graphUser.AccountEnabled = true;
+                graphUser.DisplayName = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Replace(" ", String.Empty);
+                graphUser.GivenName = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty);
+                graphUser.Surname = guiReceivedUserJSONModel.LastName.Replace(" ", String.Empty);
+                graphUser.MobilePhone = guiReceivedUserJSONModel.PhoneNumber.Replace(" ", String.Empty);
+                graphUser.MailNickname = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Substring(0, 1).Replace(" ", String.Empty);
+                graphUser.UserPrincipalName = guiReceivedUserJSONModel.FirstName.ToLower().Replace(" ", String.Empty) + "." + guiReceivedUserJSONModel.LastName.ToLower().Replace(" ", String.Empty) + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com";
+                graphUser.PasswordPolicies = "DisablePasswordExpiration";
+                graphUser.PasswordProfile = passwordProfile;
+                graphUser.JobTitle = "Tenant";
+
+
 
                 string postBody = JsonConvert.SerializeObject(graphUser);
 
@@ -151,6 +153,10 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
+
+                EMailHelper eMailHelper = new EMailHelper();
+                eMailHelper.SendMail(contact.email,
+                    "Username: " + graphUser.UserPrincipalName + "\n" + "Password: " + graphUser.PasswordProfile.Password);
 
                 return true;
 
