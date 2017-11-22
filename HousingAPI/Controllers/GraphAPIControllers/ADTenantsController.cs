@@ -96,7 +96,8 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                     MailNickname = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Substring(0, 1).Replace(" ", String.Empty),
                     UserPrincipalName = guiReceivedUserJSONModel.FirstName.ToLower().Replace(" ", String.Empty) + "." + guiReceivedUserJSONModel.LastName.ToLower().Replace(" ", String.Empty) + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
                     PasswordPolicies = "DisablePasswordExpiration",
-                    PasswordProfile = passwordProfile
+                    PasswordProfile = passwordProfile,
+                    JobTitle = "Tenant"
 
                 };
 

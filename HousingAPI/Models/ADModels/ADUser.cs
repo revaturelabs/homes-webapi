@@ -112,6 +112,9 @@ namespace HousingAPI.Models.ADModels
         [JsonProperty("passwordPolicies")]
         public string PasswordPolicies { get; set; }
 
+        [JsonProperty("jobTitle")]
+        public string JobTitle { get; set; }
+
         [JsonProperty("passwordProfile")]
         public PasswordProfile PasswordProfile { get; set; }
     }
