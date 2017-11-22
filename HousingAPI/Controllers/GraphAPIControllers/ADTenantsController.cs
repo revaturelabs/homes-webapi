@@ -89,12 +89,12 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 GraphAddUserJSONModel graphUser = new GraphAddUserJSONModel()
                 {
                     AccountEnabled = true,
-                    DisplayName = guiReceivedUserJSONModel.FirstName + guiReceivedUserJSONModel.LastName,
-                    GivenName = guiReceivedUserJSONModel.FirstName,
-                    Surname = guiReceivedUserJSONModel.LastName,
-                    MobilePhone = guiReceivedUserJSONModel.PhoneNumber,
-                    MailNickname = guiReceivedUserJSONModel.FirstName + guiReceivedUserJSONModel.LastName.Substring(0, 1),
-                    UserPrincipalName = guiReceivedUserJSONModel.FirstName.ToLower() + "." + guiReceivedUserJSONModel.LastName.ToLower() + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
+                    DisplayName = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Replace(" ", String.Empty),
+                    GivenName = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty),
+                    Surname = guiReceivedUserJSONModel.LastName.Replace(" ", String.Empty),
+                    MobilePhone = guiReceivedUserJSONModel.PhoneNumber.Replace(" ", String.Empty),
+                    MailNickname = guiReceivedUserJSONModel.FirstName.Replace(" ", String.Empty) + guiReceivedUserJSONModel.LastName.Substring(0, 1).Replace(" ", String.Empty),
+                    UserPrincipalName = guiReceivedUserJSONModel.FirstName.ToLower().Replace(" ", String.Empty) + "." + guiReceivedUserJSONModel.LastName.ToLower().Replace(" ", String.Empty) + Convert.ToString(num1) + Convert.ToString(num2) + Convert.ToString(num3) + Convert.ToString(num4) + "@andresgllive764.onmicrosoft.com",
                     PasswordPolicies = "DisablePasswordExpiration",
                     PasswordProfile = passwordProfile
 
