@@ -14,6 +14,7 @@ using HousingAPI.Models.PresentationModels.Supply;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class SuppliesController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();

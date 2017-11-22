@@ -17,7 +17,7 @@ using System.Web.Http.Description;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
-
+    [Authorize]
     public class ADUsersController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
@@ -223,7 +223,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         }
 
         //DELETE
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         public IHttpActionResult DeleteADUsers(string ObjectId)
         {

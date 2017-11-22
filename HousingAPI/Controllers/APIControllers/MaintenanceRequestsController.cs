@@ -15,10 +15,11 @@ using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Controllers
 {
+    [Authorize]
     public class MaintenanceRequestsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
-        
+
         /*
         // GET: api/MaintenanceRequests
         [ResponseType(typeof(IEnumerable<MaintenanceRequestMapper>))]
@@ -81,10 +82,25 @@ namespace HousingAPI.Controllers
         [ResponseType(typeof(IEnumerable<MaintenanceRequestWithTenantMapper>))]
         public IHttpActionResult GetMaintenanceRequestsByProvider(int id)
         {
-            
+
             var helper = new MaintenanceRequestsHelper();
             //var result = helper.GetHousingUnitsMaintenanceRequestByProvider(id);
             var result = helper.GetMaintenanceRequestsProvider(id);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+        // GET: api/MaintenanceRequests/All
+        [Route("api/MaintenanceRequests/All")]
+        //[ResponseType(typeof(HousingUnitProviderTenantMaintenanceMapper))]
+        [ResponseType(typeof(IEnumerable<MaintenanceRequestWithTenantMapper>))]
+        public IHttpActionResult GetMaintenanceRequestsAll()
+        {
+
+            var helper = new MaintenanceRequestsHelper();
+            var result = helper.GetMaintenanceRequestsAll();
             if (result != null)
                 return Ok(result);
 

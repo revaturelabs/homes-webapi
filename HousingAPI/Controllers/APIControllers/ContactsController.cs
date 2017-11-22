@@ -14,6 +14,7 @@ using HousingAPI.Models.PresentationModels.Contact;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class ContactsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();

@@ -14,6 +14,7 @@ using HousingAPI.Models.PresentationModels.RequestSuppliesMap;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class RequestSuppliesMapsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
@@ -80,7 +81,7 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         //POST: api/RequestSuppliesMaps
-       [ResponseType(typeof(RequestSuppliesMap))]
+        [ResponseType(typeof(RequestSuppliesMap))]
         public IHttpActionResult PostRequestSuppliesMap([FromBody]RequestSuppliesMap requestSuppliesMap)
         {
             if (!ModelState.IsValid)

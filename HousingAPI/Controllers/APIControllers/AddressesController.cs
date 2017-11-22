@@ -14,6 +14,7 @@ using HousingAPI.Controllers.Helpers;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class AddressesController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
@@ -24,8 +25,8 @@ namespace HousingAPI.Controllers.APIControllers
         {
             var helper = new AddressesHelper();
             var result = helper.GetAddresses();
-                if(result != null)
-                    return Ok(result);
+            if (result != null)
+                return Ok(result);
 
             return NotFound();
         }
@@ -36,11 +37,11 @@ namespace HousingAPI.Controllers.APIControllers
         {
             var helper = new AddressesHelper();
             var result = helper.GetAddress(id);
-                if(result != null)
-                    return Ok(result);
+            if (result != null)
+                return Ok(result);
 
             return NotFound();
-       
+
         }
 
         // PUT: api/Addresses/5

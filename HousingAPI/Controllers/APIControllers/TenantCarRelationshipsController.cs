@@ -14,6 +14,7 @@ using HousingAPI.Models.PresentationModels.TenantCarRelationship;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class TenantCarRelationshipsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();

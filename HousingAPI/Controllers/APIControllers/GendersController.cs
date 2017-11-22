@@ -16,7 +16,7 @@ using HousingAPI.Models.PresentationModels.Gender;
 
 namespace HousingAPI.Controllers.APIControllers
 {
-    //[Authorize]
+    [Authorize]
     //[EnableCors("*", "*", "*")]
     public class GendersController : ApiController
     {
