@@ -48,10 +48,10 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
-        // GET: api/SupplyRequests/ByTenant/5
-        [Route("api/SupplyRequests/ByTenant/{id}")]
+        // GET: api/SupplyRequests/ByContact/5
+        [Route("api/SupplyRequests/ByContact/{id}")]
         [ResponseType(typeof(IEnumerable<SupplyRequestSupplyMapper>))]
-        public IHttpActionResult GetMaintenanceRequestsByTenant(int id)
+        public IHttpActionResult GetSupplyRequestWithSuppliesByContact(int id)
         {
             var helper = new SupplyRequestsHelper();
             var result = helper.GetSupplyRequestWithSupplies(id);
