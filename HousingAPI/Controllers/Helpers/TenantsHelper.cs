@@ -342,6 +342,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        /*
         // Get tenants of a housing unit with its maintenance request
         // INSIDE HELPER: USED IN HOUSING UNIT HELPER
         // RETURNS TENANTS BY HOUSING WITH: Maintenance Request
@@ -378,6 +379,7 @@ namespace HousingAPI.Controllers.Helpers
                 return tenants;
             }
         }
+        */
 
         /*
         // Get all tenants for address

@@ -69,10 +69,10 @@ namespace HousingAPI.Controllers.APIControllers
         // GET: api/SupplyRequests/ByHouseUnit
         [Route("api/SupplyRequests/All")]
         [ResponseType(typeof(IEnumerable<HousingUnitProviderTenantSupplyMapper>))]
-        public IHttpActionResult GetMaintenanceRequestsByHouseUnit()
+        public IHttpActionResult GetSupplyRequestWithSuppliesAll()
         {
             var helper = new SupplyRequestsHelper();
-            var result = helper.GetSupplyRequestWithSuppliesHouse();
+            var result = helper.GetSupplyRequestWithSuppliesAll();
             if (result != null)
                 return Ok(result);
 
@@ -82,10 +82,10 @@ namespace HousingAPI.Controllers.APIControllers
         // GET: api/SupplyRequests/ByHouseUnit/5
         [Route("api/SupplyRequests/ByHouseUnit/{id}")]
         [ResponseType(typeof(IEnumerable<SupplyRequestWithTenant>))]
-        public IHttpActionResult GetMaintenanceRequestsByHouseUnit(int id)
+        public IHttpActionResult GetSupplyRequestWithSuppliesHouse(int id)
         {
             var helper = new SupplyRequestsHelper();
-            var result = helper.GetSupplyRequestWithSuppliesHouse(id);
+            var result = helper.GetSupplyRequestWithSuppliesByHousingUnit(id);
             if (result != null)
                 return Ok(result);
 
@@ -93,12 +93,12 @@ namespace HousingAPI.Controllers.APIControllers
         }
 
         // GET: api/SupplyRequests/ByHouseUnit/5
-        [Route("api/SupplyRequests/ByProvider/{id}")]
+        [Route("api/SupplyRequests/ByTenant/{id}")]
         [ResponseType(typeof(IEnumerable<SupplyRequestWithTenant>))]
-        public IHttpActionResult GetSupplyRequestWithSuppliesContact(int id)
+        public IHttpActionResult GetSupplyRequestWithSuppliesByHousingUnit(int id)
         {
             var helper = new SupplyRequestsHelper();
-            var result = helper.GetSupplyRequestWithSuppliesContact(id);
+            var result = helper.GetSupplyRequestWithSupplieByTenant(id);
             if (result != null)
                 return Ok(result);
 

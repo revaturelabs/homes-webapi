@@ -58,6 +58,7 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        /*
         // Get One basic table, used for housing maintenace request
         // INSIDE HELPER: USED IN TENANTS
         // RETURNS A LIST OF MAINTENANCE REQUESTS BY TENANT ID
@@ -113,12 +114,13 @@ namespace HousingAPI.Controllers.Helpers
                 return requests;
             }
         }
+        */
 
         // Get One basic table, used for housing maintenace request
         // DEFAULT
         // RETURNS A LIST OF MAINTENANCE REQUESTS BY PROVIDER ID
         // change
-        public IEnumerable<MaintenanceRequestWithTenantMapper> GetMaintenanceRequestsProvider(int contactId)
+        public IEnumerable<MaintenanceRequestWithTenantMapper> GetMaintenanceRequestsByProviderContact(int contactId)
         { 
             var content = db.MaintenanceRequests.Where(j => j.Tenant.HousingUnit.Provider.contactId == contactId).ToList();
             if (content.Count() == 0)
@@ -145,6 +147,71 @@ namespace HousingAPI.Controllers.Helpers
                 return requests;
             }
         }
+
+        // Get One basic table, used for housing maintenace request
+        // DEFAULT
+        // RETURNS A LIST OF MAINTENANCE REQUESTS BY PROVIDER ID
+        // change
+        public IEnumerable<MaintenanceRequestWithTenantMapper> GetMaintenanceRequestsByTenantContact(int contactId)
+        {
+            var content = db.MaintenanceRequests.Where(j => j.Tenant.contactId == contactId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<MaintenanceRequestWithTenantMapper> requests = new List<MaintenanceRequestWithTenantMapper>();
+                TenantsHelper tenant = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    MaintenanceRequestWithTenantMapper request = new MaintenanceRequestWithTenantMapper
+                    {
+                        Active = item.active ?? default(bool),
+                        MaintenanceRequestId = item.maintenanceRequestId,
+                        Message = item.message,
+                        TenantId = item.tenantId ?? default(int),
+
+                        Tenant = tenant.GetTenantForRequests(item.tenantId ?? 0)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
+        // Get One basic table, used for housing maintenace request
+        // DEFAULT
+        // RETURNS A LIST OF MAINTENANCE REQUESTS BY PROVIDER ID
+        // change
+        public IEnumerable<MaintenanceRequestWithTenantMapper> GetMaintenanceRequestsByTenantHousingUnit(int housingUnit)
+        {
+            var content = db.MaintenanceRequests.Where(j => j.Tenant.housingUnitId == housingUnit).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<MaintenanceRequestWithTenantMapper> requests = new List<MaintenanceRequestWithTenantMapper>();
+                TenantsHelper tenant = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    MaintenanceRequestWithTenantMapper request = new MaintenanceRequestWithTenantMapper
+                    {
+                        Active = item.active ?? default(bool),
+                        MaintenanceRequestId = item.maintenanceRequestId,
+                        Message = item.message,
+                        TenantId = item.tenantId ?? default(int),
+
+                        Tenant = tenant.GetTenantForRequests(item.tenantId ?? 0)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
         // Get One basic table, used for housing maintenace request
         // DEFAULT
         // RETURNS A LIST OF MAINTENANCE REQUESTS ALL

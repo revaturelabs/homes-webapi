@@ -286,6 +286,7 @@ namespace HousingAPI.Controllers.Helpers
          * Called in other controllers
          */
 
+        /*
         // Get All maintenance request
         // DEFAULT
         // RETURNS ALL THE HOUSING UNITS: Address, and Tenants with Maintenance Requests
@@ -319,7 +320,9 @@ namespace HousingAPI.Controllers.Helpers
                 return housingUnits;
             }
         }
+        */
 
+        /*
         // Get All maintenance request by Provider
         // DEFAULT
         // RETURNS ALL THE HOUSING UNITS BY PROVIDER WITH: Address, and Tenants with Maintenance Requests
@@ -353,6 +356,7 @@ namespace HousingAPI.Controllers.Helpers
                 return housingUnits;
             }
         }
+        */
 
         // Get All supply request 
         // DEFAULT
