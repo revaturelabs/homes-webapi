@@ -271,6 +271,7 @@
     <Compile Include="Controllers\Helpers\AddressesHelper.cs" />
     <Compile Include="Controllers\Helpers\BatchesHelper.cs" />
     <Compile Include="Controllers\Helpers\ContactsHelper.cs" />
+    <Compile Include="Controllers\Helpers\EMailHelper.cs" />
     <Compile Include="Controllers\Helpers\GendersHelper.cs" />
     <Compile Include="Controllers\Helpers\HousingUnitsHelper.cs" />
     <Compile Include="Controllers\Helpers\MaintenanceRequestsHelper.cs" />
