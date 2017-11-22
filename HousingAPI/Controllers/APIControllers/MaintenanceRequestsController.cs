@@ -91,6 +91,21 @@ namespace HousingAPI.Controllers
             return NotFound();
         }
 
+        // GET: api/MaintenanceRequests/All
+        [Route("api/MaintenanceRequests/All")]
+        //[ResponseType(typeof(HousingUnitProviderTenantMaintenanceMapper))]
+        [ResponseType(typeof(IEnumerable<MaintenanceRequestWithTenantMapper>))]
+        public IHttpActionResult GetMaintenanceRequestsAll()
+        {
+
+            var helper = new MaintenanceRequestsHelper();
+            var result = helper.GetMaintenanceRequestsAll();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
         // PUT: api/MaintenanceRequests/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutMaintenanceRequest(int id, [FromBody]MaintenanceRequest maintenanceRequest)
