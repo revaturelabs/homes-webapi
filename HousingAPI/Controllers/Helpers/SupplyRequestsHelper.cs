@@ -126,6 +126,36 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         //Get all requests with supplies
+        // Default
+        // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
+        public IEnumerable<SupplyRequestSupplyMapper> GetSupplyRequestWithSuppliesByContact(int contactId)
+        {
+            var content = db.SupplyRequests.Where(i => i.Tenant.contactId == contactId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<SupplyRequestSupplyMapper> requests = new List<SupplyRequestSupplyMapper>();
+                RequestSuppliesMapsHelper map = new RequestSuppliesMapsHelper();
+                foreach (var item in content)
+                {
+                    SupplyRequestSupplyMapper request = new SupplyRequestSupplyMapper
+                    {
+                        SupplyRequestId = item.supplyRequestId,
+                        TenantId = item.tenantId ?? default(int),
+                        Active = item.active ?? default(bool),
+
+                        RequestSuppliesMaps = map.GetRequestSuppliesMapsWithSupplyByRequest(item.supplyRequestId)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
+        //Get all requests with supplies
         // DEFAULT
         // RETURNS ONE SUPPLY REQUEST BY TENANT ID WITH: Mapping with Supplies
         public IEnumerable<SupplyRequestSupplyMapper> GetSupplyRequestWithSuppliesById(int supplyRequestId)

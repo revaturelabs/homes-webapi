@@ -59,11 +59,39 @@ namespace HousingAPI.Controllers.Helpers
         }
 
         // Get One basic table, used for housing maintenace request
-        // INSIDE HELPER: USED IN TENANTs
+        // INSIDE HELPER: USED IN TENANTS
         // RETURNS A LIST OF MAINTENANCE REQUESTS BY TENANT ID
         public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByTenant(int tenantId)
         {
             var content = db.MaintenanceRequests.Where(j => j.tenantId == tenantId).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<MaintenanceRequestMapper> requests = new List<MaintenanceRequestMapper>();
+                foreach (var item in content)
+                {
+                    MaintenanceRequestMapper request = new MaintenanceRequestMapper
+                    {
+                        Active = item.active ?? default(bool),
+                        MaintenanceRequestId = item.maintenanceRequestId,
+                        Message = item.message,
+                        TenantId = item.tenantId ?? default(int)
+                    };
+                    requests.Add(request);
+                }
+                return requests;
+            }
+        }
+
+        // Get One basic table, used for housing maintenace request
+        // DEFAULT
+        // RETURNS A LIST OF MAINTENANCE REQUESTS BY TENANT ID
+        public IEnumerable<MaintenanceRequestMapper> GetMaintenanceRequestsByContact(int contactId)
+        {
+            var content = db.MaintenanceRequests.Where(j => j.Tenant.contactId == contactId).ToList();
             if (content.Count() == 0)
             {
                 return null;
