@@ -14,6 +14,7 @@ using HousingAPI.Models.PresentationModels.Provider;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class ProvidersController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
@@ -58,7 +59,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
-        
+
         // GET api/Providers/WithContact
         [Route("api/Providers/WithContact/{id}")]
         [ResponseType(typeof(ProviderContactMapper))]
@@ -71,7 +72,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
-        
+
         // GET: api/Providers/WithUnits
         [Route("api/Providers/WithUnits")]
         [ResponseType(typeof(IEnumerable<ProviderUnitsMapper>))]
@@ -84,7 +85,7 @@ namespace HousingAPI.Controllers.APIControllers
 
             return NotFound();
         }
-        
+
         // GET api/Providers/WithUnits
         [Route("api/Providers/WithUnits/{id}")]
         [ResponseType(typeof(ProviderUnitsMapper))]

@@ -15,10 +15,11 @@ using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class SupplyRequestsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
-        
+
         /*
         // GET: api/SupplyRequests
         [ResponseType(typeof(IEnumerable<SupplyRequestMapper>))]

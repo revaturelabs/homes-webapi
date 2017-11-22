@@ -15,7 +15,7 @@ using System.Web.Http.Description;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
-
+    [Authorize]
     public class ADTenantsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
@@ -52,7 +52,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         }
 
         [NonAction]
-        public bool AddUsersToAdAndDb(GUIReceivedUserJSONModel guiReceivedUserJSONModel, int batchId )
+        public bool AddUsersToAdAndDb(GUIReceivedUserJSONModel guiReceivedUserJSONModel, int batchId)
         {
             ADUserGraphTokenResponse aDUserGraphTokenResponse = GenerateAccessToken();
 
@@ -201,7 +201,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
         [HttpPost]
         public IHttpActionResult PostADUsers([FromBody] GUIReceivedUserJSONModel guiReceivedUserJSONModel, int batch)
         {
-            bool result = AddUsersToAdAndDb(guiReceivedUserJSONModel,batch);
+            bool result = AddUsersToAdAndDb(guiReceivedUserJSONModel, batch);
             if (result)
             {
                 return Ok();
@@ -250,7 +250,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
 
         //DELETE
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         public IHttpActionResult DeleteADUsers(string ObjectId)
         {

@@ -14,6 +14,7 @@ using HousingAPI.Models.PresentationModels.Batch;
 
 namespace HousingAPI.Controllers.APIControllers
 {
+    [Authorize]
     public class BatchesController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
