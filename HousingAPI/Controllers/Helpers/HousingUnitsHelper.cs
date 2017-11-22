@@ -115,7 +115,7 @@ namespace HousingAPI.Controllers.Helpers
                     HousingSignature = content.housingSignature,
                     Capacity = content.capacity,
 
-                    Address = address.GetAddress(housingUnitId)
+                    Address = address.GetAddress(content.addressId ?? 0)
                 };
 
                 return housingUnit;
