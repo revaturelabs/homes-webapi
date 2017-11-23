@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Security;
 
 namespace HousingAPI.Controllers.GraphAPIControllers
 {
@@ -85,7 +86,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
 
                 Models.ADModels.PasswordProfile passwordProfile = new Models.ADModels.PasswordProfile()
                 {
-                    Password = "DotNet1709",
+                    Password = Membership.GeneratePassword(12, 1),
                     ForceChangePasswordNextSignIn = true
                 };
 
