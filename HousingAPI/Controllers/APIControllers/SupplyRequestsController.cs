@@ -12,10 +12,11 @@ using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
 using HousingAPI.Models.PresentationModels.SupplyRequest;
 using HousingAPI.Models.PresentationModels.HousingUnit;
+using HousingAPI.Models.JsonModels;
 
 namespace HousingAPI.Controllers.APIControllers
 {
-    [Authorize]
+    //[Authorize]
     public class SupplyRequestsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
@@ -168,17 +169,35 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/SupplyRequests
         [ResponseType(typeof(SupplyRequest))]
-        public IHttpActionResult PostSupplyRequest([FromBody]SupplyRequest supplyRequest)
+        public IHttpActionResult PostSupplyRequest([FromBody]SupplyRequestJson supplyRequestJson)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.SupplyRequests.Add(supplyRequest);
-            db.SaveChanges();
+            // Add Supply Request
+            SupplyRequest request = new SupplyRequest()
+            {
+                tenantId = supplyRequestJson.TenantId,
+                active = true
+            };
+            db.SupplyRequests.Add(request);
 
-            return CreatedAtRoute("DefaultApi", new { id = supplyRequest.supplyRequestId }, supplyRequest);
+            // Add Supply Request Maps
+            foreach (var item in supplyRequestJson.RequestSuppliesMaps)
+            {
+                RequestSuppliesMap map = new RequestSuppliesMap
+                {
+                    suppliesRequestId = request.supplyRequestId,
+                    supplyId = item.SupplyId
+                };
+                db.RequestSuppliesMaps.Add(map);
+            }
+
+            db.SaveChanges();
+            return CreatedAtRoute("DefaultApi", new { id = request.supplyRequestId }, request);
         }
 
         // DELETE: api/SupplyRequests/5
