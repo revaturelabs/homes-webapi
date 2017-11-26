@@ -21,6 +21,8 @@ namespace HousingAPI
             // Using camel case instead of proper case
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
 
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
