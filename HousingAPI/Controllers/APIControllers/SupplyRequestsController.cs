@@ -16,7 +16,7 @@ using HousingAPI.Models.JsonModels;
 
 namespace HousingAPI.Controllers.APIControllers
 {
-    //[Authorize]
+    [Authorize]
     public class SupplyRequestsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
