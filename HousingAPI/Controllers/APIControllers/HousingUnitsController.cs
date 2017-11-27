@@ -14,7 +14,7 @@ using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Controllers.APIControllers
 {
-    //[Authorize]
+    [Authorize]
     public class HousingUnitsController : ApiController
     {
         private HousingDBEntities db = new HousingDBEntities();
