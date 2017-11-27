@@ -58,6 +58,32 @@ namespace HousingAPI.Controllers.APIControllers
             return NotFound();
         }
 
+        //GET: api/Tenants/Info
+        [Route("api/Tenants/Pending")]
+        [ResponseType(typeof(IEnumerable<TenantInfoMapper>))]
+        public IHttpActionResult GetTenantsPending()
+        {
+            var helper = new TenantsHelper();
+            var result = helper.GetTenantsPending();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+        //GET: api/Tenants/Info
+        [Route("api/Tenants/Confirmed")]
+        [ResponseType(typeof(IEnumerable<TenantInfoMapper>))]
+        public IHttpActionResult GetTenantsConfirmed()
+        {
+            var helper = new TenantsHelper();
+            var result = helper.GetTenantsConfirmed();
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
         //GET: api/Tenants/Info/{id}
         [Route("api/Tenants/Info/{id}")]
         [ResponseType(typeof(TenantInfoMapper))]
