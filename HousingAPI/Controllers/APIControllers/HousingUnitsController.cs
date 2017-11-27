@@ -131,37 +131,81 @@ namespace HousingAPI.Controllers.APIControllers
             return Ok(result);
         }
 
+        //GET: api/HousingUnits/Available/
+        [Route("api/HousingUnits/Available")]
+        [ResponseType(typeof(IEnumerable<HousingUnitAvailableMapper>))]
+        public IHttpActionResult GetHousingUnitsWithTenantsAvailable()
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsWithTenantsAvailable();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        // GET: api/HousingUnits/Available/5
+        [Route("api/HousingUnits/Available/{id}")]
+        [ResponseType(typeof(HousingUnitAvailableMapper))]
+        public IHttpActionResult GetHousingUnitsWithTenantsAvailable(int id)
+        {
+            var helper = new HousingUnitsHelper();
+            var result = helper.GetHousingUnitsWithTenantsAvailable(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnit housingUnit)
+        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnitAvailableMapper housingUnit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != housingUnit.housingUnitId)
+            if (id != housingUnit.HousingUnitId)
             {
                 return BadRequest();
             }
 
-            db.Entry(housingUnit).State = EntityState.Modified;
+            if (housingUnit.Occupied < housingUnit.Capacity)
+            {
+                HousingUnit house = new HousingUnit()
+                {
+                    housingUnitId = housingUnit.HousingUnitId,
+                    providerId = housingUnit.ProviderId,
+                    addressId = housingUnit.AddressId,
+                    capacity = housingUnit.Capacity,
+                    housingSignature = housingUnit.HousingSignature
+                };
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HousingUnitExists(id))
+                db.Entry(housingUnit).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!HousingUnitExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
+
+            
 
             return StatusCode(HttpStatusCode.NoContent);
         }
