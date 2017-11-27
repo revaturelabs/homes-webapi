@@ -318,7 +318,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HousingDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\JsonModels\AddressJson.cs" />
+    <Compile Include="Models\JsonModels\HousingUnitJson.cs" />
+    <Compile Include="Models\JsonModels\MaintenanceRequestJson.cs" />
     <Compile Include="Models\JsonModels\SupplyRequestJson.cs" />
+    <Compile Include="Models\JsonModels\TenantJson.cs" />
     <Compile Include="Models\PresentationModels\Address\AddressMapper.cs" />
     <Compile Include="Models\PresentationModels\Batch\BatchMapper.cs" />
     <Compile Include="Models\PresentationModels\Contact\ContactMapper.cs" />

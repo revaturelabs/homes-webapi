@@ -1,5 +1,6 @@
 ﻿using HousingAPI.Controllers.Helpers;
 using HousingAPI.Models;
+using HousingAPI.Models.JsonModels;
 using HousingAPI.Models.PresentationModels.Tenant;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -113,24 +114,34 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Tenants/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTenant(int id, [FromBody]Tenant tenant)
+        public IHttpActionResult PutTenant(int id, [FromBody]TenantJsonPUT tenantJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != tenant.tenantId)
+            
+            if (id != tenantJson.TenantId)
             {
                 return BadRequest();
             }
 
             var housingUnitHelpper = new HousingUnitsHelper();
-            var housingUnit = housingUnitHelpper.GetHousingUnitsWithTenantsAvailable(tenant.housingUnitId ?? 0);
+            var housingUnit = housingUnitHelpper.GetHousingUnitsWithTenantsAvailable(tenantJson.HousingUnitId);
 
             if (housingUnit.Occupied < housingUnit.Capacity)
             {
-
+                Tenant tenant = new Tenant
+                {
+                    tenantId = tenantJson.TenantId,
+                    contactId = tenantJson.ContactId,
+                    batchId = tenantJson.BatchId,
+                    housingUnitId = tenantJson.HousingUnitId,
+                    genderId = tenantJson.GenderId,
+                    moveInDate = tenantJson.MoveInDate,
+                    hasMoved = tenantJson.HasMoved,
+                    hasKey = tenantJson.HasKey
+                };
 
                 db.Entry(tenant).State = EntityState.Modified;
 
@@ -157,12 +168,23 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Tenants
         [ResponseType(typeof(Tenant))]
-        public IHttpActionResult PostTenant([FromBody]Tenant tenant)
+        public IHttpActionResult PostTenant([FromBody]TenantJsonPOST tenantJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            Tenant tenant = new Tenant
+            {
+                contactId = tenantJson.ContactId,
+                batchId = tenantJson.BatchId,
+                housingUnitId = tenantJson.HousingUnitId,
+                genderId = tenantJson.GenderId,
+                moveInDate = tenantJson.MoveInDate,
+                hasMoved = tenantJson.HasMoved,
+                hasKey = tenantJson.HasKey
+            };
 
             db.Tenants.Add(tenant);
             db.SaveChanges();

@@ -12,6 +12,7 @@ using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
 using HousingAPI.Models.PresentationModels.MaintenanceRequest;
 using HousingAPI.Models.PresentationModels.HousingUnit;
+using HousingAPI.Models.JsonModels;
 
 namespace HousingAPI.Controllers
 {
@@ -140,17 +141,25 @@ namespace HousingAPI.Controllers
 
         // PUT: api/MaintenanceRequests/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMaintenanceRequest(int id, [FromBody]MaintenanceRequest maintenanceRequest)
+        public IHttpActionResult PutMaintenanceRequest(int id, [FromBody]MaintenanceRequestJsonPUT maintenanceRequestJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != maintenanceRequest.maintenanceRequestId)
+            if (id != maintenanceRequestJson.MaintenanceRequestId)
             {
                 return BadRequest();
             }
+
+            MaintenanceRequest maintenanceRequest = new MaintenanceRequest()
+            {
+                maintenanceRequestId = maintenanceRequestJson.MaintenanceRequestId,
+                active = true,
+                message = maintenanceRequestJson.Message,
+                tenantId = maintenanceRequestJson.TenantId
+            };
 
             db.Entry(maintenanceRequest).State = EntityState.Modified;
 
@@ -175,12 +184,19 @@ namespace HousingAPI.Controllers
 
         // POST: api/MaintenanceRequests
         [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult PostMaintenanceRequest([FromBody]MaintenanceRequest maintenanceRequest)
+        public IHttpActionResult PostMaintenanceRequest([FromBody]MaintenanceRequestJsonPOST maintenanceRequestJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            MaintenanceRequest maintenanceRequest = new MaintenanceRequest()
+            {
+                active = true,
+                message = maintenanceRequestJson.Message,
+                tenantId = maintenanceRequestJson.TenantId
+            };
 
             db.MaintenanceRequests.Add(maintenanceRequest);
             db.SaveChanges();
