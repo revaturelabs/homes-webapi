@@ -110,6 +110,90 @@ namespace HousingAPI.Controllers.Helpers
             }
         }
 
+        // DEFAULT
+        // RETURNS TENANTS WITH: Housing unitt with Address, batch, contact, gender and car Relationship
+        public IEnumerable<TenantInfoMapper> GetTenantsPending()
+        {
+            var content = db.Tenants.Where(j => j.housingUnitId == 0).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+                foreach (var item in content)
+                {
+                    TenantInfoMapper tenant = new TenantInfoMapper
+                    {
+                        TenantId = item.tenantId,
+                        ContactId = item.contactId ?? 0,
+                        BatchId = item.batchId ?? 0,
+                        HousingUnitId = item.housingUnitId ?? 0,
+                        GenderId = item.genderId ?? 0,
+                        MoveInDate = item.moveInDate,
+                        HasMoved = item.hasMoved ?? default(bool),
+                        HasKey = item.hasKey ?? default(bool),
+
+                        HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0),
+                        Batch = batch.GetBatch(item.batchId ?? 0),
+                        Contact = contact.GetContact(item.contactId ?? 0),
+                        Gender = gender.GetGender(item.genderId ?? 0),
+                        TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
+                    };
+                    tenants.Add(tenant);
+                }
+                return tenants;
+            }
+        }
+
+        // DEFAULT
+        // RETURNS TENANTS WITH: Housing unitt with Address, batch, contact, gender and car Relationship
+        public IEnumerable<TenantInfoMapper> GetTenantsConfirmed()
+        {
+            var content = db.Tenants.Where(j => j.housingUnitId != 0).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<TenantInfoMapper> tenants = new List<TenantInfoMapper>();
+                HousingUnitsHelper housingUnits = new HousingUnitsHelper();
+                BatchesHelpers batch = new BatchesHelpers();
+                ContactsHelper contact = new ContactsHelper();
+                GendersHelper gender = new GendersHelper();
+                TenantCarRelationshipsHelper tenantCarRelationships = new TenantCarRelationshipsHelper();
+                foreach (var item in content)
+                {
+                    TenantInfoMapper tenant = new TenantInfoMapper
+                    {
+                        TenantId = item.tenantId,
+                        ContactId = item.contactId ?? 0,
+                        BatchId = item.batchId ?? 0,
+                        HousingUnitId = item.housingUnitId ?? 0,
+                        GenderId = item.genderId ?? 0,
+                        MoveInDate = item.moveInDate,
+                        HasMoved = item.hasMoved ?? default(bool),
+                        HasKey = item.hasKey ?? default(bool),
+
+                        HousingUnit = housingUnits.GetHousingUnitWithAddress(item.housingUnitId ?? 0),
+                        Batch = batch.GetBatch(item.batchId ?? 0),
+                        Contact = contact.GetContact(item.contactId ?? 0),
+                        Gender = gender.GetGender(item.genderId ?? 0),
+                        TenantCarRelationships = tenantCarRelationships.GetTenantCarRelationship(item.tenantId)
+                    };
+                    tenants.Add(tenant);
+                }
+                return tenants;
+            }
+        }
+
         // DEFAULT: ONE TENANT WITH ALL INFO
         // RETURNS A TENANT BY ID WITH: Housing unit with Address, Batch, Contact, Gender and Car Relationship
         public TenantInfoMapper GetTenantInfo(int contactId)
