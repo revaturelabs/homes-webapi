@@ -12,6 +12,7 @@ using HousingAPI.Models;
 using HousingAPI.Controllers.Helpers;
 using HousingAPI.Models.PresentationModels.MaintenanceRequest;
 using HousingAPI.Models.PresentationModels.HousingUnit;
+using HousingAPI.Models.JsonModels;
 
 namespace HousingAPI.Controllers
 {
@@ -175,17 +176,24 @@ namespace HousingAPI.Controllers
 
         // POST: api/MaintenanceRequests
         [ResponseType(typeof(MaintenanceRequest))]
-        public IHttpActionResult PostMaintenanceRequest([FromBody]MaintenanceRequest maintenanceRequest)
+        public IHttpActionResult PostMaintenanceRequest([FromBody]MaintenanceRequestJson maintenanceRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.MaintenanceRequests.Add(maintenanceRequest);
+            MaintenanceRequest request = new MaintenanceRequest()
+            {
+                active = true,
+                message = maintenanceRequest.Message,
+                tenantId = maintenanceRequest.TenantId
+            };
+
+            db.MaintenanceRequests.Add(request);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = maintenanceRequest.maintenanceRequestId }, maintenanceRequest);
+            return CreatedAtRoute("DefaultApi", new { id = request.maintenanceRequestId }, maintenanceRequest);
         }
 
         // DELETE: api/MaintenanceRequests/5
