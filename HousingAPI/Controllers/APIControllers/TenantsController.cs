@@ -1,16 +1,13 @@
-﻿using System;
+﻿using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.Tenant;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HousingAPI.Models;
-using HousingAPI.Controllers.Helpers;
-using HousingAPI.Models.PresentationModels.Tenant;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -128,21 +125,29 @@ namespace HousingAPI.Controllers.APIControllers
                 return BadRequest();
             }
 
-            db.Entry(tenant).State = EntityState.Modified;
+            var housingUnitHelpper = new HousingUnitsHelper();
+            var housingUnit = housingUnitHelpper.GetHousingUnitsWithTenantsAvailable(tenant.housingUnitId ?? 0);
 
-            try
+            if (housingUnit.Occupied < housingUnit.Capacity)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TenantExists(id))
+
+
+                db.Entry(tenant).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!TenantExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 

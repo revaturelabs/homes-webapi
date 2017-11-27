@@ -1,16 +1,13 @@
-﻿using System;
+﻿using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models;
+using HousingAPI.Models.PresentationModels.HousingUnit;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HousingAPI.Models;
-using HousingAPI.Controllers.Helpers;
-using HousingAPI.Models.PresentationModels.HousingUnit;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -163,49 +160,37 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnitAvailableMapper housingUnit)
+        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnit housingUnit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != housingUnit.HousingUnitId)
+            if (id != housingUnit.housingUnitId)
             {
                 return BadRequest();
             }
 
-            if (housingUnit.Occupied < housingUnit.Capacity)
+
+            db.Entry(housingUnit).State = EntityState.Modified;
+
+            try
             {
-                HousingUnit house = new HousingUnit()
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HousingUnitExists(id))
                 {
-                    housingUnitId = housingUnit.HousingUnitId,
-                    providerId = housingUnit.ProviderId,
-                    addressId = housingUnit.AddressId,
-                    capacity = housingUnit.Capacity,
-                    housingSignature = housingUnit.HousingSignature
-                };
-
-                db.Entry(housingUnit).State = EntityState.Modified;
-
-                try
-                {
-                    db.SaveChanges();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!HousingUnitExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
 
-            
 
             return StatusCode(HttpStatusCode.NoContent);
         }
