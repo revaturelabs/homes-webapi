@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using HousingAPI.Models;
 using HousingAPI.Models.PresentationModels.Address;
 using HousingAPI.Controllers.Helpers;
+using HousingAPI.Models.JsonModels;
 
 namespace HousingAPI.Controllers.APIControllers
 {
@@ -46,17 +47,29 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/Addresses/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAddress(int id, [FromBody]Address address)
+        public IHttpActionResult PutAddress(int id, [FromBody]AddressJsonPUT addressJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != address.addressId)
+            if (id != addressJson.AddressId)
             {
                 return BadRequest();
             }
+
+            Address address = new Address
+            {
+                addressId = addressJson.AddressId,
+                name = addressJson.Name,
+                buildingNumber = addressJson.BuildingNumber,
+                streetName = addressJson.StreetName,
+                city = addressJson.City,
+                zipcode = addressJson.Zipcode,
+                state = addressJson.State,
+                country = addressJson.Country
+            };
 
             db.Entry(address).State = EntityState.Modified;
 
@@ -81,12 +94,23 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/Addresses
         [ResponseType(typeof(Address))]
-        public IHttpActionResult PostAddress([FromBody]Address address)
+        public IHttpActionResult PostAddress([FromBody]AddressJsonPOST addressJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            Address address = new Address
+            {
+                name = addressJson.Name,
+                buildingNumber = addressJson.BuildingNumber,
+                streetName = addressJson.StreetName,
+                city = addressJson.City,
+                zipcode = addressJson.Zipcode,
+                state = addressJson.State,
+                country = addressJson.Country
+            };
 
             db.Addresses.Add(address);
             db.SaveChanges();

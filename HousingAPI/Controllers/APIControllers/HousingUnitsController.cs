@@ -1,5 +1,6 @@
 ﻿using HousingAPI.Controllers.Helpers;
 using HousingAPI.Models;
+using HousingAPI.Models.JsonModels;
 using HousingAPI.Models.PresentationModels.HousingUnit;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -160,18 +161,26 @@ namespace HousingAPI.Controllers.APIControllers
 
         // PUT: api/HousingUnits/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnit housingUnit)
+        public IHttpActionResult PutHousingUnit(int id, [FromBody]HousingUnitJsonPUT housingUnitJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != housingUnit.housingUnitId)
+            if (id != housingUnitJson.HousingUnitId)
             {
                 return BadRequest();
             }
 
+            HousingUnit housingUnit = new HousingUnit
+            {
+                housingUnitId = housingUnitJson.HousingUnitId,
+                providerId = housingUnitJson.ProviderId,
+                addressId = housingUnitJson.AddressId,
+                housingSignature = housingUnitJson.HousingSignature,
+                capacity = housingUnitJson.Capacity
+            };
 
             db.Entry(housingUnit).State = EntityState.Modified;
 
@@ -197,12 +206,20 @@ namespace HousingAPI.Controllers.APIControllers
 
         // POST: api/HousingUnits
         [ResponseType(typeof(HousingUnit))]
-        public IHttpActionResult PostHousingUnit([FromBody]HousingUnit housingUnit)
+        public IHttpActionResult PostHousingUnit([FromBody]HousingUnitJsonPOST housingUnitJson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            HousingUnit housingUnit = new HousingUnit
+            {
+                providerId = housingUnitJson.ProviderId,
+                addressId = housingUnitJson.AddressId,
+                housingSignature = housingUnitJson.HousingSignature,
+                capacity = housingUnitJson.Capacity
+            };
 
             db.HousingUnits.Add(housingUnit);
             db.SaveChanges();
