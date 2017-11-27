@@ -58,7 +58,7 @@ namespace HousingAPI.Controllers.APIControllers
             return NotFound();
         }
 
-        //GET: api/Tenants/Info
+        //GET: api/Tenants/Pending
         [Route("api/Tenants/Pending")]
         [ResponseType(typeof(IEnumerable<TenantInfoMapper>))]
         public IHttpActionResult GetTenantsPending()
@@ -71,7 +71,7 @@ namespace HousingAPI.Controllers.APIControllers
             return NotFound();
         }
 
-        //GET: api/Tenants/Info
+        //GET: api/Tenants/Confirmed
         [Route("api/Tenants/Confirmed")]
         [ResponseType(typeof(IEnumerable<TenantInfoMapper>))]
         public IHttpActionResult GetTenantsConfirmed()

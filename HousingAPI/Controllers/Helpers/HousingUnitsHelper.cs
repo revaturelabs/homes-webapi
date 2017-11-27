@@ -190,7 +190,7 @@ namespace HousingAPI.Controllers.Helpers
         // RETURNS ALL THE HOUSING UNITS WITH: Tenants with Batch, Contact, Gender, and Car Relationship
         public IEnumerable<HousingUnitTenantInfoMapper> GetHousingUnitsWithTenants()
         {
-            var content = db.HousingUnits.ToList();
+            var content = db.HousingUnits.Where(j => j.housingUnitId != 0).ToList();
             if (content.Count() == 0)
             {
                 return null;
@@ -245,6 +245,94 @@ namespace HousingAPI.Controllers.Helpers
                     Address = address.GetAddress(content.addressId ?? 0),
                     Tenants = tenants.GetTenantsWithInfoByHousing(content.housingUnitId)
                 };
+                return housingUnit;
+            }
+        }
+
+        // Get All housing units with Tenants
+        // DEFAULT
+        // RETURNS ALL THE HOUSING UNITS WITH: Tenants with Batch, Contact, Gender, and Car Relationship
+        public IEnumerable<HousingUnitAvailableMapper> GetHousingUnitsWithTenantsAvailable()
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId !=0).ToList();
+            if (content.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<HousingUnitAvailableMapper> housingUnits = new List<HousingUnitAvailableMapper>();
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
+                foreach (var item in content)
+                {
+                    HousingUnitAvailableMapper housingUnit = new HousingUnitAvailableMapper()
+                    {
+                        HousingUnitId = item.housingUnitId,
+                        ProviderId = item.providerId ?? 0,
+                        AddressId = item.addressId ?? 0,
+                        HousingSignature = item.housingSignature,
+                        Capacity = item.capacity,
+
+                        Address = address.GetAddress(item.addressId ?? 0),
+                        Tenants = tenants.GetTenantsWithInfoByHousing(item.housingUnitId)
+                    };
+
+                    if (housingUnit.Tenants != null)
+                    {
+                        housingUnit.Occupied = housingUnit.Tenants.Count();
+                        housingUnit.Available = housingUnit.Capacity - housingUnit.Tenants.Count();
+                    }
+                    else
+                    {
+                        housingUnit.Occupied = 0;
+                        housingUnit.Available = housingUnit.Capacity;
+                    }
+
+                    housingUnits.Add(housingUnit);
+                }
+                return housingUnits;
+            }
+        }
+
+        // Get One housing unit with Tenants
+        // DEFAULT
+        // RETURNS ONE HOUSING UNIT WITH: Tenants with Batch, Contact, Gender, and Car Relationship
+        public HousingUnitAvailableMapper GetHousingUnitsWithTenantsAvailable(int housingUnitId)
+        {
+            var content = db.HousingUnits.Where(j => j.housingUnitId == housingUnitId).FirstOrDefault();
+
+            if (content == null)
+            {
+                return null;
+            }
+            else
+            {
+                AddressesHelper address = new AddressesHelper();
+                TenantsHelper tenants = new TenantsHelper();
+                HousingUnitAvailableMapper housingUnit = new HousingUnitAvailableMapper()
+                {
+                    HousingUnitId = content.housingUnitId,
+                    ProviderId = content.providerId ?? 0,
+                    AddressId = content.addressId ?? 0,
+                    HousingSignature = content.housingSignature,
+                    Capacity = content.capacity,
+
+                    Address = address.GetAddress(content.addressId ?? 0),
+                    Tenants = tenants.GetTenantsWithInfoByHousing(content.housingUnitId)
+                };
+
+                if (housingUnit.Tenants != null)
+                {
+                    housingUnit.Occupied = housingUnit.Tenants.Count();
+                    housingUnit.Available = housingUnit.Capacity - housingUnit.Tenants.Count();
+                }
+                else
+                {
+                    housingUnit.Occupied = 0;
+                    housingUnit.Available = housingUnit.Capacity;
+                }
+
                 return housingUnit;
             }
         }
