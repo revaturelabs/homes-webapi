@@ -144,7 +144,7 @@ namespace HousingAPI.Controllers.GraphAPIControllers
                 Tenant tenant = new Tenant()
                 {
                     housingUnitId = 0,
-                    genderId = 3,
+                    genderId = guiReceivedUserJSONModel.GenderId,
                     contactId = contact.contactId,
                     batchId = batchId,
                     hasKey = false,
