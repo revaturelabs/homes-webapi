@@ -132,6 +132,9 @@ namespace HousingAPI.Models.ADModels
 
         [JsonProperty("phoneNumber")]
         public string PhoneNumber { get; set; }
+
+        [JsonProperty("genderId")]
+        public int GenderId { get; set; }
     }
 
     public class GUIUserList

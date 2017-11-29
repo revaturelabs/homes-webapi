@@ -127,7 +127,7 @@ namespace HousingAPI.Controllers.Helpers
         // RETURNS ALL THE HOUSING UNITS WITH: Address, and  Provider with Contact
         public IEnumerable<HousingUnitProviderMapper> GetHousingUnitsWithProvider()
         {
-            var content = db.HousingUnits.ToList();
+            var content = db.HousingUnits.Where(j => j.housingUnitId != 0).ToList();
             if (content.Count() == 0)
             {
                 return null;
